@@ -44,6 +44,8 @@ public interface Listeners {
 
     interface SettingActions
     {
+        void commission();
+        void shop();
         void contactUs();
         void terms();
         void aboutApp();
@@ -52,22 +54,11 @@ public interface Listeners {
         void rateApp();
         void arLang();
         void enLang();
-        void whatsapp();
-        void twitter();
-        void instagram();
+
 
     }
 
 
 
-    interface ForgetListner
-    {
-        void forget();
-    }
-    interface PasswordListner {
-        void checkDatapass(String pass);
-    }
-    interface ForgetpasswordListner {
-        void checkDataForget(String phone_code, String phone);
-    }
+
 }

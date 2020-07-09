@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">غيار</string>
+    <string name="open">مفتوح</string>
+    <string name="close">مغلق</string>
     <string name="field_req">الحقل مطلوب</string>
     <string name="login">تسجيل دخول</string>
     <string name="code">الكود</string>
@@ -20,7 +22,7 @@
     <string name="home">الرئيسية</string>
     <string name="chat">المحادثة</string>
     <string name="profile">الملف الشخصي</string>
-    <string name="more">المذيد</string>
+    <string name="more">المزيد</string>
     <string name="field_required">الحقل مطلوب</string>
     <string name="inv_email">البريد الالكتروني غير صحيح</string>
     <string name="cannot_signup">لا يمكن انشاء حساب دون الموافقة الشروط والاحكام</string>
@@ -56,5 +58,13 @@
     <string name="req_refused">تم رفض طلبك</string>
     <string name="req_accepted">تم قبول طلبك</string>
     <string name="no_conversation">لا توجد محادثات</string>
+    <string name="commission">عمولة التطبيق</string>
+    <string name="shop_with_us">محلك معنا</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="no_data_to_show">لا توجد عناصر لعرضها</string>
+    <string name="empty_cart">السلة فارغة</string>
+    <string name="shop_now">تسوق الان</string>
+    <string name="auction">المزاد</string>
+    <string name="search">مطلوب</string>
 
 </resources>

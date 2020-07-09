@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="notCount"
+            type="Integer" />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities_fragments.activity_home.HomeActivity">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:openDrawer="end"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:contentInsetEnd="0dp"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetRight="0dp"
+                        app:contentInsetStart="0dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/imageCart"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_cart"
+                            android:tint="@color/white"
+                            android:padding="10dp"
+                            android:background="@drawable/circle_primary_trans"
+                            />
+
+
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_chat_bubble"
+                            android:tint="@color/white"
+                            android:padding="10dp"
+                            android:background="@drawable/circle_primary_trans"
+                            android:layout_gravity="end"
+
+
+                            />
+                        <FrameLayout
+                            android:id="@+id/flNotification"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/circle_primary_trans"
+
+                            >
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/ic_notification"
+                                android:tint="@color/white"
+                                android:padding="6dp"
+                                android:layout_gravity="center"
+                                android:clickable="false"
+                                android:longClickable="false"
+                                />
+                            <TextView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:background="@drawable/not_count"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text='@{String.valueOf(notCount),default="0"}'
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:layout_margin="2dp"
+                                android:clickable="false"
+                                android:longClickable="false"
+                                />
+                        </FrameLayout>
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:text="@string/app_name"
+                            />
+                    </androidx.appcompat.widget.Toolbar>
+                </com.google.android.material.appbar.AppBarLayout>
+                <FrameLayout
+                    android:id="@+id/fragment_app_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+                <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+                    android:id="@+id/ahBottomNav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    >
+
+
+                </com.aurelhubert.ahbottomnavigation.AHBottomNavigation>
+
+            </LinearLayout>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navView"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:elevation="0dp"
+
+                >
+
+            </com.google.android.material.navigation.NavigationView>
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

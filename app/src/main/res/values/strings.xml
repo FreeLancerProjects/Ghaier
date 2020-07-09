@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Ghaier</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <string name="field_req">Field required</string>
     <string name="login">Login</string>
     <string name="code">Code</string>
@@ -56,4 +59,12 @@
     <string name="req_refused">Your request refused</string>
     <string name="req_accepted">Your request accepted</string>
     <string name="no_conversation">No conversation</string>
+    <string name="commission">Commission</string>
+    <string name="shop_with_us">Shop with us</string>
+    <string name="contact_us">Contact us</string>
+    <string name="no_data_to_show">No data to show</string>
+    <string name="empty_cart">Empty Cart</string>
+    <string name="shop_now">Shop Now</string>
+    <string name="auction">Auction</string>
+    <string name="search">Search</string>
 </resources>

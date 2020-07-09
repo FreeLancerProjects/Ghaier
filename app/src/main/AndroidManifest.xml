@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
         android:name=".share.App"
         android:allowBackup="true"
@@ -18,12 +19,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities_fragments.activity_splash.SplashActivity">
+        <activity android:name=".activities_fragments.activity_cart.CartActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            />
+        <activity
+            android:name=".activities_fragments.activity_notification.NotificationActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_home.HomeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities_fragments.activity_about_app.AboutAppActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity android:name=".activities_fragments.activity_splash.SplashActivity">
+
         </activity>
     </application>
 
