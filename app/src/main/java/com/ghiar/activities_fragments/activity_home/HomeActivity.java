@@ -25,6 +25,7 @@ import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_More;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Profile;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Search;
+import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
@@ -88,6 +89,11 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.imageCart.setOnClickListener(v -> {
             Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        });
+
+        binding.imageChat.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ModelDetailsActivity.class);
             startActivity(intent);
         });
 

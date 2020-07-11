@@ -19,16 +19,13 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
 
-    public void addFragments(List<Fragment> fragmentList){
+    public void addFragments_Titles(List<Fragment> fragmentList,List<String> title){
 
         this.fragmentList.addAll(fragmentList);
-    }
-
-    public void addTitles(List<String> title)
-    {
         this.title.addAll(title);
 
     }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

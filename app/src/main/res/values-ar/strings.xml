@@ -66,13 +66,27 @@
     <string name="shop_now">تسوق الان</string>
     <string name="auction">المزاد</string>
     <string name="search">مطلوب</string>
-    <string name="user_name">User Name</string>
-    <string name="city">City</string>
-    <string name="country_code">Country Code</string>
+    <string name="user_name">إسم المستخدم</string>
+    <string name="city">المدينة</string>
+    <string name="country_code">كود الدولة</string>
     <string name="search2">بحث...</string>
     <string name="services">الخدمات</string>
     <string name="accessories">اكسسوارات</string>
     <string name="spare_parts">قطع غيار</string>
     <string name="search_by_model">البحث بموديل السيارة</string>
+    <string name="rate">التقييم</string>
+    <string name="share">مشاركة</string>
+    <string name="add_to_cart">أضف الى السلة</string>
+    <string name="details">التفاصيل</string>
+    <string name="state">الحالة</string>
+    <string name="type">النوع</string>
+    <string name="country">بلد المنشأ</string>
+    <string name="warranty">الكفالة</string>
+    <string name="address">العنوان</string>
+    <string name="description">الوصف</string>
+    <string name="owner">البائع</string>
+    <string name="call">إتصال</string>
+    <string name="location">الموقع</string>
+    <string name="most_seller">اشترى المستخدمين ايضا</string>
 
 </resources>

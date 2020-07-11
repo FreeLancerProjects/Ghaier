@@ -11,17 +11,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.ghiar.R;
-import com.ghiar.activities_fragments.activity_home.HomeActivity;
-import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
-import com.ghiar.databinding.FragmentHomeBinding;
 import com.ghiar.databinding.FragmentSpareAccessoriesBinding;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 
 import io.paperdb.Paper;
 
-public class Fragment_Spare_Parts  extends Fragment {
+public class Fragment_Accessories extends Fragment {
 
     private ModelDetailsActivity activity;
     private FragmentSpareAccessoriesBinding binding;
@@ -30,9 +27,9 @@ public class Fragment_Spare_Parts  extends Fragment {
     private String lang;
 
 
-    public static Fragment_Spare_Parts newInstance() {
+    public static Fragment_Accessories newInstance() {
 
-        return new Fragment_Spare_Parts();
+        return new Fragment_Accessories();
     }
 
     @Nullable
