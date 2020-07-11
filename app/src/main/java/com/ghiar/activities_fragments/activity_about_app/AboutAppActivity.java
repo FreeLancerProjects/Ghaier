@@ -59,7 +59,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     private void initView()
     {
         Paper.init(this);
-        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        lang = Paper.book().read("lang", "ar");
         binding.setBackListener(this);
         binding.setLang(lang);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
