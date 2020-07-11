@@ -66,5 +66,7 @@
     <string name="shop_now">تسوق الان</string>
     <string name="auction">المزاد</string>
     <string name="search">مطلوب</string>
+    <string name="user_name">User Name</string>
+    <string name="city">City</string>
 
 </resources>

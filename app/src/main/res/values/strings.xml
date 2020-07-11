@@ -67,4 +67,6 @@
     <string name="shop_now">Shop Now</string>
     <string name="auction">Auction</string>
     <string name="search">Search</string>
+    <string name="user_name">User Name</string>
+    <string name="city">City</string>
 </resources>
