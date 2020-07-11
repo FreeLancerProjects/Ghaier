@@ -19,7 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity"></activity>
+        <activity android:name=".activities_fragments.activity_model_details.ModelDetailsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <activity android:name=".activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity" />
         <activity
             android:name=".activities_fragments.activity_cart.CartActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
@@ -38,7 +42,7 @@
         <activity
             android:name=".activities_fragments.activity_about_app.AboutAppActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity android:name=".activities_fragments.activity_splash.SplashActivity"></activity>
+        <activity android:name=".activities_fragments.activity_splash.SplashActivity" />
     </application>
 
 </manifest>

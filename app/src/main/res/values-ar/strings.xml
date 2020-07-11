@@ -69,5 +69,10 @@
     <string name="user_name">User Name</string>
     <string name="city">City</string>
     <string name="country_code">Country Code</string>
+    <string name="search2">بحث...</string>
+    <string name="services">الخدمات</string>
+    <string name="accessories">اكسسوارات</string>
+    <string name="spare_parts">قطع غيار</string>
+    <string name="search_by_model">البحث بموديل السيارة</string>
 
 </resources>

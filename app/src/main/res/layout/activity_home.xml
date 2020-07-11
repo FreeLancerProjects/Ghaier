@@ -135,13 +135,43 @@
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navView"
-                android:layout_width="180dp"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 app:elevation="0dp"
 
                 >
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@color/second"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:gravity="center"
+                        android:text="@string/search_by_model"
+                        />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recViewModel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <ProgressBar
+                            android:id="@+id/progBarModel"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            />
+                    </FrameLayout>
+                </LinearLayout>
             </com.google.android.material.navigation.NavigationView>
         </androidx.drawerlayout.widget.DrawerLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

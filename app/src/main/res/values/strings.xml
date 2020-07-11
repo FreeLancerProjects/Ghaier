@@ -70,4 +70,9 @@
     <string name="user_name">User Name</string>
     <string name="city">City</string>
     <string name="country_code">Country Code</string>
+    <string name="search2">Search...</string>
+    <string name="services">Services</string>
+    <string name="accessories">Accessories</string>
+    <string name="spare_parts">Spare Parts</string>
+    <string name="search_by_model">Search by model</string>
 </resources>
