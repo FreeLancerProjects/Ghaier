@@ -107,7 +107,7 @@
                    >
 
                         <Spinner
-                            android:id="@+id/spBrand"
+                            android:id="@+id/spinnerCountry"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="center_vertical"
@@ -127,6 +127,7 @@
                       >
 
                         <Spinner
+                            android:id="@+id/spinnerCity"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="center_vertical"
@@ -146,7 +147,7 @@
                         >
 
                         <Spinner
-                            android:id="@+id/sp_cat"
+                            android:id="@+id/spinnerModel"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="center_vertical"

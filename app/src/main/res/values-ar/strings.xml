@@ -66,6 +66,11 @@
     <string name="shop_now">تسوق الان</string>
     <string name="auction">المزاد</string>
     <string name="search">مطلوب</string>
+    <string name="service_detials">Service Detials</string>
+    <string name="order">Order</string>
+    <string name="service">Service</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="house_service">House Service</string>
     <string name="user_name">إسم المستخدم</string>
     <string name="city">المدينة</string>
     <string name="country_code">كود الدولة</string>

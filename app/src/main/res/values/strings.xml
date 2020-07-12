@@ -70,6 +70,11 @@
     <string name="user_name">User Name</string>
     <string name="city">City</string>
     <string name="country_code">Country Code</string>
+    <string name="service_detials">Service Detials</string>
+    <string name="order">Order</string>
+    <string name="service">Service</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="house_service">House Service</string>
     <string name="search2">Search...</string>
     <string name="services">Services</string>
     <string name="accessories">Accessories</string>
