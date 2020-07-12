@@ -1,4 +1,5 @@
 <resources>
+    <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
     <string name="app_name">غيار</string>
     <string name="open">مفتوح</string>
     <string name="close">مغلق</string>
@@ -66,11 +67,11 @@
     <string name="shop_now">تسوق الان</string>
     <string name="auction">المزاد</string>
     <string name="search">مطلوب</string>
-    <string name="service_detials">Service Detials</string>
-    <string name="order">Order</string>
-    <string name="service">Service</string>
-    <string name="service_provider">Service Provider</string>
-    <string name="house_service">House Service</string>
+    <string name="service_detials">تفاصيل الخدمه</string>
+    <string name="order">طلب</string>
+    <string name="service">خدمه</string>
+    <string name="service_provider">مقدم الخدمه </string>
+    <string name="house_service">خدمة منزل</string>
     <string name="user_name">إسم المستخدم</string>
     <string name="city">المدينة</string>
     <string name="country_code">كود الدولة</string>
@@ -93,5 +94,31 @@
     <string name="call">إتصال</string>
     <string name="location">الموقع</string>
     <string name="most_seller">اشترى المستخدمين ايضا</string>
+    <string name="registration_as_a_service_provider_or_agency_owner">التسجيل كمقدم خدمه او صاحب توكيل</string>
+    <string name="same_service">خدمات مشابهه</string>
+    <string name="show_all">عرض الكل</string>
+    <string name="other_service">خدمات اخرى </string>
+    <string name="rate_service_owner">قيم صاحب الخدمه </string>
+    <string name="add_auction">اضافة مزاد</string>
+    <string name="arabic_title">العنوان بالعربى</string>
+    <string name="english_title">العنوان بالانجليزى</string>
+    <string name="service_or_product">ٍخدمه او منتج</string>
+    <string name="model">الموديل</string>
+    <string name="quantity">الكميه</string>
+    <string name="brand">الماركه</string>
+    <string name="upload_photo_here">رفع صوره هنا </string>
+    <string name="news">جديد</string>
+    <string name="used">مستخدم</string>
+    <string name="add">إضافه</string>
+    <string name="open_price">السعر الافتتاحى</string>
+    <string name="minimum">الحد الادنى</string>
+    <string name="auction_end_time">وقت انتهاء المزاد</string>
+    <string name="current_price">السعر الحالى</string>
+    <string name="minimum_auction">الحد الادنى.المزاايده</string>
+    <string name="end_time">وقت الانتهاء</string>
+    <string name="write_your_offer_here">ًاكتب عرضك هنا</string>
+    <string name="send_offer">ارسل العرض</string>
+    <string name="the_seller">البائع</string>
+    <string name="auction_detials">تفاصيل المزاد</string>
 
 </resources>

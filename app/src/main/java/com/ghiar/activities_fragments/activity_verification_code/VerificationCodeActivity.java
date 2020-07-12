@@ -74,6 +74,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
         binding.btnConfirm.setOnClickListener(view ->sendSmsCode());
 
         binding.btnConfirm.setOnClickListener(view -> {
+            navigateToSignUpActivity();
             String code = binding.edtCode.getText().toString().trim();
             if (!code.isEmpty())
             {

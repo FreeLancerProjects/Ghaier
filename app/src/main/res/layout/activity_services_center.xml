@@ -184,7 +184,6 @@
                             android:id="@+id/progBar"
                             android:layout_width="27dp"
                             android:layout_height="35dp"
-                            android:visibility="gone"
                             android:layout_gravity="center" />
 
                         <LinearLayout

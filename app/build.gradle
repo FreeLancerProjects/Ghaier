@@ -73,5 +73,5 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:17.4.4'
     implementation 'com.google.firebase:firebase-messaging:20.2.2'
-
+    implementation 'info.hoang8f:android-segmented:1.0.6'
 }
