@@ -53,6 +53,7 @@
             android:name=".activities_fragments.activity_service_center_detials.ServiceCenterDetialsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
+
             android:name=".activities_fragments.activity_addauction.AddAuctionActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity

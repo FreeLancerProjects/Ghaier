@@ -14,7 +14,7 @@ public class App extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Language.updateResources(newBase, Locale.getDefault().getLanguage()));
+        super.attachBaseContext(Language.updateResources(newBase, "ar"));
     }
 
 
