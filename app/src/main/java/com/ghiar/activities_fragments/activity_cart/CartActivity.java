@@ -1,20 +1,29 @@
 package com.ghiar.activities_fragments.activity_cart;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Address;
+import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Cart_Purchases;
+import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Payment_Type;
 import com.ghiar.databinding.ActivityAboutAppBinding;
 import com.ghiar.databinding.ActivityCartBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.AddOrderModel;
 
+import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
@@ -22,6 +31,11 @@ import io.paperdb.Paper;
 public class CartActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityCartBinding binding;
     private String lang;
+    private FragmentManager fragmentManager;
+    private Fragment_Address fragment_address;
+    private Fragment_Cart_Purchases fragment_cart_purchases;
+    private Fragment_Payment_Type fragment_payment_type;
+    private AddOrderModel addOrderModel;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -33,27 +47,225 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cart);
         initView();
+        if (savedInstanceState == null) {
+            displayFragmentPurchases();
+        }
     }
 
 
 
     private void initView()
     {
+        fragmentManager = getSupportFragmentManager();
         Paper.init(this);
-        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        lang = Paper.book().read("lang", "ar");
         binding.setBackListener(this);
         binding.setLang(lang);
 
 
+        binding.flNext.setOnClickListener(v -> {
+            if (fragment_cart_purchases!=null&&fragment_cart_purchases.isAdded()&&fragment_cart_purchases.isVisible()){
 
+                displayFragmentAddress();
+            }else if (fragment_address!=null&&fragment_address.isAdded()&&fragment_address.isVisible()){
+
+                if (fragment_address.isDataValid(this)){
+                    displayFragmentPaymentType();
+                }
+
+            }
+            else if (fragment_payment_type!=null&&fragment_payment_type.isAdded()&&fragment_payment_type.isVisible()){
+
+                //createOrder
+
+            }
+        });
+
+        binding.flBack.setOnClickListener(v -> {
+            if (fragment_cart_purchases!=null&&fragment_cart_purchases.isAdded()&&fragment_cart_purchases.isVisible()){
+                back();
+            }else if (fragment_address!=null&&fragment_address.isAdded()&&fragment_address.isVisible()){
+                displayFragmentPurchases();
+            }else if (fragment_payment_type!=null&&fragment_payment_type.isAdded()&&fragment_payment_type.isVisible()){
+                displayFragmentAddress();
+            }
+        });
+
+
+    }
+    public void displayFragmentPurchases()
+    {
+        try {
+            if (fragment_cart_purchases == null) {
+                fragment_cart_purchases = Fragment_Cart_Purchases.newInstance(addOrderModel);
+            }else {
+                fragment_cart_purchases.setModel(addOrderModel);
+            }
+
+            if (fragment_address != null && fragment_address.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_address).commit();
+            }
+            if (fragment_payment_type != null && fragment_payment_type.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_payment_type).commit();
+            }
+
+            if (fragment_cart_purchases.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_cart_purchases).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_container, fragment_cart_purchases, "fragment_cart_purchases").addToBackStack("fragment_cart_purchases").commit();
+
+            }
+
+            Log.e("1","1");
+            updateUi1();
+
+
+        } catch (Exception e) {
+        }
 
     }
 
 
 
+    public void displayFragmentAddress()
+    {
+        try {
+            if (fragment_address == null) {
+                fragment_address = Fragment_Address.newInstance(addOrderModel);
+            }else {
+                fragment_address.setModel(addOrderModel);
+            }
+
+            if (fragment_cart_purchases != null && fragment_cart_purchases.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_cart_purchases).commit();
+            }
+            if (fragment_payment_type != null && fragment_payment_type.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_payment_type).commit();
+            }
+
+            if (fragment_address.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_address).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_container, fragment_address, "fragment_address").addToBackStack("fragment_address").commit();
+
+            }
+
+            updateUi2();
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void displayFragmentPaymentType()
+    {
+        try {
+            if (fragment_payment_type == null) {
+                fragment_payment_type = Fragment_Payment_Type.newInstance(addOrderModel);
+            }else {
+                fragment_payment_type.setModel(addOrderModel);
+            }
+
+            if (fragment_cart_purchases != null && fragment_cart_purchases.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_cart_purchases).commit();
+            }
+            if (fragment_address != null && fragment_address.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_address).commit();
+            }
+
+            if (fragment_payment_type.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_payment_type).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_container, fragment_payment_type, "fragment_payment_type").addToBackStack("fragment_payment_type").commit();
+
+            }
+
+            updateUi3();
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    private void updateUi1() {
+        binding.imagePurchases.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvPurchases.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.imageArrow1.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+
+        binding.imageAddress.setColorFilter(ContextCompat.getColor(this,R.color.gray6));
+        binding.tvAddress.setTextColor(ContextCompat.getColor(this,R.color.gray6));
+        binding.imageArrow2.setColorFilter(ContextCompat.getColor(this,R.color.gray6));
+
+
+        binding.imagePayment.setColorFilter(ContextCompat.getColor(this,R.color.gray6));
+        binding.tvPayment.setTextColor(ContextCompat.getColor(this,R.color.gray6));
+
+
+    }
+    private void updateUi2() {
+
+        binding.imagePurchases.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvPurchases.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.imageArrow1.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+
+        binding.imageAddress.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvAddress.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.imageArrow2.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+
+
+        binding.imagePayment.setColorFilter(ContextCompat.getColor(this,R.color.gray6));
+        binding.tvPayment.setTextColor(ContextCompat.getColor(this,R.color.gray6));
+
+    }
+    private void updateUi3() {
+        binding.imagePurchases.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvPurchases.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.imageArrow1.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+
+        binding.imageAddress.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvAddress.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.imageArrow2.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+
+
+        binding.imagePayment.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary));
+        binding.tvPayment.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+
+    }
+
+    public void updateAddOrderModel(AddOrderModel addOrderModel){
+        this.addOrderModel = addOrderModel;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        for (Fragment fragment : fragmentList) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        for (Fragment fragment : fragmentList) {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
     @Override
     public void back() {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        back();
+    }
 }

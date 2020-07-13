@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">غيار</string>
+    <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
+    <string name="map_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
     <string name="open">مفتوح</string>
     <string name="close">مغلق</string>
     <string name="field_req">الحقل مطلوب</string>
@@ -88,5 +90,18 @@
     <string name="call">إتصال</string>
     <string name="location">الموقع</string>
     <string name="most_seller">اشترى المستخدمين ايضا</string>
+    <string name="order_cost">سعر المنتجات</string>
+    <string name="total">إجمالي الطلب</string>
+    <string name="delivery">التوصيل</string>
+    <string name="payment">طريقة الدفع</string>
+    <string name="select">إختر</string>
+    <string name="personal_information">المعلومات الشخصية</string>
+    <string name="name">الإسم</string>
+    <string name="phone_number">رقم الجوال</string>
+    <string name="select_location_on_map">حدد موقعك على الخريطة</string>
+    <string name="building_no_street">رقم المبنى/اسم الشارع</string>
+    <string name="purchases">المشتريات</string>
+    <string name="payment2">الدفع</string>
+    <string name="next">متابعة</string>
 
 </resources>

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Ghaier</string>
+    <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
+    <string name="map_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
 
@@ -89,4 +91,17 @@
     <string name="call">Call</string>
     <string name="location">Location</string>
     <string name="most_seller">Most Seller</string>
+    <string name="order_cost">Order cost</string>
+    <string name="total">Total</string>
+    <string name="delivery">Delivery</string>
+    <string name="payment">Payment</string>
+    <string name="select">Select</string>
+    <string name="personal_information">Personal information</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="select_location_on_map">Select location on map</string>
+    <string name="building_no_street">Building no/street</string>
+    <string name="purchases">Purchases</string>
+    <string name="payment2">Payment</string>
+    <string name="next">Next</string>
 </resources>

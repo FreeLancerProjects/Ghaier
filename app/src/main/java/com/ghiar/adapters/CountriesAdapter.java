@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_cart.CartActivity;
+import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Address;
 import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.databinding.CountriesRowBinding;
 import com.ghiar.models.CountryModel;
@@ -20,12 +24,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<CountryModel> list;
     private Context context;
     private LayoutInflater inflater;
-    private LoginActivity activity;
-    public CountriesAdapter(List<CountryModel> list, Context context) {
+    private AppCompatActivity activity;
+    private Fragment fragment;
+    public CountriesAdapter(List<CountryModel> list, Context context, Fragment fragment) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
-        activity = (LoginActivity) context;
+        activity = (AppCompatActivity) context;
+        this.fragment = fragment;
 
 
     }
@@ -48,7 +54,15 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         myHolder.binding.setModel(list.get(position));
 
         myHolder.itemView.setOnClickListener(view -> {
-            activity.setItemData(list.get(myHolder.getAdapterPosition()));
+            if (activity instanceof LoginActivity){
+                LoginActivity loginActivity = (LoginActivity) activity;
+                loginActivity.setItemData(list.get(myHolder.getAdapterPosition()));
+            }else if (activity instanceof CartActivity&&fragment!=null){
+                if (fragment instanceof Fragment_Address){
+                    Fragment_Address fragment_address = (Fragment_Address) fragment;
+                    fragment_address.setItemData(list.get(myHolder.getAdapterPosition()));
+                }
+            }
 
         });
     }
