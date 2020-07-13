@@ -24,7 +24,7 @@ import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Auction;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_More;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Profile;
-import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Search;
+import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Reguired;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
 import com.ghiar.databinding.ActivityHomeBinding;
@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private UserModel userModel;
     private Fragment_Home fragment_home;
     private Fragment_Auction fragment_auction;
-    private Fragment_Search fragment_search;
+    private Fragment_Reguired fragment_reguired;
     private Fragment_Profile fragment_profile;
     private Fragment_More fragment_more;
     private ActionBarDrawerToggle toggle;
@@ -187,8 +187,8 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_auction != null && fragment_auction.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_auction).commit();
             }
-            if (fragment_search != null && fragment_search.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_search).commit();
+            if (fragment_reguired != null && fragment_reguired.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_reguired).commit();
             }
 
             if (fragment_profile != null && fragment_profile.isAdded()) {
@@ -218,8 +218,8 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_home != null && fragment_home.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_home).commit();
             }
-            if (fragment_search != null && fragment_search.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_search).commit();
+            if (fragment_reguired != null && fragment_reguired.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_reguired).commit();
             }
 
             if (fragment_profile != null && fragment_profile.isAdded()) {
@@ -242,8 +242,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void displayFragmentSearch() {
         try {
-            if (fragment_search == null) {
-                fragment_search = Fragment_Search.newInstance();
+            if (fragment_reguired == null) {
+                fragment_reguired = Fragment_Reguired.newInstance();
             }
 
             if (fragment_home != null && fragment_home.isAdded()) {
@@ -259,11 +259,11 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_more != null && fragment_more.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_more).commit();
             }
-            if (fragment_search.isAdded()) {
-                fragmentManager.beginTransaction().show(fragment_search).commit();
+            if (fragment_reguired.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_reguired).commit();
 
             } else {
-                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_search, "fragment_search").addToBackStack("fragment_search").commit();
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_reguired, "fragment_required").addToBackStack("fragment_required").commit();
 
             }
             updateBottomNavigationPosition(2);
@@ -286,8 +286,8 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().hide(fragment_auction).commit();
             }
 
-            if (fragment_search != null && fragment_search.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_search).commit();
+            if (fragment_reguired != null && fragment_reguired.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_reguired).commit();
             }
             if (fragment_more != null && fragment_more.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_more).commit();
@@ -317,8 +317,8 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().hide(fragment_auction).commit();
             }
 
-            if (fragment_search != null && fragment_search.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_search).commit();
+            if (fragment_reguired != null && fragment_reguired.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_reguired).commit();
             }
             if (fragment_profile != null && fragment_profile.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_profile).commit();

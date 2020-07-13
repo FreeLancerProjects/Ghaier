@@ -7,12 +7,14 @@ import androidx.multidex.MultiDexApplication;
 
 import com.ghiar.language.Language;
 
+import java.util.Locale;
+
 
 public class App extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Language.updateResources(newBase,"ar"));
+        super.attachBaseContext(Language.updateResources(newBase, Locale.getDefault().getLanguage()));
     }
 
 

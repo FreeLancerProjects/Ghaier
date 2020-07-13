@@ -26,17 +26,37 @@
         >
         <activity android:name=".activities_fragments.activity_model_details.ModelDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
-        <activity android:name=".activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities_fragments.activity_cart.CartActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
             android:name=".activities_fragments.activity_notification.NotificationActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_login.LoginActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_verification_code.VerificationCodeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_signup.SignUpActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_service_center.ServiceCenterActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_service_center_detials.ServiceCenterDetialsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activity_addauction.AddAuctionActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name=".activities_fragments.activtity_auction_detials.AuctionDetialsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
@@ -47,8 +67,7 @@
         <activity
             android:name=".activities_fragments.activity_home.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            >
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
 
     @Override
     public void checkDataLogin(String phone_code, String phone) {
+        navigateToVerificationCodeActivity();
         if (loginModel.isDataValid(this)) {
         //    Common.CloseKeyBoard(this, binding.ed);
 

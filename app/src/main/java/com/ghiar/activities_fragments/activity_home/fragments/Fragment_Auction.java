@@ -1,5 +1,6 @@
 package com.ghiar.activities_fragments.activity_home.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_addauction.AddAuctionActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.databinding.FragmentAuctionBinding;
 import com.ghiar.databinding.FragmentMoreBinding;
@@ -21,7 +23,7 @@ import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class Fragment_Auction extends Fragment{
+public class Fragment_Auction extends Fragment {
 
     private HomeActivity activity;
     private FragmentAuctionBinding binding;
@@ -49,13 +51,14 @@ public class Fragment_Auction extends Fragment{
         Paper.init(activity);
         lang = Paper.book().read("lang", "ar");
         userModel = preferences.getUserData(activity);
-
+        binding.llMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, AddAuctionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
-
-
-
-
 
 
 }
