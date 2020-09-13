@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
     @NonNull
     @Override
     public ServiceViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemServiceBinding binding = ItemServiceBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemServiceBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.item_service, parent, false);
         return new ServiceViewholder(binding);
     }
 
@@ -48,7 +49,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
     public void onBindViewHolder(@NonNull ServiceViewholder holder, int position) {
 
     holder.binding.setService(list.get(position));
-    holder.binding.setLang(Preferences.getInstance().getLanguage(context));
+    holder.binding.setLang("ar");
 
         Log.e(TAG,list.get(position).getTitle_ar());
 
@@ -68,6 +69,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         ItemServiceBinding binding;
         public ServiceViewholder(@NonNull ItemServiceBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

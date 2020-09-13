@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 import static com.ghiar.tags.Tags.base_url;
 
-public class Fragment_Home extends Fragment{
+public class Fragment_Home extends Fragment {
 
     private static final String TAG = "Fragment_Home";
     private HomeActivity activity;
@@ -68,48 +68,36 @@ public class Fragment_Home extends Fragment{
     private void initView() {
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
-        servicesAdapter = new ServicesAdapter(new ArrayList<ServiceModel>(),this.getContext(),this);
+        servicesAdapter = new ServicesAdapter(new ArrayList<ServiceModel>(), this.getContext(), this);
+        binding.recViewService.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
         Paper.init(activity);
-        lang = Paper.book().read("lang","ar");
+        lang = Paper.book().read("lang", "ar");
         userModel = preferences.getUserData(activity);
         binding.setLang(lang);
 
     }
 
 
-
-    private void getServices(){
+    private void getServices() {
 
         Api.getService(base_url).getHomeServices().enqueue(new Callback<ServiceModel>() {
             @Override
             public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
-
-                servicesAdapter.setList(response.body().getMain_services());
-                binding.recViewService.setLayoutManager(new LinearLayoutManager(getContext()));
-                binding.recViewService.setAdapter(servicesAdapter);
-
-//                for (ServiceModel serviceModel:response.body().getMain_services()){
-//                    Log.d(TAG,serviceModel.getTitle_ar());
-//                }
-
                 binding.progBarService.setVisibility(View.GONE);
+                servicesAdapter.setList(response.body().getMain_services());
+                binding.recViewService.setAdapter(servicesAdapter);
             }
 
             @Override
             public void onFailure(Call<ServiceModel> call, Throwable t) {
-                Log.d(TAG,t.getMessage());
+                Log.d(TAG, t.getMessage());
+                binding.progBarService.setVisibility(View.GONE);
+
             }
         });
 
     }
-
-
-
-
-
-
-
-
 
 
 }
