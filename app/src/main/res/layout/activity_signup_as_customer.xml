@@ -13,18 +13,13 @@
             name="backListener"
             type="com.ghiar.interfaces.Listeners.BackListener" />
 
-
+        <variable
+            name="model"
+            type="com.ghiar.models.SignUpModel" />
         <variable
             name="signUpListener"
             type="com.ghiar.interfaces.Listeners.SignUpListener" />
 
-        <variable
-            name="showDialogListener"
-            type="com.ghiar.interfaces.Listeners.ShowCountryDialogListener" />
-
-        <!--        <variable-->
-        <!--            name="model"-->
-        <!--            type="com.endpoint.nadres.models.SignUpStudentModel" />-->
 
     </data>
 
@@ -118,7 +113,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:singleLine="true"
-                        android:text="@string/user_name"
+                        android:text="@string/name"
                         android:textColor="@color/register"
                         android:textSize="17sp"
 
@@ -136,17 +131,20 @@
 
 
                         <EditText
+                            android:id="@+id/edtName"
                             android:layout_width="match_parent"
                             android:layout_height="37dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:background="@color/white"
-                            android:hint="@string/user_name"
+                            android:hint="@string/name"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray4"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:text="@={model.name}"
+                            error="@{model.error_name}"/>
 
 
                     </FrameLayout>
@@ -208,50 +206,7 @@
 
                             />
 
-                        <EditText
-                            android:id="@+id/edt_phone"
-                            android:layout_width="0dp"
-                            android:layout_height="37dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@color/white"
-                            android:hint="@string/user_phone"
-                            android:inputType="phone"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray4"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/view2"
-                            app:layout_constraintStart_toEndOf="@id/view"
-                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:id="@+id/view2"
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@color/gray4"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/image_phone_code"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/image_phone_code"
-                            android:layout_width="40dp"
-                            android:layout_height="37dp"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:onClick="@{()->showDialogListener.showDialog()}"
-                            android:padding="12dp"
-                            android:rotation='@{lang.equals("ar")?180:0}'
-                            android:src="@drawable/ic_right_arrow"
-                            android:tint="@color/colorAccent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

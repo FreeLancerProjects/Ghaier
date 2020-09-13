@@ -1,8 +1,10 @@
 package com.ghiar.services;
 
+import com.ghiar.models.CityDataModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ServiceModel;
+import com.ghiar.models.UserModel;
 
 import java.util.List;
 
@@ -37,7 +39,24 @@ public interface Service {
 
     @GET("api/get-main-services")
     Call<ServiceModel> getHomeServices();
+    @FormUrlEncoded
+    @POST("api/login")
+    Call<UserModel> login(@Field("phone_code") String phone_code,
+                          @Field("phone") String phone
+    );
 
 
+    @FormUrlEncoded
+    @POST("api/register")
+    Call<UserModel> signUp(@Field("name") String name,
+                                       @Field("email") String email,
+                                       @Field("phone_code") String phone_code,
+                                       @Field("phone") String phone,
+                                       @Field("city_id") String city_id
 
+
+    );
+
+    @GET("api/city")
+    Call<CityDataModel> getCity();
 }

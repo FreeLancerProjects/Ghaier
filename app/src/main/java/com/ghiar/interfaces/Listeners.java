@@ -4,8 +4,11 @@ package com.ghiar.interfaces;
 public interface Listeners {
 
     interface LoginListener {
-        void checkDataLogin(String phone_code, String phone);
+        void validate();
+
+        void showCountryDialog();
     }
+
     interface TransFerListener {
         void checkData(String amount);
     }
@@ -18,10 +21,6 @@ public interface Listeners {
         void createNewAccount();
     }
 
-    interface ShowCountryDialogListener
-    {
-        void showDialog();
-    }
 
     interface SignUpListener
     {

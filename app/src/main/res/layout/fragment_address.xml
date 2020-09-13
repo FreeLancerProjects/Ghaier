@@ -16,8 +16,8 @@
             name="userModel"
             type="com.ghiar.models.UserModel" />
         <variable
-            name="showDialogListener"
-            type="com.ghiar.interfaces.Listeners.ShowCountryDialogListener" />
+            name="listener"
+            type="com.ghiar.interfaces.Listeners.LoginListener" />
 
     </data>
 
@@ -192,7 +192,7 @@
                     android:layout_height="37dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:onClick="@{()->showDialogListener.showDialog()}"
+                    android:onClick="@{()->listener.showCountryDialog()}"
                     android:padding="12dp"
                     android:rotation='@{lang.equals("ar")?180:0}'
                     android:src="@drawable/ic_right_arrow"

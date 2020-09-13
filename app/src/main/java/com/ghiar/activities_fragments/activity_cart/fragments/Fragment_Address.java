@@ -1,7 +1,6 @@
 package com.ghiar.activities_fragments.activity_cart.fragments;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -59,7 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Address extends Fragment implements Listeners.ShowCountryDialogListener{
+public class Fragment_Address extends Fragment implements Listeners.LoginListener{
     private static final String TAG = "data";
     private CartActivity activity;
     private FragmentAddressBinding binding;
@@ -106,7 +105,7 @@ public class Fragment_Address extends Fragment implements Listeners.ShowCountryD
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        binding.setShowDialogListener(this);
+        binding.setListener(this);
         binding.setLang(lang);
         binding.edtPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -178,7 +177,7 @@ public class Fragment_Address extends Fragment implements Listeners.ShowCountryD
 
         dialog = new AlertDialog.Builder(activity)
                 .create();
-        countriesAdapter = new CountriesAdapter(countryModelList, activity,this);
+      //  countriesAdapter = new CountriesAdapter(countryModelList, activity);
 
         DialogCountriesBinding binding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.dialog_countries, null, false);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
@@ -208,11 +207,6 @@ public class Fragment_Address extends Fragment implements Listeners.ShowCountryD
 
 
 
-    @Override
-    public void showDialog() {
-        dialog.show();
-
-    }
 
 
     @Override
@@ -229,5 +223,16 @@ public class Fragment_Address extends Fragment implements Listeners.ShowCountryD
 
             }
         }
+    }
+
+    @Override
+    public void validate() {
+
+    }
+
+    @Override
+    public void showCountryDialog() {
+        dialog.show();
+
     }
 }

@@ -45,7 +45,10 @@
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
             android:name=".activities_fragments.activity_signup.SignUpActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
+            android:configChanges="keyboardHidden|screenSize|orientation" >
+
+        </activity>
+
         <activity
             android:name=".activities_fragments.activity_service_center.ServiceCenterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
@@ -69,16 +72,19 @@
             android:name=".activities_fragments.activity_home.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
+        <activity
+            android:name=".activities_fragments.activity_about_app.AboutAppActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity android:name=".activities_fragments.activity_splash.SplashActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities_fragments.activity_about_app.AboutAppActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity android:name=".activities_fragments.activity_splash.SplashActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

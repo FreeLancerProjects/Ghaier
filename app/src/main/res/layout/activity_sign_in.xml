@@ -5,22 +5,18 @@
 
     <data>
 
+
         <variable
             name="lang"
             type="String" />
 
         <variable
-            name="loginModel"
-            type="com.ghiar.models.LoginModel" />
-
-        <variable
-            name="loginListener"
+            name="listener"
             type="com.ghiar.interfaces.Listeners.LoginListener" />
 
         <variable
-            name="showDialogListener"
-            type="com.ghiar.interfaces.Listeners.ShowCountryDialogListener" />
-
+            name="loginModel"
+            type="com.ghiar.models.LoginModel" />
         <variable
             name="skiplistner"
             type="com.ghiar.interfaces.Listeners.SkipListener" />
@@ -122,7 +118,6 @@
 
                             <TextView
                                 android:id="@+id/tv_code"
-                                error="@{loginModel.error_phone_code}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="37dp"
                                 android:layout_gravity="center_vertical"
@@ -191,7 +186,7 @@
                                 android:layout_height="37dp"
                                 android:layout_marginStart="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:onClick="@{()->showDialogListener.showDialog()}"
+                                android:onClick="@{()->listener.showCountryDialog()}"
                                 android:padding="12dp"
                                 android:rotation='@{lang.equals("ar")?180:0}'
                                 android:src="@drawable/ic_right_arrow"
@@ -211,7 +206,7 @@
                             android:layout_marginTop="30dp"
                             android:layout_marginBottom="30dp"
                             android:background="@drawable/small_rounded_primary"
-                            android:onClick="@{()->loginListener.checkDataLogin(loginModel.phone_code,loginModel.phone)}"
+                            android:onClick="@{()->listener.validate()}"
                             android:paddingLeft="50dp"
                             android:paddingRight="50dp"
                             android:text="@string/login"
@@ -221,6 +216,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/tvSkip"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
@@ -228,7 +224,6 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginRight="15dp"
                             android:gravity="center"
-                            android:onClick="@{()->skiplistner.skip()}"
                             android:paddingStart="8dp"
                             android:paddingLeft="8dp"
                             android:paddingEnd="8dp"

@@ -134,4 +134,7 @@
     <string name="purchases">Purchases</string>
     <string name="payment2">Payment</string>
     <string name="next">Next</string>
+    <string name="ch_city">Choose city</string>
+    <string name="choose">choose</string>
+
 </resources>

@@ -20,7 +20,7 @@
 
         <variable
             name="showDialogListener"
-            type="com.ghiar.interfaces.Listeners.ShowCountryDialogListener" />
+            type="com.ghiar.interfaces.Listeners.LoginListener" />
 
         <!--        <variable-->
         <!--            name="model"-->
