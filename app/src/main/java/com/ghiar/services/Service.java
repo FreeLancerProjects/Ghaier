@@ -2,6 +2,7 @@ package com.ghiar.services;
 
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
+import com.ghiar.models.ServiceModel;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public interface Service {
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
 
+    @GET("api/get-main-services")
+    Call<ServiceModel> getHomeServices();
 
 
 
