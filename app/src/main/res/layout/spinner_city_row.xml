@@ -6,6 +6,9 @@
         <variable
             name="name"
             type="String" />
+        <variable
+            name="data"
+            type="String" />
 
     </data>
 
@@ -18,6 +21,6 @@
         android:paddingRight="10dp"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:text="@{name}"
+        android:text="@{data}"
         />
 </layout>

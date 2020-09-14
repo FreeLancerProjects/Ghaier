@@ -4,6 +4,7 @@ import com.ghiar.models.CityDataModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ServiceModel;
+import com.ghiar.models.SettingModel;
 import com.ghiar.models.UserModel;
 
 import java.util.List;
@@ -59,4 +60,15 @@ public interface Service {
 
     @GET("api/city")
     Call<CityDataModel> getCity();
+
+    @GET("api/setting")
+    Call<SettingModel> getSetting();
+
+    @FormUrlEncoded
+    @POST("api/logout")
+    Call<ResponseBody> logout(@Header("user_id") int user_id,
+                              @Field("phone_token") String phone_token
+
+
+    );
 }

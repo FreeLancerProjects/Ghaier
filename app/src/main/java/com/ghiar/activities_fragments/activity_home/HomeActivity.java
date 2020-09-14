@@ -11,9 +11,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -25,21 +27,28 @@ import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_More;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Profile;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Reguired;
+import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
+import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
@@ -77,7 +86,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (userModel != null) {
-            EventBus.getDefault().register(this);
+           // EventBus.getDefault().register(this);
             updateToken();
 
         }
@@ -442,11 +451,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void Logout() {
-        /*final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         userModel = preferences.getUserData(this);
         dialog.show();
+        Log.e("mmmmm",userModel.getUser().getId()+userModel.getUser().getFireBaseToken()+"");
         Api.getService(Tags.base_url)
-                .Logout("Bearer  " + userModel.getData().getToken(), userModel.getData().getFireBaseToken())
+                .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -463,7 +473,7 @@ public class HomeActivity extends AppCompatActivity {
                             preferences.create_update_userdata(HomeActivity.this, null);
                             preferences.create_update_session(HomeActivity.this, Tags.session_logout);
                             preferences.clear(HomeActivity.this);
-                            Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
+                            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
 
@@ -480,7 +490,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
 
                     }
-                })*/;
+                });
     }
 
 

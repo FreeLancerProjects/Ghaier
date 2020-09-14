@@ -143,9 +143,9 @@ public class Fragment_Address extends Fragment implements Listeners.LoginListene
 
         if (userModel!=null){
             if (addOrderModel!=null){
-                addOrderModel.setName(userModel.getData().getName());
-                addOrderModel.setPhone_code(userModel.getData().getPhone_code());
-                addOrderModel.setPhone(userModel.getData().getPhone());
+                addOrderModel.setName(userModel.getUser().getName());
+                addOrderModel.setPhone_code(userModel.getUser().getPhone_code());
+                addOrderModel.setPhone(userModel.getUser().getPhone());
 
             }
         }

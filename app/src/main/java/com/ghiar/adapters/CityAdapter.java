@@ -9,41 +9,54 @@ import android.widget.BaseAdapter;
 
 import androidx.databinding.DataBindingUtil;
 
+
 import com.ghiar.R;
 import com.ghiar.databinding.SpinnerCityRowBinding;
+import com.ghiar.models.CityDataModel;
 
 import java.util.List;
 
-public class CityAdapter extends BaseAdapter {
-    private List<String> list;
-    private Context context;
-    private LayoutInflater inflater;
+import io.paperdb.Paper;
 
-    public CityAdapter(List<String> list, Context context) {
-        this.list = list;
+public class CityAdapter extends BaseAdapter {
+    private List<CityDataModel.CityModel> data;
+    private Context context;
+    private String lang;
+
+    public CityAdapter(List<CityDataModel.CityModel> data, Context context) {
+        this.data = data;
         this.context = context;
-        inflater = LayoutInflater.from(context);
+        lang = Paper.book().read("lang","ar");
+
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return data.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
+    public Object getItem(int i) {
+        return i;
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        @SuppressLint("ViewHolder") SpinnerCityRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.spinner_city_row,parent,false);
-        binding.setName(list.get(position));
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        @SuppressLint("ViewHolder") SpinnerCityRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.spinner_city_row,viewGroup,false);
+
+        if (lang.equals("ar")){
+            binding.setData(data.get(i).getAr_city_title());
+
+        }else {
+            binding.setData(data.get(i).getEn_city_title());
+
+        }
+
         return binding.getRoot();
     }
 }

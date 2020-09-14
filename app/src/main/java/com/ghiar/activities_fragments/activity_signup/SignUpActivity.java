@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_about_app.AboutAppActivity;
@@ -60,10 +61,11 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private Uri uri = null;
     private SignUpModel signUpModel;
+    private CityDataModel.CityModel cityModel;
     private Preferences preferences;
     private String phone;
     private String phone_code;
-    private List<String> cityList;
+    private List<CityDataModel.CityModel> cityList;
     private CityAdapter cityAdapter;
 
     @Override
@@ -83,7 +85,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     private void initView() {
         cityList = new ArrayList<>();
-        cityList.add(getString(R.string.choose));
         preferences = Preferences.getInstance();
         signUpModel = new SignUpModel();
         binding.setSignUpListener(this);
@@ -93,6 +94,12 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
         cityAdapter = new CityAdapter(cityList,this);
         binding.spinnercity.setAdapter(cityAdapter);
+
+        cityModel = new CityDataModel.CityModel();
+        cityModel.setId_city("0");
+        cityModel.setAr_city_title(getString(R.string.choose));
+        cityList.add(cityModel);
+
 
         binding.checkbox.setOnClickListener(v -> {
             if (binding.checkbox.isChecked())
@@ -110,13 +117,14 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         binding.spinnercity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position==0){
+                if (position==0)
+                {
                     signUpModel.setCity_id("");
-                }else {
-                    signUpModel.setCity_id(cityList.get(position));
+                }else
+                {
+                    signUpModel.setCity_id(cityList.get(position).getId_city());
 
                 }
-
                 binding.setModel(signUpModel);
             }
 
@@ -125,7 +133,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
             }
         });
-
 
         getCities();
     }
@@ -141,12 +148,15 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                     public void onResponse(Call<CityDataModel> call, Response<CityDataModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-
-                            cityList.clear();
-                            cityList.add(getString(R.string.choose));
-                            cityList.addAll(response.body().getData().getCity());
-                            runOnUiThread(() -> cityAdapter.notifyDataSetChanged());
-
+                            if (response.body().getCity().size() > 0) {
+                                cityList.clear();
+                                cityList.add(cityModel);
+                                cityList.addAll(response.body().getCity());
+                                Log.e("data",cityList.size()+"__");
+                                SignUpActivity.this.runOnUiThread(() -> {
+                                    cityAdapter.notifyDataSetChanged();
+                                });
+                            }
                         } else {
                             try {
 
@@ -154,8 +164,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+
                             if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
 
                             } else {
                                 Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();

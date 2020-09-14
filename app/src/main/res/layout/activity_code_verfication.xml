@@ -67,7 +67,7 @@
                 <com.alimuzaffar.lib.pin.PinEntryEditText
                     android:id="@+id/edt_code"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:cursorVisible="false"
                     android:layoutDirection="ltr"
                     android:maxLength="6"

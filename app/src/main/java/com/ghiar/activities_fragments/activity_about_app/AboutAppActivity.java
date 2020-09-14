@@ -17,6 +17,7 @@ import com.ghiar.R;
 import com.ghiar.databinding.ActivityAboutAppBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.SettingModel;
 import com.ghiar.remote.Api;
 import com.ghiar.tags.Tags;
 
@@ -81,21 +82,21 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     private void getAppData()
     {
 
-       /* Api.getService(Tags.base_url)
-                .getSettings(lang)
-                .enqueue(new Callback<AppDataModel>() {
+        Api.getService(Tags.base_url)
+                .getSetting()
+                .enqueue(new Callback<SettingModel>() {
                     @Override
-                    public void onResponse(Call<AppDataModel> call, Response<AppDataModel> response) {
+                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
                         binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
 
                             if (type==1)
                             {
 
-                                binding.setContent(response.body().getTerms_condition());
+                                binding.setContent(response.body().getSetting().getPermission());
                             }else
                             {
-                                binding.setContent(response.body().getCompany_about());
+                                binding.setContent(response.body().getSetting().getPermission());
 
                             }
 
@@ -118,7 +119,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                     }
 
                     @Override
-                    public void onFailure(Call<AppDataModel> call, Throwable t) {
+                    public void onFailure(Call<SettingModel> call, Throwable t) {
                         try {
                             binding.progBar.setVisibility(View.GONE);
 
@@ -134,7 +135,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                         } catch (Exception e) {
                         }
                     }
-                });*/
+                });
 
     }
 
