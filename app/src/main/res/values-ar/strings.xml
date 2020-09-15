@@ -135,5 +135,9 @@
     <string name="payment2">الدفع</string>
     <string name="next">متابعة</string>
     <string name="choose">أختر</string>
+    <string name="subject">الموضوع</string>
+    <string name="message">رسالة</string>
+    <string name="send">ارسال</string>
+    <string name="suc">تم بنجاح</string>
 
 </resources>

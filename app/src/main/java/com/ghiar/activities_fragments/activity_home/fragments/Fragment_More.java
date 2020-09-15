@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_about_app.AboutAppActivity;
+import com.ghiar.activities_fragments.activity_contact_us.ContactUsActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.databinding.FragmentMoreBinding;
 import com.ghiar.interfaces.Listeners;
@@ -80,7 +81,8 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
 
     @Override
     public void contactUs() {
-
+        Intent intent = new Intent(activity, ContactUsActivity.class);
+        startActivity(intent);
     }
 
     @Override

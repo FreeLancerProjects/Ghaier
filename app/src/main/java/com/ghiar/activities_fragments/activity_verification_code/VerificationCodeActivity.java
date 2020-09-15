@@ -192,6 +192,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
+        Log.e("mmmnnss",Tags.base_url+""+phone+phone_code);
         Api.getService(Tags.base_url)
                 .login(phone_code, phone)
                 .enqueue(new Callback<UserModel>() {

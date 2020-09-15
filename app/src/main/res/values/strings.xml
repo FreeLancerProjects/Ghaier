@@ -136,5 +136,9 @@
     <string name="next">Next</string>
     <string name="ch_city">Choose city</string>
     <string name="choose">choose</string>
+    <string name="subject">subject</string>
+    <string name="message">message</string>
+    <string name="send">Send</string>
+    <string name="suc">Success</string>
 
 </resources>

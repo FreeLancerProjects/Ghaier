@@ -37,6 +37,7 @@ import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -86,6 +87,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (userModel != null) {
+
+            Log.e("bbbbbbbb",userModel.getUser().getName()+"");
            // EventBus.getDefault().register(this);
             updateToken();
 
@@ -346,9 +349,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void NavigateToSignInActivity() {
-       /* Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 
     private void updateToken() {
@@ -366,7 +369,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                         if (response.isSuccessful()) {
                                             try {
-                                                userModel.getData().setFireBaseToken(token);
+                                                userModel.getUser().setFireBaseToken(token);
                                                 preferences.create_update_userdata(HomeActivity.this, userModel);
                                                 Log.e("Success", "token updated");
                                             } catch (Exception e) {
@@ -451,46 +454,48 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void Logout() {
-        final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
-        userModel = preferences.getUserData(this);
-        dialog.show();
-        Log.e("mmmmm",userModel.getUser().getId()+userModel.getUser().getFireBaseToken()+"");
-        Api.getService(Tags.base_url)
-                .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        dialog.dismiss();
-                        if (response.isSuccessful()) {
-                            new Handler()
-                                    .postDelayed(() -> {
-                                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                        if (manager != null) {
-                                            manager.cancel(Tags.not_tag, Tags.not_id);
+        if (userModel != null) {
+            final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            userModel = preferences.getUserData(this);
+            dialog.show();
+            Log.e("mmmmm", userModel.getUser().getId() + userModel.getUser().getFireBaseToken() + "");
+            Api.getService(Tags.base_url)
+                    .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful()) {
+                                new Handler()
+                                        .postDelayed(() -> {
+                                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                            if (manager != null) {
+                                                manager.cancel(Tags.not_tag, Tags.not_id);
 
-                                        }
-                                    }, 1);
-                            preferences.create_update_userdata(HomeActivity.this, null);
-                            preferences.create_update_session(HomeActivity.this, Tags.session_logout);
-                            preferences.clear(HomeActivity.this);
-                            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
+                                            }
+                                        }, 1);
+                                preferences.create_update_userdata(HomeActivity.this, null);
+                                preferences.create_update_session(HomeActivity.this, Tags.session_logout);
+                                preferences.clear(HomeActivity.this);
+                                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
 
-                        } else {
-                            try {
-                                Log.e("error", response.code() + "__" + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            } else {
+                                try {
+                                    Log.e("error", response.code() + "__" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+        }
     }
 
 
