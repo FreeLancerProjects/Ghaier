@@ -1,6 +1,7 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_service_center.ServiceCenterActivity;
 import com.ghiar.databinding.ItemServiceBinding;
 import com.ghiar.models.ServiceModel;
 import com.ghiar.preferences.Preferences;
@@ -31,7 +33,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
 
 
-    public ServicesAdapter(List<ServiceModel> list, Context context, Fragment fragment) {
+    public ServicesAdapter(Context context, Fragment fragment) {
         this.list = list;
         this.context = context;
         this.fragment = fragment;
@@ -50,8 +52,14 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
     holder.binding.setService(list.get(position));
     holder.binding.setLang("ar");
-
-        Log.e(TAG,list.get(position).getTitle_ar());
+    holder.binding.image.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ServiceCenterActivity.class);
+            intent.putExtra("serviceId",list.get(position).getId());
+            context.startActivity(intent);
+        }
+    });
 
     }
 
@@ -61,8 +69,9 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
     }
 
     public void setList(List<ServiceModel> list) {
+        this.list.clear();
         this.list = list;
-
+        notifyDataSetChanged();
     }
 
     public class ServiceViewholder extends RecyclerView.ViewHolder {

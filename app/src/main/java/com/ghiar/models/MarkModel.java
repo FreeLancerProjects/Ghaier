@@ -2,11 +2,11 @@ package com.ghiar.models;
 
 import java.util.List;
 
-public class ServiceModel {
+public class MarkModel {
 
     int id;
-    String title_ar, title_en, image, updated_at, created_at;
-    List<ServiceModel> main_services;
+    String title_ar,title_en,image,updated_at,created_at;
+    List<MarkModel> marks;
 
     public int getId() {
         return id;
@@ -56,11 +56,11 @@ public class ServiceModel {
         this.created_at = created_at;
     }
 
-    public List<ServiceModel> getMain_services() {
-        return main_services;
+    public List<MarkModel> getMarks() {
+        return marks;
     }
 
-    public void setMain_services(List<ServiceModel> main_services) {
-        this.main_services = main_services;
+    public void setMarks(List<MarkModel> marks) {
+        this.marks = marks;
     }
 }

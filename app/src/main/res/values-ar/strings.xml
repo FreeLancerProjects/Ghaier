@@ -134,10 +134,13 @@
     <string name="purchases">المشتريات</string>
     <string name="payment2">الدفع</string>
     <string name="next">متابعة</string>
+    <string name="ch_city">اختار المدينة</string>
     <string name="choose">أختر</string>
     <string name="subject">الموضوع</string>
     <string name="message">رسالة</string>
     <string name="send">ارسال</string>
     <string name="suc">تم بنجاح</string>
+    <string name="currency_type">ريال</string>
+    <string name="marks">توكيلات السيارات</string>
 
 </resources>

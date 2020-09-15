@@ -8,6 +8,8 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -17,6 +19,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -30,8 +34,10 @@ import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Reguired;
 import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
+import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
+import com.ghiar.models.MarkModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -52,6 +58,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG = "HomeActivity";
     private ActivityHomeBinding binding;
     private FragmentManager fragmentManager;
     private Preferences preferences;
@@ -62,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment_Profile fragment_profile;
     private Fragment_More fragment_more;
     private ActionBarDrawerToggle toggle;
+    private MarkAdapter markAdapter;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -74,6 +83,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
         if (manager != null) {
             manager.cancel(Tags.not_tag, Tags.not_id);
 
@@ -120,10 +132,37 @@ public class HomeActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this,binding.drawer,binding.toolBar,R.string.open,R.string.close);
         toggle.syncState();
         fragmentManager = getSupportFragmentManager();
+
+        // init marks recyclerview
+        markAdapter = new MarkAdapter(this);
+        binding.recViewModel.setLayoutManager(new LinearLayoutManager(this));
+        getDrawerMarks();
         setUpBottomNavigation();
     }
 
 
+    // get marks data for navigation drawer
+    private void getDrawerMarks(){
+
+        Api.getService(Tags.base_url).getMarks().enqueue(new Callback<MarkModel>() {
+            @Override
+            public void onResponse(Call<MarkModel> call, Response<MarkModel> response) {
+                binding.progBarModel.setVisibility(View.GONE);
+                Log.d(TAG,"Mark Size:"+response.body().getMarks());
+                markAdapter.setList(response.body().getMarks());
+                binding.recViewModel.setAdapter(markAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<MarkModel> call, Throwable t) {
+                binding.progBarModel.setVisibility(View.GONE);
+                Log.d(TAG,t.getMessage());
+
+            }
+        });
+
+
+    }
 
 
     private void setUpBottomNavigation() {

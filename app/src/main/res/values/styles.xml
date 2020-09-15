@@ -14,4 +14,8 @@
         <item name="android:windowExitAnimation">@anim/dialog_congratulation_exit</item>
     </style>
 
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="colorControlActivated">@color/second</item>
+    </style>
+
 </resources>

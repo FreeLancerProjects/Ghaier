@@ -140,5 +140,7 @@
     <string name="message">message</string>
     <string name="send">Send</string>
     <string name="suc">Success</string>
+    <string name="currency_type">pound</string>
+    <string name="marks">Car Marks</string>
 
 </resources>
