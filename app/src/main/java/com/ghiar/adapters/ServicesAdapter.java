@@ -25,41 +25,36 @@ import java.util.List;
 
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServiceViewholder> {
 
-    private static final String TAG = "ServicesAdapter";
-    List<ServiceModel> list = new ArrayList<>();
-    Context context;
-    Fragment fragment;
-    AppCompatActivity activity;
+    private List<ServiceModel> list;
+    private Context context;
 
 
-
-    public ServicesAdapter(Context context, Fragment fragment) {
+    public ServicesAdapter(Context context, List<ServiceModel> list) {
         this.list = list;
         this.context = context;
-        this.fragment = fragment;
 
     }
 
     @NonNull
     @Override
     public ServiceViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemServiceBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.item_service, parent, false);
+        ItemServiceBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_service, parent, false);
         return new ServiceViewholder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ServiceViewholder holder, int position) {
 
-    holder.binding.setService(list.get(position));
-    holder.binding.setLang("ar");
-    holder.binding.image.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, ServiceCenterActivity.class);
-            intent.putExtra("serviceId",list.get(position).getId());
-            context.startActivity(intent);
-        }
-    });
+        holder.binding.setService(list.get(position));
+        holder.binding.setLang("ar");
+        holder.binding.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ServiceCenterActivity.class);
+                intent.putExtra("serviceId", list.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -68,14 +63,10 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         return list.size();
     }
 
-    public void setList(List<ServiceModel> list) {
-        this.list.clear();
-        this.list = list;
-        notifyDataSetChanged();
-    }
 
     public class ServiceViewholder extends RecyclerView.ViewHolder {
         ItemServiceBinding binding;
+
         public ServiceViewholder(@NonNull ItemServiceBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

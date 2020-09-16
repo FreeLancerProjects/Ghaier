@@ -23,21 +23,13 @@ import java.util.List;
 
 public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdapter.ServiceCenterAdapterVH> {
 
-    private static final String TAG = "ServiceCenterAdapter";
-    List<ServiceCenterModel> list = new ArrayList<>();
-    Context context;
-    Fragment fragment;
-    AppCompatActivity activity;
+    private List<ServiceCenterModel> list;
+    private Context context;
 
 
-    public ServiceCenterAdapter(Context context) {
+    public ServiceCenterAdapter(Context context, List<ServiceCenterModel> list) {
         this.context = context;
-    }
-
-    public ServiceCenterAdapter(Context context, Fragment fragment) {
-        this.context = context;
-        this.fragment = fragment;
-
+        this.list = list;
     }
 
     @NonNull
@@ -51,7 +43,7 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
     public void onBindViewHolder(@NonNull ServiceCenterAdapterVH holder, int position) {
 
         holder.binding.setServiceCenter(list.get(position));
-        holder.binding.setLang(Preferences.getInstance().getLanguage(context));
+        holder.binding.setLang("ar");
         holder.binding.ratingBar.setRating(Float.parseFloat(list.get(position).getRate()));
     }
 
@@ -60,11 +52,7 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
         return list.size();
     }
 
-    public void setList(List<ServiceCenterModel> list) {
-        this.list.clear();
-        this.list = list;
-        notifyDataSetChanged();
-    }
+
 
     public class ServiceCenterAdapterVH extends RecyclerView.ViewHolder {
         ItemServiceCenterBinding binding;

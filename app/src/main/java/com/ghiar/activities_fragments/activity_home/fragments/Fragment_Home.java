@@ -64,7 +64,9 @@ public class Fragment_Home extends Fragment {
     private SliderAdapter sliderAdapter;
     private ProductAdapter accessoriesAdapter;
     private ProductAdapter partsAdapter;
-    private List<ProductModel> productModelList = new ArrayList<>();
+    private List<ProductModel> productModelList, productModelsspare;
+    private List<ServiceModel> serviceModelList;
+    private List<SliderModel> sliderModelList, sliderModels;
 
 
     public static Fragment_Home newInstance() {
@@ -85,22 +87,27 @@ public class Fragment_Home extends Fragment {
     }
 
     private void initView() {
+        productModelList = new ArrayList<>();
+        serviceModelList = new ArrayList<>();
+        productModelsspare = new ArrayList<>();
+        sliderModelList = new ArrayList<>();
+        sliderModels = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
 
         //services recyclerview
-        servicesAdapter = new ServicesAdapter(this.getContext(), this);
+        servicesAdapter = new ServicesAdapter(activity, serviceModelList);
         binding.recViewService.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+binding.recViewService.setAdapter(servicesAdapter);
 
         //services recyclerview
-        partsAdapter = new ProductAdapter(this.getContext(), this);
+        partsAdapter = new ProductAdapter(activity, this, productModelsspare);
         binding.recViewSpareParts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+binding.recViewSpareParts.setAdapter(partsAdapter);
         //services recyclerview
-        accessoriesAdapter = new ProductAdapter(this.getContext(), this);
+        accessoriesAdapter = new ProductAdapter(activity, this, productModelList);
         binding.recViewAccessories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+binding.recViewAccessories.setAdapter(accessoriesAdapter);
 
         sliderInit();
 
@@ -114,7 +121,7 @@ public class Fragment_Home extends Fragment {
     //initiate slider ui
     private void sliderInit() {
         //top slider
-        sliderAdapter = new SliderAdapter(this.getContext());
+        sliderAdapter = new SliderAdapter(activity, sliderModelList);
         binding.imageSliderTop.setSliderAdapter(sliderAdapter);
         binding.imageSliderTop.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         binding.imageSliderTop.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -126,7 +133,7 @@ public class Fragment_Home extends Fragment {
         binding.imageSliderTop.startAutoCycle();
 
         //bottom slider
-        sliderAdapter = new SliderAdapter(this.getContext());
+        sliderAdapter = new SliderAdapter(activity, sliderModels);
         binding.imageSliderBottom.setSliderAdapter(sliderAdapter);
         binding.imageSliderBottom.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         binding.imageSliderBottom.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -147,8 +154,35 @@ public class Fragment_Home extends Fragment {
             @Override
             public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
                 binding.progBarService.setVisibility(View.GONE);
-                servicesAdapter.setList(response.body().getMain_services());
-                binding.recViewService.setAdapter(servicesAdapter);
+                if (response.isSuccessful() && response.body() != null && response.body().getMain_services() != null) {
+                    serviceModelList.clear();
+                    serviceModelList.addAll(response.body().getMain_services());
+                    if (response.body().getMain_services().size() > 0) {
+                        // rec_sent.setVisibility(View.VISIBLE);
+                        //  Log.e("data",response.body().getData().get(0).getAr_title());
+
+                        // binding.ll.setVisibility(View.GONE);
+                        servicesAdapter.notifyDataSetChanged();
+                        //   total_page = response.body().getMeta().getLast_page();
+
+                    } else {
+                        servicesAdapter.notifyDataSetChanged();
+
+                        // binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    }
+                } else {
+                    servicesAdapter.notifyDataSetChanged();
+
+                    //  binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
@@ -168,20 +202,17 @@ public class Fragment_Home extends Fragment {
             @Override
             public void onResponse(Call<SliderModel> call, Response<SliderModel> response) {
 
-
-                List<SliderModel> top = response.body().getTop();
-                sliderAdapter.setSliderModelList(top);
-                binding.imageSliderTop.setSliderAdapter(sliderAdapter);
-
-
-                sliderAdapter = new SliderAdapter(getContext());
-                List<SliderModel> bottom = response.body().getBottom();
-                sliderAdapter.setSliderModelList(bottom);
-                binding.imageSliderBottom.setSliderAdapter(sliderAdapter);
+                if (response.code() == 200 && response.body() != null) {
+                    sliderModelList.addAll(response.body().getTop());
+                    sliderAdapter.notifyDataSetChanged();
+                    binding.imageSliderTop.setSliderAdapter(sliderAdapter);
 
 
-                Log.d(TAG, "top list size:" + top.size());
-                Log.d(TAG, "bottom list size:" + bottom.size());
+                    sliderModels.addAll(response.body().getBottom());
+                    sliderAdapter.notifyDataSetChanged();
+                    binding.imageSliderBottom.setSliderAdapter(sliderAdapter);
+                }
+
             }
 
             @Override
@@ -197,10 +228,37 @@ public class Fragment_Home extends Fragment {
         Api.getService(base_url).getParts(1, "off").enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
-                Log.d(TAG, "Parts size: " + response.body().getPart().size());
-                partsAdapter.setList(response.body().getPart());
-                binding.recViewSpareParts.setAdapter(partsAdapter);
                 binding.progBarSpareParts.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().getPart() != null) {
+                    productModelsspare.clear();
+                    productModelsspare.addAll(response.body().getPart());
+                    if (response.body().getPart().size() > 0) {
+                        // rec_sent.setVisibility(View.VISIBLE);
+                        //  Log.e("data",response.body().getData().get(0).getAr_title());
+
+                       // binding.llNoStore.setVisibility(View.GONE);
+                        partsAdapter.notifyDataSetChanged();
+                        //   total_page = response.body().getMeta().getLast_page();
+
+                    } else {
+                        partsAdapter.notifyDataSetChanged();
+
+                      //  binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    }
+                }
+                else {
+                    partsAdapter.notifyDataSetChanged();
+
+                   // binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
 
@@ -217,11 +275,40 @@ public class Fragment_Home extends Fragment {
         Api.getService(base_url).getAccessories(1, "off").enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
-                Log.d(TAG, "Accessories size: " + response.body().getAccessory().size());
-                accessoriesAdapter.setList(response.body().getAccessory());
-                binding.recViewAccessories.setAdapter(accessoriesAdapter);
                 binding.progBarAccessories.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().getAccessory() != null) {
+                    productModelList.clear();
+                    productModelList.addAll(response.body().getAccessory());
+                    if (response.body().getAccessory().size() > 0) {
+                        // rec_sent.setVisibility(View.VISIBLE);
+                        //  Log.e("data",response.body().getData().get(0).getAr_title());
+
+                        // binding.llNoStore.setVisibility(View.GONE);
+                        accessoriesAdapter.notifyDataSetChanged();
+                        //   total_page = response.body().getMeta().getLast_page();
+
+                    } else {
+                        accessoriesAdapter.notifyDataSetChanged();
+
+                        //  binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    }
+                }
+                else {
+                    accessoriesAdapter.notifyDataSetChanged();
+
+                    // binding.llNoStore.setVisibility(View.VISIBLE);
+
+                    //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
+
 
             @Override
             public void onFailure(Call<ProductModel> call, Throwable t) {

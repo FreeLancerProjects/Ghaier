@@ -17,13 +17,13 @@ import java.util.List;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
-    private static final String TAG = "SliderAdapter";
     Context context;
-    List<SliderModel> sliderModelList = new ArrayList<>();
+  private   List<SliderModel> sliderModelList ;
 
 
-    public SliderAdapter(Context context) {
+    public SliderAdapter(Context context,List<SliderModel>sliderModelList) {
         this.context = context;
+        this.sliderModelList=sliderModelList;
     }
 
     @Override
@@ -42,10 +42,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         return sliderModelList.size();
     }
 
-    public void setSliderModelList(List<SliderModel> sliderModelList) {
-        this.sliderModelList = sliderModelList;
-        notifyDataSetChanged();
-    }
 
     ;
 

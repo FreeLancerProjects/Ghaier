@@ -38,6 +38,7 @@ import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.ServiceCenterModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -48,6 +49,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment_More fragment_more;
     private ActionBarDrawerToggle toggle;
     private MarkAdapter markAdapter;
+    private List<MarkModel> markModelList;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -82,14 +85,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
-        if (manager != null) {
-            manager.cancel(Tags.not_tag, Tags.not_id);
-
-        }
+//        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//
+//        if (manager != null) {
+//            manager.cancel(Tags.not_tag, Tags.not_id);
+//
+//        }
         initView();
 
         if (savedInstanceState == null) {
@@ -127,6 +130,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void initView() {
+        markModelList=new ArrayList<>();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         toggle = new ActionBarDrawerToggle(this,binding.drawer,binding.toolBar,R.string.open,R.string.close);
@@ -134,8 +138,9 @@ public class HomeActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         // init marks recyclerview
-        markAdapter = new MarkAdapter(this);
+        markAdapter = new MarkAdapter(this,markModelList);
         binding.recViewModel.setLayoutManager(new LinearLayoutManager(this));
+        binding.recViewModel.setAdapter(markAdapter);
         getDrawerMarks();
         setUpBottomNavigation();
     }
@@ -144,24 +149,66 @@ public class HomeActivity extends AppCompatActivity {
     // get marks data for navigation drawer
     private void getDrawerMarks(){
 
-        Api.getService(Tags.base_url).getMarks().enqueue(new Callback<MarkModel>() {
-            @Override
-            public void onResponse(Call<MarkModel> call, Response<MarkModel> response) {
-                binding.progBarModel.setVisibility(View.GONE);
-                Log.d(TAG,"Mark Size:"+response.body().getMarks());
-                markAdapter.setList(response.body().getMarks());
-                binding.recViewModel.setAdapter(markAdapter);
-            }
+        markModelList.clear();
+        markAdapter.notifyDataSetChanged();
+        binding.progBarModel.setVisibility(View.VISIBLE);
 
-            @Override
-            public void onFailure(Call<MarkModel> call, Throwable t) {
-                binding.progBarModel.setVisibility(View.GONE);
-                Log.d(TAG,t.getMessage());
-
-            }
-        });
+        try {
 
 
+            Api.getService(Tags.base_url)
+                    .getMarks()
+                    .enqueue(new Callback<MarkModel>() {
+                        @Override
+                        public void onResponse(Call<MarkModel> call, Response<MarkModel> response) {
+                            binding.progBarModel.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null && response.body().getMarks() != null) {
+                                markModelList.clear();
+                                markModelList.addAll(response.body().getMarks());
+                                if (response.body().getMarks().size() > 0) {
+                                    // rec_sent.setVisibility(View.VISIBLE);
+                                   //   Log.e("datasssssss",response.body().getMarks().get(0).getTitle_ar());
+
+                                   // binding.flNotification.setVisibility(View.GONE);
+                                    markAdapter.notifyDataSetChanged();
+                                    //   total_page = response.body().getMeta().getLast_page();
+
+                                } else {
+                                    markAdapter.notifyDataSetChanged();
+
+                               //     binding.llNoNotification.setVisibility(View.VISIBLE);
+
+                                }
+                            } else {
+                                markAdapter.notifyDataSetChanged();
+
+                             //   binding.llNoNotification.setVisibility(View.VISIBLE);
+
+                                //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                try {
+                                    Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MarkModel> call, Throwable t) {
+                            try {
+                                binding.progBarModel.setVisibility(View.GONE);
+                                //binding.llNoNotification.setVisibility(View.VISIBLE);
+
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            binding.progBarModel.setVisibility(View.GONE);
+           // binding.ll.setVisibility(View.VISIBLE);
+
+        }
     }
 
 

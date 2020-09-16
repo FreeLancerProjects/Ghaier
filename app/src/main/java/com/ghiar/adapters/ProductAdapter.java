@@ -22,16 +22,15 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductAdapterVH> {
 
-    private static final String TAG = "ProductAdapter";
-    List<ProductModel> list = new ArrayList<>();
-    Context context;
-    Fragment fragment;
-    AppCompatActivity activity;
+   private List<ProductModel> list ;
+   private Context context;
+    private Fragment fragment;
 
 
-    public ProductAdapter(Context context, Fragment fragment) {
+    public ProductAdapter(Context context, Fragment fragment,List<ProductModel> list) {
         this.context = context;
         this.fragment = fragment;
+        this.list=list;
 
     }
 
@@ -50,7 +49,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductA
         holder.binding.ratingBar.setRating((Float.parseFloat(list.get(position).getRate())));
 
 
-        Log.e(TAG, list.get(position).getTitle_ar());
 
     }
 
@@ -59,11 +57,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductA
         return list.size();
     }
 
-    public void setList(List<ProductModel> list) {
-        this.list.clear();
-        this.list = list;
-        notifyDataSetChanged();
-    }
 
     public class ProductAdapterVH extends RecyclerView.ViewHolder {
         ItemProductBinding binding;

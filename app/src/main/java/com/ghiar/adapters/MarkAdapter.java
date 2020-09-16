@@ -20,21 +20,15 @@ import java.util.List;
 
 public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.MarkViewholder> {
 
-    private static final String TAG = "MarkAdapter";
-    List<MarkModel> list = new ArrayList<>();
-    Context context;
-    Fragment fragment;
-    AppCompatActivity activity;
+   private List<MarkModel> list ;
+    private Context context;
 
 
-    public MarkAdapter(Context context) {
-        this.context = context;
-    }
 
-    public MarkAdapter(Context context, Fragment fragment) {
+
+    public MarkAdapter(Context context, List<MarkModel> list) {
         this.list = list;
         this.context = context;
-        this.fragment = fragment;
 
     }
 
@@ -51,7 +45,6 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.MarkViewholder
     holder.binding.setMark(list.get(position));
     holder.binding.setLang("ar");
 
-        Log.e(TAG,list.get(position).getTitle_ar());
 
     }
 
@@ -60,11 +53,7 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.MarkViewholder
         return list.size();
     }
 
-    public void setList(List<MarkModel> list) {
-        this.list.clear();
-        this.list = list;
-        notifyDataSetChanged();
-    }
+
 
     public class MarkViewholder extends RecyclerView.ViewHolder {
         ItemDrawerMarkBinding binding;
