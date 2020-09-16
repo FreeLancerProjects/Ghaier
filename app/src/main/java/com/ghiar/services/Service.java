@@ -1,5 +1,6 @@
 package com.ghiar.services;
 
+import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
 import com.ghiar.models.MarkModel;
 import com.ghiar.models.PlaceGeocodeData;
@@ -52,16 +53,20 @@ public interface Service {
     Call<SliderModel> getHomeSliderData();
 
     @GET("api/get-market-services")
-    Call<ServiceCenterModel> getServiceCenterData(@Query("services_id")int services_id);
+    Call<ServiceCenterModel> getServiceCenterData(@Query("services_id") int services_id);
 
 
     @GET("api/get-accessory")
-    Call<ProductModel> getAccessories(@Query("paginate_num") int paginate_num,
-                                          @Query("paginate") String paginate);
+    Call<ProductModel> getAccessories(
+            @Query("paginate") String paginate);
 
     @GET("api/get-part")
-    Call<ProductModel> getParts(@Query("paginate_num") int paginate_num,
-                                @Query("paginate") String paginate);
+    Call<ProductModel> getParts(
+            @Query("paginate") String paginate);
+
+    @GET("api/get-auctions")
+    Call<AuctionModel> getAuctions(
+            @Query("paginate") String paginate);
 
     @FormUrlEncoded
     @POST("api/login")

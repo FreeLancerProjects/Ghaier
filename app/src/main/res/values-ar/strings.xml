@@ -142,5 +142,11 @@
     <string name="suc">تم بنجاح</string>
     <string name="currency_type">ريال</string>
     <string name="marks">توكيلات السيارات</string>
+    <string name="second">Second</string>
+    <string name="minute">Minute</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="rs">Ryal</string>
+    <string name="untillnow">حتى الان</string>
 
 </resources>

@@ -15,6 +15,10 @@ import com.ghiar.tags.Tags;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GeneralMethod {
@@ -73,7 +77,15 @@ public class GeneralMethod {
         }
 
     }
+    @BindingAdapter({"date"})
+    public static void displayDate (TextView textView,long date)
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E dd MMM yyyy ,HH:mm ", Locale.ENGLISH);
+        String m_date = dateFormat.format(new Date(date*1000));
 
+        textView.setText(String.format(":"+m_date));
+
+    }
 
 }
 

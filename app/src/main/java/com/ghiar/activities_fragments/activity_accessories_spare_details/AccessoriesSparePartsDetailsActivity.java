@@ -17,15 +17,16 @@ import com.ghiar.language.Language;
 
 import io.paperdb.Paper;
 
-public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity implements Listeners.BackListener{
+public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityAccessoriesSparePartsDetailsBinding binding;
     private String lang;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,7 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     }
 
 
-
-
-    private void initView()
-    {
+    private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
         binding.setBackListener(this);

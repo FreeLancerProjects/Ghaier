@@ -142,5 +142,11 @@
     <string name="suc">Success</string>
     <string name="currency_type">pound</string>
     <string name="marks">Car Marks</string>
+    <string name="second">Second</string>
+    <string name="minute">Minute</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="rs">Ryal</string>
+    <string name="untillnow">Untill Now</string>
 
 </resources>

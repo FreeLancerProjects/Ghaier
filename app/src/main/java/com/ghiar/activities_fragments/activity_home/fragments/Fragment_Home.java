@@ -225,7 +225,7 @@ binding.recViewAccessories.setAdapter(accessoriesAdapter);
 
 
     private void getParts() {
-        Api.getService(base_url).getParts(1, "off").enqueue(new Callback<ProductModel>() {
+        Api.getService(base_url).getParts("off").enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                 binding.progBarSpareParts.setVisibility(View.GONE);
@@ -272,7 +272,7 @@ binding.recViewAccessories.setAdapter(accessoriesAdapter);
     }
 
     private void getAccessories() {
-        Api.getService(base_url).getAccessories(1, "off").enqueue(new Callback<ProductModel>() {
+        Api.getService(base_url).getAccessories( "off").enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                 binding.progBarAccessories.setVisibility(View.GONE);
