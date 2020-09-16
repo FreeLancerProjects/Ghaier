@@ -45,7 +45,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.MarkView
     public void onBindViewHolder(@NonNull MarkViewholder holder, int position) {
 
         holder.binding.setAuctionmodel(list.get(position));
-        holder.binding.setLang("en");
+        holder.binding.setLang("ar");
         long enddate = Long.parseLong(list.get(position).getEnd_date()) * 1000;
         long date = System.currentTimeMillis();
         long diffrent = (enddate - date);
