@@ -148,5 +148,6 @@
     <string name="day">Day</string>
     <string name="rs">Ryal</string>
     <string name="untillnow">حتى الان</string>
+    <string name="service_or_product_or_accessory">service or product or accessory</string>
 
 </resources>

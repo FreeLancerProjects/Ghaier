@@ -3,6 +3,7 @@ package com.ghiar.services;
 import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.ModelModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ProductModel;
@@ -48,6 +49,9 @@ public interface Service {
 
     @GET("api/get-mark")
     Call<MarkModel> getMarks();
+
+    @GET("api/get-model")
+    Call<ModelModel> getModels();
 
     @GET("api/slider")
     Call<SliderModel> getHomeSliderData();
@@ -109,4 +113,30 @@ public interface Service {
                                    @Field("message") String message
 
     );
+
+    @Multipart
+    @POST("api/add-advertisement")
+    Call<ResponseBody> addWanted(@Part("user_id") RequestBody user_id,
+                              @Part("title_ar") RequestBody title_ar,
+                              @Part("title_en") RequestBody title_en,
+                              @Part("model_id") RequestBody model_id,
+                              @Part("mark_id") RequestBody mark_id,
+                              @Part("amount") RequestBody amount,
+                              @Part("status") RequestBody status,
+                              @Part("type") RequestBody type,
+                              @Part MultipartBody.Part image
+    );
+
+    @Multipart
+    @POST("api/add-advertisement")
+    Call<ResponseBody> addWantedWithOutImage(@Part("user_id") RequestBody user_id,
+                                 @Part("title_ar") RequestBody title_ar,
+                                 @Part("title_en") RequestBody title_en,
+                                 @Part("model_id") RequestBody model_id,
+                                 @Part("mark_id") RequestBody mark_id,
+                                 @Part("amount") RequestBody amount,
+                                 @Part("status") RequestBody status,
+                                 @Part("type") RequestBody type
+    );
+
 }

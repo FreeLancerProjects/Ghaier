@@ -3,12 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:segmentedgroup="http://schemas.android.com/tools">
 
+    <data>
+
+
+        <variable
+            name="listener"
+            type="com.ghiar.interfaces.Listeners.AddRequiredListener" />
+
+        <variable
+            name="lang"
+            type="String" />
+
+
+        <variable
+            name="model"
+            type="com.ghiar.models.AddWantedModel" />
+
+        <variable
+            name="marksmodel"
+            type="com.ghiar.models.MarkModel" />
+        <variable
+            name="modelsmodel"
+            type="com.ghiar.models.ModelModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray0">
 
+<!--
         <FrameLayout
             android:id="@+id/f1"
             android:layout_width="match_parent"
@@ -28,6 +53,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/logowhite" />
         </FrameLayout>
+-->
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -79,6 +105,7 @@
                         android:background="@color/white"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:text="@{model.title_ar}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -123,6 +150,7 @@
                         android:background="@color/white"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:text="@{model.title_en}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -139,7 +167,7 @@
                     android:layout_marginRight="15dp"
 
                     android:singleLine="true"
-                    android:text="@string/service_or_product"
+                    android:text="@string/service_or_product_or_accessory"
                     android:textColor="@color/register"
                     android:textSize="17sp"
 
@@ -158,7 +186,7 @@
 
 
                     <Spinner
-                        android:id="@+id/spinnercity"
+                        android:id="@+id/spinnertype"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_gravity="center_vertical"
@@ -170,44 +198,44 @@
 
                 </FrameLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="15dp"
-
-                    android:singleLine="true"
-                    android:text="@string/services"
-                    android:textColor="@color/register"
-                    android:textSize="17sp"
-
-                    />
-
-                <FrameLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="3dp"
-                    android:background="@drawable/edtsmall_rounded_whiteshape"
-                    android:padding="5dp"
-
-
-                    >
-
-
-                    <Spinner
+                <!--    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="37dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="15dp"
+
+                        android:singleLine="true"
+                        android:text="@string/services"
+                        android:textColor="@color/register"
+                        android:textSize="17sp"
 
                         />
 
+                    <FrameLayout
 
-                </FrameLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/edtsmall_rounded_whiteshape"
+                        android:padding="5dp"
+
+
+                        >
+
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="37dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+
+                            />
+
+
+                    </FrameLayout>-->
 
                 <TextView
                     android:layout_width="match_parent"
@@ -237,6 +265,7 @@
 
 
                     <Spinner
+                        android:id="@+id/spinnerModel"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_gravity="center_vertical"
@@ -280,8 +309,10 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
+                        android:inputType="number"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:text="@{model.amount}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -317,6 +348,7 @@
 
 
                     <Spinner
+                        android:id="@+id/spinner_marks"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_gravity="center_vertical"
@@ -332,9 +364,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:onClick="@{()->listener.checkCameraPermission()}"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="5dp"
+
                     app:contentPadding="8dp">
 
                     <FrameLayout
@@ -424,6 +458,7 @@
                         android:text="@string/used"
                         android:textColor="@color/white" />
                 </RadioGroup>
+
                 <Button
                     android:id="@+id/btnSend"
                     android:layout_width="wrap_content"
@@ -432,6 +467,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/small_rounded_second"
+                    android:onClick="@{()->listener.checkDataValid()}"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
                     android:text="@string/add"
@@ -443,6 +479,7 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

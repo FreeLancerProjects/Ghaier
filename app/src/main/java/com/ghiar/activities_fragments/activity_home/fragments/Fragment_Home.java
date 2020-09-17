@@ -98,16 +98,16 @@ public class Fragment_Home extends Fragment {
         //services recyclerview
         servicesAdapter = new ServicesAdapter(activity, serviceModelList);
         binding.recViewService.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-binding.recViewService.setAdapter(servicesAdapter);
+        binding.recViewService.setAdapter(servicesAdapter);
 
         //services recyclerview
         partsAdapter = new ProductAdapter(activity, this, productModelsspare);
         binding.recViewSpareParts.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-binding.recViewSpareParts.setAdapter(partsAdapter);
+        binding.recViewSpareParts.setAdapter(partsAdapter);
         //services recyclerview
         accessoriesAdapter = new ProductAdapter(activity, this, productModelList);
         binding.recViewAccessories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-binding.recViewAccessories.setAdapter(accessoriesAdapter);
+        binding.recViewAccessories.setAdapter(accessoriesAdapter);
 
         sliderInit();
 
@@ -236,21 +236,20 @@ binding.recViewAccessories.setAdapter(accessoriesAdapter);
                         // rec_sent.setVisibility(View.VISIBLE);
                         //  Log.e("data",response.body().getData().get(0).getAr_title());
 
-                       // binding.llNoStore.setVisibility(View.GONE);
+                        // binding.llNoStore.setVisibility(View.GONE);
                         partsAdapter.notifyDataSetChanged();
                         //   total_page = response.body().getMeta().getLast_page();
 
                     } else {
                         partsAdapter.notifyDataSetChanged();
 
-                      //  binding.llNoStore.setVisibility(View.VISIBLE);
+                        //  binding.llNoStore.setVisibility(View.VISIBLE);
 
                     }
-                }
-                else {
+                } else {
                     partsAdapter.notifyDataSetChanged();
 
-                   // binding.llNoStore.setVisibility(View.VISIBLE);
+                    // binding.llNoStore.setVisibility(View.VISIBLE);
 
                     //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                     try {
@@ -272,7 +271,7 @@ binding.recViewAccessories.setAdapter(accessoriesAdapter);
     }
 
     private void getAccessories() {
-        Api.getService(base_url).getAccessories( "off").enqueue(new Callback<ProductModel>() {
+        Api.getService(base_url).getAccessories("off").enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                 binding.progBarAccessories.setVisibility(View.GONE);
@@ -293,8 +292,7 @@ binding.recViewAccessories.setAdapter(accessoriesAdapter);
                         //  binding.llNoStore.setVisibility(View.VISIBLE);
 
                     }
-                }
-                else {
+                } else {
                     accessoriesAdapter.notifyDataSetChanged();
 
                     // binding.llNoStore.setVisibility(View.VISIBLE);

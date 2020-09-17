@@ -26,4 +26,8 @@
     <color name="red">#920a0c</color>
     <color name="color_primary_trans">#553A506B</color>
     <color name="color_gray_trans">#55e0e0e0</color>
+
+    <color name="black_trans">#55000000</color>
+    <color name="color5">#38c1d0</color>
+    <color name="color1">#ec85a0</color>
 </resources>

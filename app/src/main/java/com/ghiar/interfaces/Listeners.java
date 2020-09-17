@@ -57,6 +57,14 @@ public interface Listeners {
 
     }
 
+    interface AddRequiredListener{
+
+        void openSheet();
+        void closeSheet();
+        void checkDataValid();
+        void checkReadPermission();
+        void checkCameraPermission();
+    }
 
 
 
