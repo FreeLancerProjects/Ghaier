@@ -23,7 +23,7 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
     private String lang;
 
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
 
 
     @Override

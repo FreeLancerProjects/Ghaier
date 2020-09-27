@@ -115,7 +115,7 @@ public interface Service {
     );
 
     @Multipart
-    @POST("api/add-advertisement")
+    @POST("api/add-wanted")
     Call<ResponseBody> addWanted(@Part("user_id") RequestBody user_id,
                               @Part("title_ar") RequestBody title_ar,
                               @Part("title_en") RequestBody title_en,
@@ -128,7 +128,7 @@ public interface Service {
     );
 
     @Multipart
-    @POST("api/add-advertisement")
+    @POST("api/add-wanted")
     Call<ResponseBody> addWantedWithOutImage(@Part("user_id") RequestBody user_id,
                                  @Part("title_ar") RequestBody title_ar,
                                  @Part("title_en") RequestBody title_en,

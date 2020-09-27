@@ -47,7 +47,7 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
     // private List<NotificationDataModel.NotificationModel> notificationModelList;
     //private NotificationAdapter adapter;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private ServiceCenterAdapter serviceCenterAdapter;
     private List<ServiceCenterModel> serviceCenterModelList;
     private int serviceId;

@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private FragmentManager fragmentManager;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private Fragment_Home fragment_home;
     private Fragment_Auction fragment_auction;
     private Fragment_Reguired fragment_reguired;
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (userModel != null) {
 
-            Log.e("bbbbbbbb",userModel.getUser().getName()+"");
+            Log.e("bbbbbbbb",userModel.getName()+"");
            // EventBus.getDefault().register(this);
             updateToken();
 
@@ -504,49 +504,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void onBackPressed() {
-
-        if (binding.drawer.isDrawerOpen(GravityCompat.START)){
-            binding.drawer.closeDrawer(GravityCompat.START);
-        }else {
-            if (userModel != null) {
-                if (EventBus.getDefault().isRegistered(this)) {
-                    EventBus.getDefault().unregister(this);
-                }
-
-            /*if (fragment_home != null && fragment_home.isAdded() && fragment_home.isVisible()) {
-                finish();
-            } else {
-                displayFragmentMain();
-
-
-            }*/
-
-            } else {
-
-            /*if (fragment_home != null && fragment_home.isAdded() && fragment_home.isVisible()) {
-                NavigateToSignInActivity();
-            } else {
-                displayFragmentMain();
-
-
-            }*/
-            }
-        }
-
-    }
-
-
     public void Logout() {
         if (userModel != null) {
             final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
             userModel = preferences.getUserData(this);
             dialog.show();
-            Log.e("mmmmm", userModel.getUser().getId() + userModel.getUser().getFireBaseToken() + "");
+            Log.e("mmmmm", userModel.getId() + userModel.getFireBaseToken() + "");
             Api.getService(Tags.base_url)
-                    .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
+                    .logout(userModel.getId(), userModel.getFireBaseToken())
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -594,6 +559,25 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        if (fragment_home != null && fragment_home.isAdded() && fragment_home.isVisible()) {
+            if (userModel==null)
+            {
+                navigateToSignInActivity();
+            }else
+            {
+                finish();
+            }
+        } else {
+            displayFragmentHome();
+        }
+    }
+
+    private void navigateToSignInActivity() {
+        Intent intent =new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

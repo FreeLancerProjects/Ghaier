@@ -44,7 +44,7 @@ public class Fragment_Auction extends Fragment {
     private HomeActivity activity;
     private FragmentAuctionBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private String lang;
     private List<SingleAuctionModel> singleAuctionModelList;
     private AuctionAdapter auctionAdapter;

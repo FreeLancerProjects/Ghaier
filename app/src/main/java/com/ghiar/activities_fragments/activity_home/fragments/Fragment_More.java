@@ -40,7 +40,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
     private HomeActivity activity;
     private FragmentMoreBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private String lang;
 
 

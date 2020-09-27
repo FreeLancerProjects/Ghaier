@@ -15,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -64,7 +67,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     private HomeActivity activity;
     private FragmentRequiredBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private AddWantedModel addWantedModel;
     private String lang;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -78,7 +81,6 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     private List<MarkModel> markModelList;
     private MarksAdapter marksAdapter;
     private MarkModel markModel;
-
     private List<ModelModel> modelModelList;
     private ModelsAdapter modelsAdapter;
     private ModelModel modelModel;
@@ -99,6 +101,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     private void initView() {
         markModelList = new ArrayList<>();
         modelModelList = new ArrayList<>();
+        addWantedModel=new AddWantedModel();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         Paper.init(activity);
@@ -110,13 +113,13 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         markModel.setId(0);
         markModel.setTitle_ar(getString(R.string.choose));
         markModelList.add(markModel);
-
         modelsAdapter = new ModelsAdapter(modelModelList, activity);
         binding.spinnerModel.setAdapter(modelsAdapter);
         modelModel = new ModelModel();
         modelModel.setId(0);
         modelModel.setTitle_ar(getString(R.string.choose));
         modelModelList.add(modelModel);
+
 
         binding.spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,6 +158,20 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         });
         getMarks();
         getModels();
+        binding.btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("bbbb","  "+userModel.getId());
+                checkDataValid();
+            }
+        });
+
+        binding.imageFill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateImageAlertDialog(IMG_REQ1);
+            }
+        });
     }
 
     private void getMarks() {
@@ -285,7 +302,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
         RequestBody title_ar_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_ar()));
         RequestBody title_en_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_en()));
-        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getUser().getId()));
+        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getId()));
         RequestBody model_id_part = Common.getRequestBodyText(addWantedModel.getModel_id());
         RequestBody mark_id_part = Common.getRequestBodyText(addWantedModel.getMark_id());
         RequestBody status_part = Common.getRequestBodyText(addWantedModel.getStatus());
@@ -339,21 +356,23 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                 });
     }
 
-    private void addAdswithoutImage() {
+    private void addًWantedswithoutImage() {
 
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         RequestBody title_ar_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_ar()));
         RequestBody title_en_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_en()));
-        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getUser().getId()));
+        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getId()));
         RequestBody model_id_part = Common.getRequestBodyText(addWantedModel.getModel_id());
         RequestBody mark_id_part = Common.getRequestBodyText(addWantedModel.getMark_id());
         RequestBody status_part = Common.getRequestBodyText(addWantedModel.getStatus());
         RequestBody amount_part = Common.getRequestBodyText(addWantedModel.getAmount());
         RequestBody type_part = Common.getRequestBodyText(addWantedModel.getType());
+
+        Log.e("ccccc",addWantedModel.getTitle_ar()+" " +addWantedModel.getTitle_en()+" "+ userModel.getId()+ " "+ addWantedModel.getModel_id()+" "+  " "+model_id_part+" " +status_part+" "+ amount_part+" "+type_part);
         Api.getService(Tags.base_url)
-                .addWantedWithOutImage(title_ar_part, title_en_part, user_id_part, model_id_part, mark_id_part, amount_part, status_part, type_part)
+                .addWantedWithOutImage(user_id_part,title_ar_part, title_en_part, model_id_part, mark_id_part, amount_part, status_part, type_part)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -399,27 +418,243 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
 
     @Override
-    public void openSheet() {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+       if (requestCode == READ_REQ && resultCode == Activity.RESULT_OK && data != null) {
+
+            uri = data.getData();
+            if (uri != null) {
+                Log.e("uri", uri + "_");
+                addWantedModel.setImage(uri);
+                String path = Common.getImagePath(activity, uri);
+                if (path != null) {
+                    Log.e("path", path + "__");
+
+                    Picasso.get().load(new File(path)).fit().into(binding.imageFill);
+
+                } else {
+                    Picasso.get().load(uri).fit().into(binding.imageFill);
+
+                }
+                binding.image.setVisibility(View.GONE);
+            }
+
+
+        } else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
+
+            binding.image.setVisibility(View.GONE);
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            uri = getUriFromBitmap(bitmap);
+            if (uri != null) {
+                String path = Common.getImagePath(activity, uri);
+
+                if (path != null) {
+                    Picasso.get().load(new File(path)).fit().into(binding.imageFill);
+
+                } else {
+                    Picasso.get().load(uri).fit().into(binding.imageFill);
+
+                }
+            }
+
+
+        }
+
+
+
+
+    }
+
+
+    private void SelectImage(int req) {
+
+        Intent intent = new Intent();
+
+        if (req == READ_REQ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            } else {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            }
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+            startActivityForResult(intent, req);
+
+        } else if (req == CAMERA_REQ) {
+            try {
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, req);
+            } catch (SecurityException e) {
+                Toast.makeText(activity, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(activity, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
+    private Uri getUriFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        return Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, "", ""));
+    }
+
+
+    @Override
+    public void openSheet() {
+        binding.expandLayout.setExpanded(true, true);
     }
 
     @Override
     public void closeSheet() {
+        binding.expandLayout.collapse(true);
 
     }
-
     @Override
     public void checkDataValid() {
+       addWantedModel.setType(String.valueOf(binding.spinnertype.getSelectedItem()));
+        if (binding.rbChoose1.isChecked()) {
+            addWantedModel.setStatus("new");
+        } else if (binding.rbChoose2.isChecked()) {
+            addWantedModel.setStatus("old");
 
+        }
+        binding.setModel(addWantedModel);
+        if (!addWantedModel.isDataValid(activity)) {
+            Log.e("kkkkkk","5555");
+            if (imgUri1 != null) {
+                addWanted();
+            } else {
+                addًWantedswithoutImage();
+            }
+        }
     }
 
     @Override
     public void checkReadPermission() {
-
+        closeSheet();
+        if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, READ_REQ);
+        } else {
+            SelectImage(READ_REQ);
+        }
     }
 
     @Override
     public void checkCameraPermission() {
 
+        closeSheet();
+
+        if (ContextCompat.checkSelfPermission(activity, write_permission) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(activity, camera_permission) == PackageManager.PERMISSION_GRANTED
+        ) {
+            SelectImage(CAMERA_REQ);
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{camera_permission, write_permission}, CAMERA_REQ);
+        }
     }
+
+    private void CreateImageAlertDialog(final int img_req) {
+
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setCancelable(true)
+                .create();
+
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_select_image, null);
+        Button btn_camera = view.findViewById(R.id.btn_camera);
+        Button btn_gallery = view.findViewById(R.id.btn_gallery);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+
+
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                selectedType = 2;
+                Check_CameraPermission(img_req);
+
+            }
+        });
+
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                selectedType = 1;
+                CheckReadPermission(img_req);
+
+
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void CheckReadPermission(int img_req) {
+        if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, img_req);
+        } else {
+            SelectImage(1, img_req);
+        }
+    }
+
+    private void Check_CameraPermission(int img_req) {
+        if (ContextCompat.checkSelfPermission(activity, camera_permission) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, write_permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{camera_permission, write_permission}, img_req);
+        } else {
+            SelectImage(2, img_req);
+
+        }
+
+    }
+
+    private void SelectImage(int type, int img_req) {
+
+        Intent intent = new Intent();
+
+        if (type == 1) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            } else {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            }
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+            startActivityForResult(intent, img_req);
+
+        } else if (type == 2) {
+            try {
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, img_req);
+            } catch (SecurityException e) {
+                Toast.makeText(activity, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(activity, R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
 }

@@ -26,7 +26,7 @@ public class Fragment_Spare_Parts  extends Fragment {
     private ModelDetailsActivity activity;
     private FragmentSpareAccessoriesBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private String lang;
 
 

@@ -185,8 +185,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
     }
 
     private void login() {
-
-
+        
 //        navigateToSignUpActivity();
 //      /*  Log.e("3","3");
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));

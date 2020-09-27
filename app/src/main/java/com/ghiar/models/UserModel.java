@@ -29,19 +29,18 @@ public class UserModel implements Serializable {
         private String address;
         private String user_type;
         private String details;
-        private List<Stage> stage_fk;
 
         private String fireBaseToken;
 
         public User() {
         }
 
-        public User(int id, String name, String phone_code, String phone, String logo, String token) {
+        public User(int id, String name, String phone_code, String phone, String image, String token) {
             this.id = id;
             this.name = name;
             this.phone_code = phone_code;
             this.phone = phone;
-            this.logo = logo;
+            this.image = image;
         }
 
         public int getId() {
@@ -103,42 +102,9 @@ public class UserModel implements Serializable {
             return details;
         }
 
-        public List<Stage> getStage_fk() {
-            return stage_fk;
-        }
 
 
 
-        public static class Stage implements Serializable {
-            private int id;
-            private int stage_id;
-            private StageClassName stage_class_name;
-
-            public int getId() {
-                return id;
-            }
-
-            public int getStage_id() {
-                return stage_id;
-            }
-
-            public StageClassName getStage_class_name() {
-                return stage_class_name;
-            }
-
-            public class StageClassName implements Serializable {
-                private int id;
-                private String title;
-
-                public int getId() {
-                    return id;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-            }
-        }
 
     }
 }

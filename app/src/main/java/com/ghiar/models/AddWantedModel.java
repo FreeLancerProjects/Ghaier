@@ -20,8 +20,6 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     private Uri image;
     private String title_ar;
     private String title_en;
-    private String details_ar;
-    private String details_en;
     private String model_id;
     private String mark_id;
     private String amount;
@@ -29,23 +27,18 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     private String type;
     public ObservableField<String> error_title_ar = new ObservableField<>();
     public ObservableField<String> error_title_en = new ObservableField<>();
-    public ObservableField<String> error_details_ar = new ObservableField<>();
-    public ObservableField<String> error_details_en = new ObservableField<>();
 
 
     public boolean isDataValid(Context context) {
 
 
         if (!title_ar.isEmpty() &&
-                !title_en.isEmpty() &&
-                !details_ar.isEmpty() &&
-                !details_en.isEmpty()
+                !title_en.isEmpty()
 
         ) {
             error_title_ar.set(null);
             error_title_en.set(null);
-            error_details_ar.set(null);
-            error_details_en.set(null);
+
 
             return true;
         } else {
@@ -62,16 +55,6 @@ public class AddWantedModel extends BaseObservable implements Serializable {
                 error_title_en.set(null);
             }
 
-            if (details_ar.isEmpty()) {
-                error_details_ar.set(context.getString(R.string.field_required));
-            }else {
-                error_details_ar.set(null);
-            }
-            if (details_en.isEmpty()) {
-                error_details_en.set(context.getString(R.string.field_required));
-            }else {
-                error_details_en.set(null);
-            }
 
 
             return false;
@@ -81,8 +64,6 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public AddWantedModel(){
         setTitle_ar("");
         setTitle_en("");
-        setDetails_ar("");
-        setDetails_en("");
         setAmount("");
         setImage(null);
         setStatus("");
@@ -116,21 +97,6 @@ public class AddWantedModel extends BaseObservable implements Serializable {
         this.title_en = title_en;
     }
 
-    public String getDetails_ar() {
-        return details_ar;
-    }
-
-    public void setDetails_ar(String details_ar) {
-        this.details_ar = details_ar;
-    }
-
-    public String getDetails_en() {
-        return details_en;
-    }
-
-    public void setDetails_en(String details_en) {
-        this.details_en = details_en;
-    }
 
     public String getModel_id() {
         return model_id;

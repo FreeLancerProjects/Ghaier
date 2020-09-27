@@ -46,7 +46,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
    // private List<NotificationDataModel.NotificationModel> notificationModelList;
     //private NotificationAdapter adapter;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private int current_page=1;
     private boolean isLoading=false;
     private boolean isFromFirebase = false;

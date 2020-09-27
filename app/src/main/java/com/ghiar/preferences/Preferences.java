@@ -43,11 +43,11 @@ public class Preferences {
 
     }
 
-    public UserModel getUserData(Context context) {
+    public UserModel.User getUserData(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user_data = preferences.getString("user_data", "");
-        UserModel userModel = gson.fromJson(user_data, UserModel.class);
+        UserModel.User userModel = gson.fromJson(user_data, UserModel.User.class);
         return userModel;
     }
     public void create_update_session(Context context, String session) {

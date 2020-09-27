@@ -58,7 +58,7 @@ public class Fragment_Home extends Fragment {
     private HomeActivity activity;
     private FragmentHomeBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private String lang;
     private ServicesAdapter servicesAdapter;
     private SliderAdapter sliderAdapter;

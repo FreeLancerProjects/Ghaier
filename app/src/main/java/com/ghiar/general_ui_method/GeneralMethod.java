@@ -36,6 +36,26 @@ public class GeneralMethod {
         }
     }
 
+    @BindingAdapter("imageProfile")
+    public static void displayImageProfile(View view ,String imageEndPoint)
+    {
+        String path = Tags.IMAGE_URL+imageEndPoint;
+        if (view instanceof CircleImageView)
+        {
+            CircleImageView imageView = (CircleImageView) view;
+            Picasso.get().load(Uri.parse(path)).placeholder(R.drawable.ic_avatar).into(imageView);
+        }else if (view instanceof RoundedImageView)
+        {
+            RoundedImageView imageView = (RoundedImageView) view;
+            Picasso.get().load(Uri.parse(path)).placeholder(R.drawable.ic_avatar).into(imageView);
+        }else if (view instanceof ImageView)
+        {
+
+            ImageView imageView = (ImageView) view;
+            Picasso.get().load(Uri.parse(path)).placeholder(R.drawable.ic_avatar).into(imageView);
+        }
+    }
+
 
 
 

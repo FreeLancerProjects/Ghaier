@@ -142,12 +142,18 @@
     <string name="suc">تم بنجاح</string>
     <string name="currency_type">ريال</string>
     <string name="marks">توكيلات السيارات</string>
-    <string name="second">Second</string>
-    <string name="minute">Minute</string>
-    <string name="hour">Hour</string>
-    <string name="day">Day</string>
-    <string name="rs">Ryal</string>
+    <string name="second">ثانية</string>
+    <string name="minute">دقيقة</string>
+    <string name="hour">ساعه</string>
+    <string name="day">يوم</string>
+    <string name="rs">ر.س</string>
     <string name="untillnow">حتى الان</string>
-    <string name="service_or_product_or_accessory">service or product or accessory</string>
+    <string name="service_or_product_or_accessory">النوع</string>
+
+    <string-array name="type_arrays">
+        <item>خدمة</item>
+        <item>قطعة غيار</item>
+        <item>أكسسوارات</item>
+    </string-array>
 
 </resources>

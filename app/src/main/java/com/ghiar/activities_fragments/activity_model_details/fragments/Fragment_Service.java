@@ -24,7 +24,7 @@ public class Fragment_Service extends Fragment {
     private ModelDetailsActivity activity;
     private FragmentServicesBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
     private String lang;
 
 

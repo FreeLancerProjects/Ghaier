@@ -26,7 +26,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
     private String lang;
 
     private Preferences preferences;
-    private UserModel userModel;
+    private UserModel.User userModel;
 
 
     @Override
