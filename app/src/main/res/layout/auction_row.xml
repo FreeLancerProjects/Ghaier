@@ -324,5 +324,25 @@
                 tools:ignore="RtlCompat" />
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray5"
+            />
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/small_rounded_second"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="@string/bid_now"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+
+            />
     </LinearLayout>
 </layout>

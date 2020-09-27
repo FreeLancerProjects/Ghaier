@@ -149,6 +149,8 @@
     <string name="rs">ر.س</string>
     <string name="untillnow">حتى الان</string>
     <string name="service_or_product_or_accessory">النوع</string>
+    <string name="bid_now">Bid now</string>
+    <string name="price">Price</string>
 
     <string-array name="type_arrays">
         <item>خدمة</item>

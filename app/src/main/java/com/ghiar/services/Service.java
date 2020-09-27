@@ -103,7 +103,15 @@ public interface Service {
 
 
     );
+    @FormUrlEncoded
+    @POST("api/auction-action")
+    Call<ResponseBody> sendAuction(
+            @Field("price") String price,
+            @Field("auction_id") String auction_id,
+            @Field("value") String value
 
+
+    );
 
     @FormUrlEncoded
     @POST("api/contact-us")

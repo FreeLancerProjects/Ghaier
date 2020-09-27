@@ -149,6 +149,8 @@
     <string name="rs">Ryal</string>
     <string name="untillnow">Untill Now</string>
     <string name="service_or_product_or_accessory">service or product or accessory</string>
+    <string name="bid_now">Bid now</string>
+    <string name="price">Price</string>
     <string-array name="type_arrays">
         <item>service</item>
         <item>product</item>

@@ -3,13 +3,16 @@ package com.ghiar.adapters;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Auction;
 import com.ghiar.databinding.AuctionRowBinding;
 import com.ghiar.databinding.ItemDrawerMarkBinding;
 import com.ghiar.models.MarkModel;
@@ -26,12 +29,12 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.MarkView
 
     private List<SingleAuctionModel> list;
     private Context context;
+    private Fragment fragment;
 
-
-    public AuctionAdapter(Context context, List<SingleAuctionModel> list) {
+    public AuctionAdapter(Context context, List<SingleAuctionModel> list, Fragment fragment) {
         this.list = list;
         this.context = context;
-
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -75,7 +78,15 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.MarkView
             }
         };
         cdt.start();
-
+        holder.binding.btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fragment instanceof Fragment_Auction) {
+                    Fragment_Auction fragment_auction = (Fragment_Auction) fragment;
+                    fragment_auction.CreateDialogAlert(context, holder.getLayoutPosition());
+                }
+            }
+        });
     }
 
     @Override
