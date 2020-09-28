@@ -23,12 +23,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="m"
-        >
-        <activity android:name=".activities_fragments.activity_contact_us.ContactUsActivity"
+        tools:targetApi="m">
+        <activity
+            android:name=".activities_fragments.activity_contact_us.ContactUsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities_fragments.activity_model_details.ModelDetailsActivity"
+        <activity
+            android:name=".activities_fragments.activity_model_details.ModelDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -49,7 +50,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
             android:name=".activities_fragments.activity_signup.SignUpActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" >
+            android:configChanges="keyboardHidden|screenSize|orientation">
 
         </activity>
 
@@ -70,8 +71,7 @@
         <activity
             android:name=".activities_fragments.activity_map.MapActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities_fragments.activity_home.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -81,7 +81,7 @@
         <activity
             android:name=".activities_fragments.activity_about_app.AboutAppActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity android:name=".activities_fragments.activity_splash.SplashActivity" >
+        <activity android:name=".activities_fragments.activity_splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -96,6 +96,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

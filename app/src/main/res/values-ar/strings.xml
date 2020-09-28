@@ -151,6 +151,8 @@
     <string name="service_or_product_or_accessory">النوع</string>
     <string name="bid_now">Bid now</string>
     <string name="price">Price</string>
+    <string name="bidit">مزايدة حتى الان</string>
+    <string name="r_s">R.s</string>
 
     <string-array name="type_arrays">
         <item>خدمة</item>

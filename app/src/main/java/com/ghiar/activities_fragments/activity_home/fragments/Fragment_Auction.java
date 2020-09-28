@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_addauction.AddAuctionActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
 import com.ghiar.adapters.AuctionAdapter;
 import com.ghiar.databinding.DialogAddPriceBinding;
 import com.ghiar.databinding.DialogAlertBinding;
@@ -218,5 +219,11 @@ public class Fragment_Auction extends Fragment {
         } catch (Exception e) {
 
         }
+    }
+
+    public void show(int layoutPosition) {
+        Intent intent = new Intent(activity, AuctionDetialsActivity.class);
+        intent.putExtra("search", singleAuctionModelList.get(layoutPosition).getId() + "");
+        startActivity(intent);
     }
 }

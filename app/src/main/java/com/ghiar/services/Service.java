@@ -9,6 +9,7 @@ import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ProductModel;
 import com.ghiar.models.ServiceCenterModel;
 import com.ghiar.models.ServiceModel;
+import com.ghiar.models.SingleAuctionModel;
 import com.ghiar.models.SliderModel;
 import com.ghiar.models.SettingModel;
 import com.ghiar.models.UserModel;
@@ -103,6 +104,7 @@ public interface Service {
 
 
     );
+
     @FormUrlEncoded
     @POST("api/auction-action")
     Call<ResponseBody> sendAuction(
@@ -125,26 +127,32 @@ public interface Service {
     @Multipart
     @POST("api/add-wanted")
     Call<ResponseBody> addWanted(@Part("user_id") RequestBody user_id,
-                              @Part("title_ar") RequestBody title_ar,
-                              @Part("title_en") RequestBody title_en,
-                              @Part("model_id") RequestBody model_id,
-                              @Part("mark_id") RequestBody mark_id,
-                              @Part("amount") RequestBody amount,
-                              @Part("status") RequestBody status,
-                              @Part("type") RequestBody type,
-                              @Part MultipartBody.Part image
-    );
-
-    @Multipart
-    @POST("api/add-wanted")
-    Call<ResponseBody> addWantedWithOutImage(@Part("user_id") RequestBody user_id,
                                  @Part("title_ar") RequestBody title_ar,
                                  @Part("title_en") RequestBody title_en,
                                  @Part("model_id") RequestBody model_id,
                                  @Part("mark_id") RequestBody mark_id,
                                  @Part("amount") RequestBody amount,
                                  @Part("status") RequestBody status,
-                                 @Part("type") RequestBody type
+                                 @Part("type") RequestBody type,
+                                 @Part MultipartBody.Part image
     );
 
+    @Multipart
+    @POST("api/add-wanted")
+    Call<ResponseBody> addWantedWithOutImage(@Part("user_id") RequestBody user_id,
+                                             @Part("title_ar") RequestBody title_ar,
+                                             @Part("title_en") RequestBody title_en,
+                                             @Part("model_id") RequestBody model_id,
+                                             @Part("mark_id") RequestBody mark_id,
+                                             @Part("amount") RequestBody amount,
+                                             @Part("status") RequestBody status,
+                                             @Part("type") RequestBody type
+    );
+
+    @GET("api/get-one-auction")
+    Call<SingleAuctionModel> get_singleauction(
+            @Query("auction_id") String auction_id
+
+
+    );
 }

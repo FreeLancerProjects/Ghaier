@@ -360,25 +360,19 @@
                         />
 
                     <FrameLayout
-
+                        android:id="@+id/fldate"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/edtsmall_rounded_whiteshape"
-                        android:padding="5dp"
+                        android:padding="5dp">
 
-
-                        >
-
-
-                        <DatePicker
+                        <TextView
+                            android:id="@+id/tvdate"
                             android:layout_width="match_parent"
-                            android:layout_height="37dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:calendarTextColor="@color/colorAccent"
-                            android:headerBackground="@color/white" />
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
 
                     </FrameLayout>
@@ -444,6 +438,30 @@
                         </FrameLayout>
                     </androidx.cardview.widget.CardView>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        >
+                        <ImageView
+                            android:id="@+id/imageSelectPhoto"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_camera"
+                            android:padding="20dp"
+                            android:tint="@color/gray3"
+
+                            />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            >
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

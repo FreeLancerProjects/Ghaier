@@ -87,6 +87,15 @@ public class AuctionAdapter extends RecyclerView.Adapter<AuctionAdapter.MarkView
                 }
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fragment instanceof Fragment_Auction) {
+                    Fragment_Auction fragment_auction = (Fragment_Auction) fragment;
+                    fragment_auction.show( holder.getLayoutPosition());
+                }
+            }
+        });
     }
 
     @Override

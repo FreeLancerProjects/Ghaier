@@ -151,6 +151,8 @@
     <string name="service_or_product_or_accessory">service or product or accessory</string>
     <string name="bid_now">Bid now</string>
     <string name="price">Price</string>
+    <string name="bidit">Bid it yet</string>
+    <string name="r_s">R.s</string>
     <string-array name="type_arrays">
         <item>service</item>
         <item>product</item>

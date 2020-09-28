@@ -13,6 +13,9 @@
             name="lang"
             type="String" />
 
+        <variable
+            name="model"
+            type="com.ghiar.models.SingleAuctionModel" />
 
     </data>
 
@@ -77,8 +80,8 @@
                 android:clickable="false"
                 android:longClickable="false"
                 android:padding="8dp"
+                android:text="@string/auction_detials"
                 android:textColor="@color/white"
-              android:text="@string/auction_detials"
 
 
                 />
@@ -88,10 +91,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="8dp"
             android:background="@color/gray1"
             android:fillViewport="true"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,23 +176,25 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="5dp"
-                    android:text="@string/quantity"
+                    android:text='@{model.count+@string/bidit}'
                     android:textColor="@color/register"
                     android:textSize="10sp"
                     tools:ignore="RtlCompat" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/user_name"
+                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
                     android:textColor="@color/register"
                     android:textSize="17sp"
                     tools:ignore="RtlCompat" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray10"
                     android:layout_marginTop="15dp"
-                    />
+                    android:background="@color/gray10" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -215,10 +220,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                   >
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -228,11 +233,12 @@
                             android:clickable="false"
                             android:gravity="center"
                             android:longClickable="false"
-                            android:text="@string/current_price"
+                            android:text="@{model.current}"
                             android:textColor="@color/second"
                             android:textSize="10sp"
 
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -241,7 +247,7 @@
                             android:clickable="false"
                             android:gravity="center"
                             android:longClickable="false"
-                            android:text="@string/current_price"
+                            android:text="@string/r_s"
                             android:textColor="@color/register"
                             android:textSize="10sp"
 
@@ -251,12 +257,13 @@
 
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray10"
                     android:layout_marginTop="15dp"
-                    />
+                    android:background="@color/gray10" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -287,18 +294,20 @@
                         android:layout_weight="1"
                         android:clickable="false"
                         android:gravity="center"
+                        android:text="@{model.start_price}"
                         android:longClickable="false"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray10"
                     android:layout_marginTop="15dp"
-                    />
+                    android:background="@color/gray10" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -330,17 +339,19 @@
                         android:clickable="false"
                         android:gravity="center"
                         android:longClickable="false"
+                        android:text="@{model.amount}"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/gray10"
                     android:layout_marginTop="15dp"
-                    />
+                    android:background="@color/gray10" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -372,18 +383,20 @@
                         android:clickable="false"
                         android:gravity="center"
                         android:longClickable="false"
+                        android:text="@{model.end_date}"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
 
                 </LinearLayout>
+
                 <FrameLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
                     android:background="@drawable/small_rounded_grayblack"
                     android:padding="5dp"
 
@@ -398,22 +411,23 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/gray2"
+                        android:hint="@string/write_your_offer_here"
                         android:padding="5dp"
                         android:singleLine="true"
-                        android:hint="@string/write_your_offer_here"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray10"
                         android:textSize="14sp" />
 
 
                 </FrameLayout>
+
                 <Button
                     android:id="@+id/btnSend"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="30dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@drawable/small_rounded_second"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
@@ -422,6 +436,7 @@
                     android:textSize="15sp"
 
                     />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -435,63 +450,66 @@
                     android:textSize="17sp"
 
                     />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
-                    app:cardElevation="3dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:contentPadding="8dp"
-                    >
+                    app:cardElevation="3dp"
+                    app:contentPadding="8dp">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
+
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/image"
+                            image="@{model.user.logo}"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:src="@drawable/ic_avatar"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            />
+                            app:layout_constraintTop_toTopOf="parent" />
+
                         <TextView
                             android:id="@+id/tvOwnerName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/image"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:text="@{model.User.name}"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="@id/image"
-                            />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/image"
+
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.iarcuschin.simpleratingbar.SimpleRatingBar
                             android:id="@+id/rateBarOwner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@id/tvOwnerName"
                             app:layout_constraintTop_toBottomOf="@id/tvOwnerName"
+                            app:srb_drawBorderEnabled="true"
                             app:srb_isIndicator="true"
-                            app:srb_stepSize=".5"
+                            app:srb_numberOfStars="5"
+                            app:srb_starBackgroundColor="@color/white"
+                            app:srb_starBorderWidth="3"
                             app:srb_starSize="18dp"
                             app:srb_starsSeparation="5dp"
-                            app:srb_numberOfStars="5"
-                            app:srb_starBorderWidth="3"
-                            app:srb_drawBorderEnabled="true"
-                            app:srb_starBackgroundColor="@color/white"
-                            android:layout_marginTop="5dp"
-
-                            />
+                            app:srb_stepSize=".5" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -529,6 +547,7 @@
                         android:background="@color/white"
                         android:padding="5dp"
                         android:singleLine="true"
+                        android:text='@{lang.equals("ar")?model.details_ar:model.details_en}'
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
