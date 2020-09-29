@@ -2,12 +2,18 @@ package com.ghiar.services;
 
 import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
+import com.ghiar.models.MainServiceModel;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.MarksModel;
 import com.ghiar.models.ModelModel;
+import com.ghiar.models.ModelsData;
+import com.ghiar.models.NotificationDataModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ProductModel;
+import com.ghiar.models.ProductsModel;
 import com.ghiar.models.ServiceCenterModel;
+import com.ghiar.models.ServiceCentersModel;
 import com.ghiar.models.ServiceModel;
 import com.ghiar.models.SingleAuctionModel;
 import com.ghiar.models.SliderModel;
@@ -46,27 +52,33 @@ public interface Service {
                                       @Query(value = "key") String key);
 
     @GET("api/get-main-services")
-    Call<ServiceModel> getHomeServices();
+    Call<MainServiceModel> getHomeServices();
 
     @GET("api/get-mark")
-    Call<MarkModel> getMarks();
+    Call<MarksModel> getMarks();
 
     @GET("api/get-model")
-    Call<ModelModel> getModels();
+    Call<ModelsData> getModels();
 
     @GET("api/slider")
     Call<SliderModel> getHomeSliderData();
 
     @GET("api/get-market-services")
-    Call<ServiceCenterModel> getServiceCenterData(@Query("services_id") int services_id);
+    Call<ServiceCentersModel> getServiceCenterData(@Query("services_id") int services_id);
 
+    @GET("api/one-market")
+    Call<ServiceCenterModel> get_singleservicecenter(
+            @Query("market_id") String market_id
+
+
+    );
 
     @GET("api/get-accessory")
-    Call<ProductModel> getAccessories(
+    Call<ProductsModel> getAccessories(
             @Query("paginate") String paginate);
 
     @GET("api/get-part")
-    Call<ProductModel> getParts(
+    Call<ProductsModel> getParts(
             @Query("paginate") String paginate);
 
     @GET("api/get-auctions")
@@ -155,4 +167,45 @@ public interface Service {
 
 
     );
+    @Multipart
+    @POST("api/addNewAuctionRequest")
+    Call<ResponseBody> auctionwithimage(
+            @Part("title_ar") RequestBody title_ar,
+            @Part("title_en") RequestBody title_en,
+            @Part("details_ar") RequestBody details_ar,
+            @Part("details_en") RequestBody details_en,
+            @Part("step_price") RequestBody step_price,
+            @Part("amount") RequestBody amount,
+            @Part("start_price") RequestBody start_price,
+            @Part("end_time") RequestBody end_time,
+
+            @Part("end_date") RequestBody end_date,
+
+            @Part("user_id") RequestBody user_id,
+            @Part MultipartBody.Part images,
+            @Part List<MultipartBody.Part> image);
+    @Multipart
+    @POST("api/addNewAuctionRequest")
+    Call<ResponseBody> auctionwithimage(
+            @Part("title_ar") RequestBody title_ar,
+            @Part("title_en") RequestBody title_en,
+            @Part("details_ar") RequestBody details_ar,
+            @Part("details_en") RequestBody details_en,
+            @Part("step_price") RequestBody step_price,
+            @Part("amount") RequestBody amount,
+            @Part("start_price") RequestBody start_price,
+            @Part("end_time") RequestBody end_time,
+
+            @Part("end_date") RequestBody end_date,
+
+            @Part("user_id") RequestBody user_id,
+            @Part MultipartBody.Part images);
+    @GET("api/my-notifications")
+    Call<NotificationDataModel> getnotification(
+            @Query("page") int page,
+            @Header("Authorization") String Authorization,
+            @Header("lang") String lang
+
+    );
+
 }

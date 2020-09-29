@@ -153,6 +153,7 @@
     <string name="price">Price</string>
     <string name="bidit">Bid it yet</string>
     <string name="r_s">R.s</string>
+    <string name="add_main_image">Add Main Image</string>
     <string-array name="type_arrays">
         <item>service</item>
         <item>product</item>

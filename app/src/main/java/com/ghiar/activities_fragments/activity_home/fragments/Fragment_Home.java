@@ -26,8 +26,10 @@ import com.ghiar.adapters.SliderAdapter;
 import com.ghiar.databinding.FragmentHomeBinding;
 import com.ghiar.databinding.FragmentMoreBinding;
 import com.ghiar.interfaces.Listeners;
+import com.ghiar.models.MainServiceModel;
 import com.ghiar.models.MarkModel;
 import com.ghiar.models.ProductModel;
+import com.ghiar.models.ProductsModel;
 import com.ghiar.models.ServiceModel;
 import com.ghiar.models.SliderModel;
 import com.ghiar.models.UserModel;
@@ -150,9 +152,9 @@ public class Fragment_Home extends Fragment {
     // get services
     private void getServices() {
 
-        Api.getService(base_url).getHomeServices().enqueue(new Callback<ServiceModel>() {
+        Api.getService(base_url).getHomeServices().enqueue(new Callback<MainServiceModel>() {
             @Override
-            public void onResponse(Call<ServiceModel> call, Response<ServiceModel> response) {
+            public void onResponse(Call<MainServiceModel> call, Response<MainServiceModel> response) {
                 binding.progBarService.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null && response.body().getMain_services() != null) {
                     serviceModelList.clear();
@@ -186,7 +188,7 @@ public class Fragment_Home extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ServiceModel> call, Throwable t) {
+            public void onFailure(Call<MainServiceModel> call, Throwable t) {
                 Log.d(TAG, t.getMessage());
                 binding.progBarService.setVisibility(View.GONE);
 
@@ -225,9 +227,9 @@ public class Fragment_Home extends Fragment {
 
 
     private void getParts() {
-        Api.getService(base_url).getParts("off").enqueue(new Callback<ProductModel>() {
+        Api.getService(base_url).getParts("off").enqueue(new Callback<ProductsModel>() {
             @Override
-            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+            public void onResponse(Call<ProductsModel> call, Response<ProductsModel> response) {
                 binding.progBarSpareParts.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null && response.body().getPart() != null) {
                     productModelsspare.clear();
@@ -262,7 +264,7 @@ public class Fragment_Home extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ProductModel> call, Throwable t) {
+            public void onFailure(Call<ProductsModel> call, Throwable t) {
                 Log.d(TAG, t.getMessage());
                 binding.progBarSpareParts.setVisibility(View.GONE);
             }
@@ -271,9 +273,9 @@ public class Fragment_Home extends Fragment {
     }
 
     private void getAccessories() {
-        Api.getService(base_url).getAccessories("off").enqueue(new Callback<ProductModel>() {
+        Api.getService(base_url).getAccessories("off").enqueue(new Callback<ProductsModel>() {
             @Override
-            public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
+            public void onResponse(Call<ProductsModel> call, Response<ProductsModel> response) {
                 binding.progBarAccessories.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null && response.body().getAccessory() != null) {
                     productModelList.clear();
@@ -309,7 +311,7 @@ public class Fragment_Home extends Fragment {
 
 
             @Override
-            public void onFailure(Call<ProductModel> call, Throwable t) {
+            public void onFailure(Call<ProductsModel> call, Throwable t) {
                 Log.d(TAG, t.getMessage());
                 binding.progBarAccessories.setVisibility(View.GONE);
             }

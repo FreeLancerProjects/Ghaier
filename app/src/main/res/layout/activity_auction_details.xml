@@ -294,8 +294,8 @@
                         android:layout_weight="1"
                         android:clickable="false"
                         android:gravity="center"
-                        android:text="@{model.start_price}"
                         android:longClickable="false"
+                        android:text="@{model.start_price}"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -405,6 +405,7 @@
 
 
                     <EditText
+                        android:id="@+id/edprice"
                         android:layout_width="match_parent"
                         android:layout_height="47dp"
                         android:layout_gravity="center_vertical"

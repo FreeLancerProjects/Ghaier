@@ -14,6 +14,9 @@
         <variable
             name="lang"
             type="String" />
+        <variable
+            name="model"
+            type="com.ghiar.models.ServiceCenterModel" />
 
     </data>
 
@@ -89,6 +92,7 @@
                         android:layout_marginBottom="10dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/back"
+                        image="@{model.image}"
 
                         />
 
@@ -114,7 +118,7 @@
                             android:layout_marginEnd="5dp"
                             android:clickable="false"
                             android:longClickable="false"
-                            android:text="@string/user_name"
+                            android:text="@{model.name}"
                             android:textColor="@color/register"
                             android:textSize="16sp"
 
@@ -139,6 +143,7 @@
                                 app:srb_starBorderWidth="3"
                                 app:srb_starSize="15dp"
                                 app:srb_starsSeparation="10dp"
+
                                 app:srb_stepSize=".5"
                                 tools:ignore="RtlCompat" />
 
@@ -345,7 +350,9 @@
                                 android:gravity="center"
                                 android:longClickable="false"
                                 android:textColor="@color/black"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+
+                                />
 
 
                         </LinearLayout>
@@ -478,7 +485,7 @@
                         android:layout_marginEnd="5dp"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:text="@string/description"
+                        android:text="@{model.details}"
                         android:textColor="@color/black"
                         android:textSize="16sp"
 
@@ -519,7 +526,7 @@
                         android:layout_marginEnd="5dp"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:text="@string/description"
+                        android:text="@{model.address}"
                         android:textColor="@color/black"
                         android:textSize="16sp"
 

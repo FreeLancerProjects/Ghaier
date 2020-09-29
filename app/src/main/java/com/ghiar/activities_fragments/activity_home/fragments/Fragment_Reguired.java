@@ -39,7 +39,9 @@ import com.ghiar.interfaces.Listeners;
 import com.ghiar.models.AddWantedModel;
 import com.ghiar.models.CityDataModel;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.MarksModel;
 import com.ghiar.models.ModelModel;
+import com.ghiar.models.ModelsData;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -180,9 +182,9 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
         Api.getService(Tags.base_url)
                 .getMarks()
-                .enqueue(new Callback<MarkModel>() {
+                .enqueue(new Callback<MarksModel>() {
                     @Override
-                    public void onResponse(Call<MarkModel> call, Response<MarkModel> response) {
+                    public void onResponse(Call<MarksModel> call, Response<MarksModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getMarks().size() > 0) {
@@ -215,7 +217,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                     }
 
                     @Override
-                    public void onFailure(Call<MarkModel> call, Throwable t) {
+                    public void onFailure(Call<MarksModel> call, Throwable t) {
                         try {
                             dialog.dismiss();
                             if (t.getMessage() != null) {
@@ -240,9 +242,9 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
         Api.getService(Tags.base_url)
                 .getModels()
-                .enqueue(new Callback<ModelModel>() {
+                .enqueue(new Callback<ModelsData>() {
                     @Override
-                    public void onResponse(Call<ModelModel> call, Response<ModelModel> response) {
+                    public void onResponse(Call<ModelsData> call, Response<ModelsData> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getModels().size() > 0) {
@@ -275,7 +277,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                     }
 
                     @Override
-                    public void onFailure(Call<ModelModel> call, Throwable t) {
+                    public void onFailure(Call<ModelsData> call, Throwable t) {
                         try {
                             dialog.dismiss();
                             if (t.getMessage() != null) {

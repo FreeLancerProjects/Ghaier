@@ -139,27 +139,31 @@ public class Fragment_Auction extends Fragment {
     }
 
     public void CreateDialogAlert(Context context, int pos) {
-        final AlertDialog dialog = new AlertDialog.Builder(context)
-                .create();
+        if (userModel != null) {
+            final AlertDialog dialog = new AlertDialog.Builder(context)
+                    .create();
 
-        DialogAddPriceBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_price, null, false);
+            DialogAddPriceBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_price, null, false);
 
-        binding.btnSend.setOnClickListener(v -> {
-                    String value = binding.edtstprice.getText().toString();
-                    if (!value.isEmpty()) {
-                        sendauction(value, pos);
-                        dialog.dismiss();
+            binding.btnSend.setOnClickListener(v -> {
+                        String value = binding.edtstprice.getText().toString();
+                        if (!value.isEmpty()) {
+                            sendauction(value, pos);
+                            dialog.dismiss();
 
-                    } else {
-                        binding.edtstprice.setError(context.getResources().getString(R.string.field_req));
+                        } else {
+                            binding.edtstprice.setError(context.getResources().getString(R.string.field_req));
+                        }
                     }
-                }
 
-        );
-        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setView(binding.getRoot());
-        dialog.show();
+            );
+            dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setView(binding.getRoot());
+            dialog.show();
+        } else {
+
+        }
     }
 
     private void sendauction(String price, int pos) {

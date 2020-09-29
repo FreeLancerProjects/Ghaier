@@ -27,7 +27,7 @@ import java.util.List;
 
 import io.paperdb.Paper;
 
-public class ModelDetailsActivity extends AppCompatActivity implements Listeners.BackListener{
+public class ModelDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityModelDetailsBinding binding;
     private String lang;
     private ViewPagerAdapter adapter;
@@ -38,8 +38,9 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +49,7 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     }
 
 
-
-
-    private void initView()
-    {
+    private void initView() {
         fragmentList = new ArrayList<>();
         titles = new ArrayList<>();
         Paper.init(this);
@@ -70,7 +68,7 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
 
         binding.tab.setupWithViewPager(binding.pager);
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.addFragments_Titles(fragmentList,titles);
+        adapter.addFragments_Titles(fragmentList, titles);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(3);
         binding.image.setOnClickListener(v -> {
@@ -79,7 +77,6 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
         });
 
     }
-
 
 
     @Override

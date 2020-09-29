@@ -38,6 +38,7 @@ import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.MarksModel;
 import com.ghiar.models.ServiceCenterModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
@@ -158,9 +159,9 @@ public class HomeActivity extends AppCompatActivity {
 
             Api.getService(Tags.base_url)
                     .getMarks()
-                    .enqueue(new Callback<MarkModel>() {
+                    .enqueue(new Callback<MarksModel>() {
                         @Override
-                        public void onResponse(Call<MarkModel> call, Response<MarkModel> response) {
+                        public void onResponse(Call<MarksModel> call, Response<MarksModel> response) {
                             binding.progBarModel.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null && response.body().getMarks() != null) {
                                 markModelList.clear();
@@ -194,7 +195,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<MarkModel> call, Throwable t) {
+                        public void onFailure(Call<MarksModel> call, Throwable t) {
                             try {
                                 binding.progBarModel.setVisibility(View.GONE);
                                 //binding.llNoNotification.setVisibility(View.VISIBLE);
@@ -591,4 +592,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public void showservicecenter(int position) {
+        Intent intent=new Intent(HomeActivity.this,ModelDetailsActivity.class);
+        intent.putExtra("search",markModelList.get(position).getId()+"");
+        startActivity(intent);
+    }
 }

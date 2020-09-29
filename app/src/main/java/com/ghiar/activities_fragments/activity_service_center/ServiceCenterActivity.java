@@ -22,6 +22,7 @@ import com.ghiar.databinding.ActivityServicesCenterBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
 import com.ghiar.models.ServiceCenterModel;
+import com.ghiar.models.ServiceCentersModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -103,9 +104,9 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
 
             Api.getService(Tags.base_url)
                     .getServiceCenterData(serviceId)
-                    .enqueue(new Callback<ServiceCenterModel>() {
+                    .enqueue(new Callback<ServiceCentersModel>() {
                         @Override
-                        public void onResponse(Call<ServiceCenterModel> call, Response<ServiceCenterModel> response) {
+                        public void onResponse(Call<ServiceCentersModel> call, Response<ServiceCentersModel> response) {
                             binding.progBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null && response.body().getMarkets() != null) {
                                 serviceCenterModelList.clear();
@@ -139,7 +140,7 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
                         }
 
                         @Override
-                        public void onFailure(Call<ServiceCenterModel> call, Throwable t) {
+                        public void onFailure(Call<ServiceCentersModel> call, Throwable t) {
                             try {
                                 binding.progBar.setVisibility(View.GONE);
                                 binding.llNoNotification.setVisibility(View.VISIBLE);

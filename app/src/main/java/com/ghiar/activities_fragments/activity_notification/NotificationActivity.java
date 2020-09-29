@@ -20,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.adapters.Notification_Adapter;
 import com.ghiar.databinding.ActivityNotificationBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.NotificationDataModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -43,8 +45,8 @@ import retrofit2.Response;
 public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityNotificationBinding binding;
     private String lang;
-   // private List<NotificationDataModel.NotificationModel> notificationModelList;
-    //private NotificationAdapter adapter;
+    private List<NotificationDataModel.NotificationModel> notificationModelList;
+    private Notification_Adapter adapter;
     private Preferences preferences;
     private UserModel.User userModel;
     private int current_page=1;
@@ -82,15 +84,15 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
-        //notificationModelList = new ArrayList<>();
+        notificationModelList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
-        //adapter = new NotificationAdapter(this,notificationModelList);
-       // binding.recView.setAdapter(adapter);
+        adapter = new Notification_Adapter(notificationModelList,this);
+        binding.recView.setAdapter(adapter);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -120,9 +122,9 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     private void getNotification()
     {
-        /*try {
+        try {
             Api.getService(Tags.base_url)
-                    .getNotification(userModel.getUser().getToken(),current_page,"on",20)
+                    .getnotification(current_page,userModel.getId()+"",lang)
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -177,15 +179,15 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     private void loadMore(int page)
     {
-        /*try {
+        try {
 
             Api.getService(Tags.base_url)
-                    .getNotification(userModel.getUser().getToken(),page,"on",20)
+                    .getnotification(page,userModel.getId()+"",lang)
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -201,7 +203,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
                                 notificationModelList.addAll(response.body().getData());
 
                                 if (response.body().getData().size() > 0) {
-                                    current_page = response.body().getMeta().getCurrent_page();
+                                    current_page = response.body().getCurrent_page();
                                     adapter.notifyItemRangeChanged(oldPos,notificationModelList.size()-1);
 
                                 }
@@ -249,7 +251,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     @Override

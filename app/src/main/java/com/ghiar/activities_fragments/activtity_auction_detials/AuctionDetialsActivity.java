@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_addauction.AddAuctionActivity;
 import com.ghiar.adapters.AuctionSlideAdapter;
 import com.ghiar.adapters.Image_Adapter;
 import com.ghiar.adapters.SliderAdapter;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +85,22 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
         binding.recView.setAdapter(image_adapter);
         binding.progBar.setVisibility(View.GONE);
         binding.progBarslider.setVisibility(View.GONE);
+        binding.btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String price = binding.edprice.getText().toString();
+                if(userModel!=null){
+                if (!price.isEmpty()) {
+                    sendauction(price);
+                } else {
+                    binding.edprice.setError(getResources().getString(R.string.field_req));
+                }
+            }
+            else {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -161,6 +180,67 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
 
 
     public void showimage(int layoutPosition) {
-
+        binding.pager.setCurrentItem(layoutPosition);
     }
+
+    private void sendauction(String price) {
+        try {
+
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            dialog.setCancelable(false);
+            dialog.show();
+            Api.getService(Tags.base_url)
+                    .sendAuction(price, search_id, userModel.getId() + "")
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(AuctionDetialsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+                            } else {
+
+                                try {
+
+                                    Log.e("errorcode", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                if (response.code() == 500) {
+                                    //   Toast.makeText(ChatActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    if (response.code() == 422) {
+                                        // Toast.makeText(ChatActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();//
+                                        try {
+                                            Toast.makeText(AuctionDetialsActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                dialog.dismiss();
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(AuctionDetialsActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AuctionDetialsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+    }
+
+
 }

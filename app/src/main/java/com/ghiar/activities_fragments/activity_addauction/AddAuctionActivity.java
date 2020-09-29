@@ -2,6 +2,7 @@ package com.ghiar.activities_fragments.activity_addauction;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,13 +33,18 @@ import com.ghiar.databinding.ActivityServicesCenterBinding;
 import com.ghiar.databinding.DialogSelectImageBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.AddAuctionModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
+import com.ghiar.remote.Api;
+import com.ghiar.share.Common;
+import com.ghiar.tags.Tags;
 import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +52,12 @@ import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddAuctionActivity extends AppCompatActivity implements Listeners.BackListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private ActivityAddAuctionBinding binding;
@@ -67,6 +79,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
     private String date;
     private String time;
     private Calendar calendar1;
+    private AddAuctionModel addAuctionModel;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -83,12 +96,13 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
 
 
     private void initView() {
+        addAuctionModel = new AddAuctionModel();
         urlList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-
+        binding.setModel(addAuctionModel);
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         Paper.init(this);
@@ -117,9 +131,175 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
         binding.recView.setLayoutManager(manager);
         imagesAdapter = new ImagesAdapter(urlList, this);
         binding.recView.setAdapter(imagesAdapter);
+        binding.btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userModel != null) {
+                    if (addAuctionModel.isDataValid(AddAuctionActivity.this)) {
+                        if (uri != null) {
+                            if (urlList != null && urlList.size() > 0) {
+                                auctionimage(addAuctionModel);
+                            } else {
+                                auctionwithoutimages(addAuctionModel);
+                            }
+                        }
+                    } else {
+                        Toast.makeText(AddAuctionActivity.this, getResources().getString(R.string.add_main_image), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    // Common.CreateNoSignAlertDialog(AddAuctionActivity.this);
 
+                }
+            }
+        });
         createDatePickerDialog();
         createTimePickerDialog();
+    }
+
+    private List<MultipartBody.Part> getMultipartBodyList(List<Uri> uriList, String image_cv) {
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        for (Uri uri : uriList) {
+            MultipartBody.Part part = Common.getMultiPart(this, uri, image_cv);
+            partList.add(part);
+        }
+        return partList;
+    }
+
+    private void auctionimage(AddAuctionModel addAuctionModel) {
+        try {
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            dialog.setCancelable(false);
+            dialog.show();
+            RequestBody english_part = Common.getRequestBodyText(addAuctionModel.getEnglish_title());
+            RequestBody arabic_part = Common.getRequestBodyText(addAuctionModel.getArabic_title());
+            RequestBody englishd_part = Common.getRequestBodyText(addAuctionModel.getEnglish_detials());
+            RequestBody arabicd_part = Common.getRequestBodyText(addAuctionModel.getArabic_detials());
+            RequestBody min_part = Common.getRequestBodyText(addAuctionModel.getMin());
+            RequestBody quantity_part = Common.getRequestBodyText(addAuctionModel.getQuantity());
+            RequestBody price_part = Common.getRequestBodyText(addAuctionModel.getPrice());
+            RequestBody time_part = Common.getRequestBodyText(addAuctionModel.getTime());
+            RequestBody date_part = Common.getRequestBodyText(addAuctionModel.getDate());
+            RequestBody user_part = Common.getRequestBodyText(userModel.getId() + "");
+
+
+            MultipartBody.Part imagepart = Common.getMultiPart(this, uri, "main_image");
+
+
+            List<MultipartBody.Part> partimageList = getMultipartBodyList(urlList, "Auction_images[]");
+            Api.getService(Tags.base_url)
+                    .auctionwithimage(arabic_part, english_part, arabicd_part, englishd_part, min_part, quantity_part, price_part, time_part, date_part, user_part, imagepart, partimageList)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(AddAuctionActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+
+                                Appply();
+                            } else {
+                                try {
+
+                                    Log.e("errorssss", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                dialog.dismiss();
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(AddAuctionActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AddAuctionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+        }
+    }
+
+    private void auctionwithoutimages(AddAuctionModel addAuctionModel) {
+        try {
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            dialog.setCancelable(false);
+            dialog.show();
+            RequestBody english_part = Common.getRequestBodyText(addAuctionModel.getEnglish_title());
+            RequestBody arabic_part = Common.getRequestBodyText(addAuctionModel.getArabic_title());
+            RequestBody englishd_part = Common.getRequestBodyText(addAuctionModel.getEnglish_detials());
+            RequestBody arabicd_part = Common.getRequestBodyText(addAuctionModel.getArabic_detials());
+            RequestBody min_part = Common.getRequestBodyText(addAuctionModel.getMin());
+            RequestBody quantity_part = Common.getRequestBodyText(addAuctionModel.getQuantity());
+            RequestBody price_part = Common.getRequestBodyText(addAuctionModel.getPrice());
+            RequestBody time_part = Common.getRequestBodyText(addAuctionModel.getTime());
+            RequestBody date_part = Common.getRequestBodyText(addAuctionModel.getDate());
+            RequestBody user_part = Common.getRequestBodyText(userModel.getId() + "");
+
+
+            MultipartBody.Part imagepart = Common.getMultiPart(this, uri, "main_image");
+
+
+            Api.getService(Tags.base_url)
+                    .auctionwithimage(arabic_part, english_part, arabicd_part, englishd_part, min_part, quantity_part, price_part, time_part, date_part, user_part, imagepart)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful() && response.body() != null) {
+                                Toast.makeText(AddAuctionActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+
+                                Appply();
+                            } else {
+                                try {
+
+                                    Log.e("errorssss", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                dialog.dismiss();
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(AddAuctionActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AddAuctionActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+        }
+    }
+
+    private void Appply() {
+        addAuctionModel = new AddAuctionModel();
+        binding.setModel(addAuctionModel);
+        binding.imageFill.setImageDrawable(null);
+        binding.llimage.setVisibility(View.VISIBLE);
+        urlList.clear();
+        imagesAdapter.notifyDataSetChanged();
+        finish();
     }
 
     private void createDatePickerDialog() {
@@ -154,7 +334,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
         date = year + "-" + ((monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : (monthOfYear + 1)) + "-" + (dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth);
         // date = calendar.get(Calendar.YEAR) + "-" + (calendar.getTime().getMonth()+calendar.getTime().getMonth():calendar.getTime().getMonth()) + "-" + (calendar.getTime().getDay()<10?"0"+calendar.getTime().getDay():calendar.getTime().getDay());
         timePickerDialog.show(getFragmentManager(), "");
-
+        addAuctionModel.setDate(date);
 
     }
 
@@ -181,7 +361,8 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
         calendar.set(Calendar.SECOND, second);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-        time = calendar.getTime().getHours() + ":" + calendar.getTime().getMinutes();
+        time = dateFormat.format(calendar);
+        addAuctionModel.setTime(time);
         binding.tvdate.setText(date + "  " + time);
     }
 

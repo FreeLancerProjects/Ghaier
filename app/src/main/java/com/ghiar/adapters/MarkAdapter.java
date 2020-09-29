@@ -3,6 +3,7 @@ package com.ghiar.adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.databinding.ItemDrawerMarkBinding;
 import com.ghiar.models.MarkModel;
 
@@ -45,7 +47,15 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.MarkViewholder
     holder.binding.setMark(list.get(position));
     holder.binding.setLang("ar");
 
-
+holder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(context instanceof HomeActivity){
+            HomeActivity activity=(HomeActivity)context;
+            activity.showservicecenter(holder.getLayoutPosition());
+        }
+    }
+});
     }
 
     @Override
