@@ -157,6 +157,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                                     cityAdapter.notifyDataSetChanged();
                                 });
                             }
+
                         } else {
                             try {
 
