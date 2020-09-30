@@ -1,8 +1,9 @@
 package com.ghiar.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MarkModel {
+public class MarkModel implements Serializable {
 
    private int id;
    private String title_ar;

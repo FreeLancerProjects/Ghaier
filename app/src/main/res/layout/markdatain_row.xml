@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        
+
         <variable
             name="model"
             type="com.ghiar.models.MarkDataInModel" />
-        
+
         <variable
             name="lang"
             type="String" />
@@ -24,23 +24,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:padding="10dp">
 
 
             <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                android:layout_weight=".3"
-                >
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
                     image="@{model.image}"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
                     android:background="@drawable/back">
 
                 </ImageView>
@@ -49,52 +47,25 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cons"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                >
+                android:padding="5dp">
 
 
                 <TextView
                     android:id="@+id/city_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text='@{lang.equals("ar")?model.city.ar_city_title:model.city.en_city_title}'
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="12sp"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <LinearLayout
                     android:id="@+id/linear_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/linear_call"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingLeft="5dp"
-                        android:textSize="12sp"
-                        android:textColor="@color/register" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/nav_distance"
-                        android:tint="@color/colorPrimary" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background='@{lang.equals("en")?@drawable/search_right_bg:@drawable/search_left_bg,default=@drawable/search_left_bg}'
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -102,50 +73,55 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="3dp"
                         android:paddingLeft="5dp"
-                        android:text="اتصال"
-                        android:textColor="@color/white" />
+                        android:text='@{model.price+@string/r_s}'
+                        android:textColor="@color/register"
+                        android:textSize="12sp" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/ic_call_1"
-                        android:tint="@color/white" />
+
                 </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/service_center_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
-                    app:layout_constraintTop_toBottomOf="@id/linear_distance"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textSize="16sp"
                     android:textColor="@color/register"
-                    />
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linear_distance" />
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{lang.equals("ar")?model.details_ar:model.details_en}'
-                    app:layout_constraintTop_toBottomOf="@id/service_center_name"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:maxLines="2"
-
+                    android:text='@{lang.equals("ar")?model.details_ar:model.details_en}'
                     android:textSize="10sp"
-                    />
+                    app:layout_constraintStart_toStartOf="parent"
 
-                <RatingBar
+                    app:layout_constraintTop_toBottomOf="@id/service_center_name" />
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:theme="@style/RatingBar"
-                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    app:srb_drawBorderEnabled="true"
+                    app:srb_isIndicator="false"
+                    app:srb_numberOfStars="5"
+                    app:srb_starBackgroundColor="@color/white"
+                    app:srb_starBorderWidth="3"
+                    app:srb_starSize="15dp"
+                    app:srb_starsSeparation="10dp"
+                    app:srb_stepSize=".5"
+                    tools:ignore="RtlCompat"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:rating="3"
+                    app:layout_constraintTop_toBottomOf="@+id/tv"
+                    rate="@{Double.parseDouble(model.rate)}"
 
 
                     />
@@ -153,11 +129,79 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_share"
                     android:tint="@color/gray4"
-                    />
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fl_add_to_cart"
+                    app:layout_constraintTop_toBottomOf="@+id/tv"
+                    tools:ignore="RtlCompat" />
+
+                <FrameLayout
+                    android:id="@+id/fl_add_to_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/small_rounded_primary"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:longClickable="false"
+                        android:orientation="horizontal"
+android:padding="3dp"
+                        >
+
+                        <FrameLayout
+                            android:layout_width="15dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+
+                            >
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/image"
+                                android:layout_width="15dp"
+                                android:layout_height="10dp" />
+
+                            <ImageView
+                                android:id="@+id/image_arrow2"
+                                android:layout_width="15dp"
+                                android:layout_height="10dp"
+                                android:layout_marginStart="2dp"
+                                android:background="@color/colorPrimary"
+                                android:clickable="false"
+                                android:longClickable="false"
+                                android:src="@drawable/ic_cart"
+                                android:tint="@color/white"
+                                tools:ignore="RtlCompat" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:gravity="center_vertical"
+                            android:longClickable="false"
+                            android:maxLines="2"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/add_to_cart"
+                            android:textColor="@color/white"
+                            android:textSize="9sp"
+                            tools:ignore="RtlCompat" />
+                    </LinearLayout>
+
+                </FrameLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

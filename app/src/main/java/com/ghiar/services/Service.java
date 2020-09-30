@@ -64,8 +64,13 @@ public interface Service {
     @GET("api/slider")
     Call<SliderModel> getHomeSliderData();
 
-    @GET("api/get-market-services")
-    Call<ServiceCentersModel> getServiceCenterData(@Query("services_id") int services_id);
+    @GET("api/market-filtter")
+    Call<ServiceCentersModel> getServiceCenterData(
+            @Query("mark_id") String mark_id,
+            @Query("city_id") String city_id,
+            @Query("name") String name,
+            @Query("services_id") String services_id
+    );
 
     @GET("api/one-market")
     Call<ServiceCenterModel> get_singleservicecenter(

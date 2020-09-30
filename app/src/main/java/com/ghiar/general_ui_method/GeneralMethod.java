@@ -3,6 +3,7 @@ package com.ghiar.general_ui_method;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import androidx.databinding.BindingAdapter;
 import com.ghiar.R;
 import com.ghiar.models.UserModel;
 import com.ghiar.tags.Tags;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -59,6 +61,15 @@ public class GeneralMethod {
             ImageView imageView = (ImageView) view;
             Picasso.get().load(Uri.parse(path)).placeholder(R.drawable.ic_avatar).into(imageView);
         }
+    }
+    @BindingAdapter("rate")
+    public static void rate(SimpleRatingBar simpleRatingBar, double rate) {
+        SimpleRatingBar.AnimationBuilder builder = simpleRatingBar.getAnimationBuilder()
+                .setRatingTarget((float) rate)
+                .setDuration(1000)
+                .setRepeatCount(0)
+                .setInterpolator(new LinearInterpolator());
+        builder.start();
     }
 
 

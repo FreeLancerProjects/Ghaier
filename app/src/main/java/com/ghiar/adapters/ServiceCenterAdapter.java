@@ -3,6 +3,7 @@ package com.ghiar.adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
+import com.ghiar.activities_fragments.activity_service_center.ServiceCenterActivity;
 import com.ghiar.databinding.ItemProductBinding;
 import com.ghiar.databinding.ItemServiceCenterBinding;
 import com.ghiar.models.ProductModel;
@@ -44,7 +47,20 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
 
         holder.binding.setServiceCenter(list.get(position));
         holder.binding.setLang("ar");
-        holder.binding.ratingBar.setRating(Float.parseFloat(list.get(position).getRate()));
+        holder.binding.linearCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(context instanceof ServiceCenterActivity){
+                    ServiceCenterActivity serviceCenterActivity=(ServiceCenterActivity)context;
+                    serviceCenterActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
+                }
+                else {
+                    ModelDetailsActivity modelDetailsActivity=(ModelDetailsActivity)context;
+                    modelDetailsActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
+
+                }
+            }
+        });
     }
 
     @Override

@@ -184,6 +184,17 @@ public class Fragment_Accessories extends Fragment {
 
             }
         });
+        binding.imsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = binding.editQuery.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(activity,binding.editQuery);
+                    title=query;
+                    getFilterData();
+                }
+            }
+        });
         getModels();
         getCities();
     }

@@ -1,14 +1,19 @@
 package com.ghiar.activities_fragments.activity_model_details;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.ghiar.R;
@@ -21,6 +26,7 @@ import com.ghiar.databinding.ActivityAboutAppBinding;
 import com.ghiar.databinding.ActivityModelDetailsBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.MarkModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +40,9 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     private List<Fragment> fragmentList;
     private List<String> titles;
     public String markid;
-
+    private MarkModel markModel;
+    private Intent intent;
+    private static final int REQUEST_PHONE_CALL = 1;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -52,9 +60,10 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     }
 
     private void getDataFromIntent() {
-        Intent intent=getIntent();
-        if(intent.getStringExtra("search")!=null){
-            markid=intent.getStringExtra("search");
+        Intent intent = getIntent();
+        if (intent.getStringExtra("search") != null) {
+            markid = intent.getStringExtra("search");
+            markModel = (MarkModel) intent.getSerializableExtra("data");
         }
     }
 
@@ -88,10 +97,53 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
 
     }
 
+    public void call(String s) {
+        intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", s, null));
 
-    @Override
-    public void back() {
-        finish();
+
+        if (intent != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                } else {
+                    startActivity(intent);
+                }
+            } else {
+                startActivity(intent);
+            }
+        }
     }
 
-}
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (this.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    Activity#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for Activity#requestPermissions for more details.
+                            return;
+                        }
+                    }
+                    startActivity(intent);
+                } else {
+
+                }
+                return;
+            }
+        }}
+
+        @Override
+        public void back () {
+            finish();
+        }
+
+    }

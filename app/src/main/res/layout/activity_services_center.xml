@@ -98,28 +98,28 @@
                     android:background="@drawable/small_rounded_white2"
                     android:orientation="horizontal"
                     android:padding="8dp"
-                    android:weightSum="3"
+                    android:weightSum="2"
                     app:layout_constraintTop_toTopOf="parent">
 
 
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                   >
+<!--                    <FrameLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                   >-->
 
-                        <Spinner
-                            android:id="@+id/spinnerCountry"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="8dp"
-                            >
+<!--                        <Spinner-->
+<!--                            android:id="@+id/spinnerCountry"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_vertical"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            >-->
 
-                        </Spinner>
-                    </FrameLayout>
+<!--                        </Spinner>-->
+<!--                    </FrameLayout>-->
 
 
                     <FrameLayout
@@ -151,7 +151,7 @@
                         >
 
                         <Spinner
-                            android:id="@+id/spinnerModel"
+                            android:id="@+id/spinner_marks"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_gravity="center_vertical"

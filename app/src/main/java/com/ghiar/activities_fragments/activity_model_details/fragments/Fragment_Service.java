@@ -23,6 +23,7 @@ import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivit
 import com.ghiar.adapters.CityAdapter;
 import com.ghiar.adapters.MarkDataInAdapter;
 import com.ghiar.adapters.ModelsAdapter;
+import com.ghiar.adapters.ServiceCenterAdapter;
 import com.ghiar.databinding.FragmentServicesBinding;
 import com.ghiar.databinding.FragmentSpareAccessoriesBinding;
 import com.ghiar.models.CityDataModel;
@@ -30,6 +31,8 @@ import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.ModelModel;
 import com.ghiar.models.ModelsData;
+import com.ghiar.models.ServiceCenterModel;
+import com.ghiar.models.ServiceCentersModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -61,10 +64,11 @@ public class Fragment_Service extends Fragment {
     private ArrayAdapter<String> adapter;
     private List<String> list;
     private List<String> list2;
-    private MarkDataInAdapter markDataInAdapter;
+//    private MarkDataInAdapter markDataInAdapter;
     private String markid, model_id, status, title, country_id;
-    private List<MarkDataInModel> markDataInModelList;
-
+//    private List<MarkDataInModel> markDataInModelList;
+    private ServiceCenterAdapter serviceCenterAdapter;
+    private List<ServiceCenterModel> serviceCenterModelList;
     public static Fragment_Service newInstance() {
 
         return new Fragment_Service();
@@ -75,7 +79,7 @@ public class Fragment_Service extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_services, container, false);
         initView();
-        getFilterData();
+        getSerciceCenerData();
         return binding.getRoot();
 
     }
@@ -84,7 +88,7 @@ public class Fragment_Service extends Fragment {
 
         list = new ArrayList<>();
         list2 = new ArrayList<>();
-        markDataInModelList = new ArrayList<>();
+        serviceCenterModelList=new ArrayList<>();
         modelModelList = new ArrayList<>();
         cityList = new ArrayList<>();
         activity = (ModelDetailsActivity) getActivity();
@@ -105,9 +109,9 @@ public class Fragment_Service extends Fragment {
         list.add(getResources().getString(R.string.choose));
         list.add(getResources().getString(R.string.news));
         list.add(getResources().getString(R.string.used));
-        markDataInAdapter = new MarkDataInAdapter(activity, markDataInModelList);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
-        binding.recView.setAdapter(markDataInAdapter);
+        serviceCenterAdapter = new ServiceCenterAdapter(activity, serviceCenterModelList);
+        binding.recView.setAdapter(serviceCenterAdapter);
 
         list2.add("new");
         list2.add("used");
@@ -116,6 +120,7 @@ public class Fragment_Service extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 //        binding.spinnerState.setAdapter(adapter);
+        binding.spinnerModel.setVisibility(View.GONE);
         binding.spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -124,7 +129,7 @@ public class Fragment_Service extends Fragment {
                 } else {
                     model_id = modelModelList.get(position).getId() + "";
                     modelModel.setId(modelModelList.get(position).getId());
-                    getFilterData();
+                    getSerciceCenerData();
                 }
             }
 
@@ -147,7 +152,7 @@ public class Fragment_Service extends Fragment {
                 if (position == 0) {
                 } else {
                     country_id = cityList.get(position).getId_city() + "";
-                    getFilterData();
+                    getSerciceCenerData();
                 }
             }
 
@@ -162,11 +167,22 @@ public class Fragment_Service extends Fragment {
                 if (!TextUtils.isEmpty(query)) {
                     Common.CloseKeyBoard(activity,binding.editQuery);
                     title=query;
-                    getFilterData();
+                    getSerciceCenerData();
                     return false;
                 }
             }
             return false;
+        });
+        binding.imsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = binding.editQuery.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(activity,binding.editQuery);
+                    title=query;
+                    getSerciceCenerData();
+                }
+            }
         });
 //        binding.spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
@@ -307,42 +323,42 @@ public class Fragment_Service extends Fragment {
     }
 
 
-    private void getFilterData() {
+    private void getSerciceCenerData() {
 
-        markDataInModelList.clear();
-        markDataInAdapter.notifyDataSetChanged();
+        serviceCenterModelList.clear();
+        serviceCenterAdapter.notifyDataSetChanged();
         binding.progBar.setVisibility(View.VISIBLE);
 
         try {
 
 
             Api.getService(Tags.base_url)
-                    .get_MarkDataIn(country_id, model_id, status, title, "service", markid)
-                    .enqueue(new Callback<MarksDataModel>() {
+                    .getServiceCenterData(markid, country_id, title, null)
+                    .enqueue(new Callback<ServiceCentersModel>() {
                         @Override
-                        public void onResponse(Call<MarksDataModel> call, Response<MarksDataModel> response) {
+                        public void onResponse(Call<ServiceCentersModel> call, Response<ServiceCentersModel> response) {
                             binding.progBar.setVisibility(View.GONE);
-                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                                markDataInModelList.clear();
-                                markDataInModelList.addAll(response.body().getData());
-                                if (response.body().getData().size() > 0) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getMarkets() != null) {
+                                serviceCenterModelList.clear();
+                                serviceCenterModelList.addAll(response.body().getMarkets());
+                                if (response.body().getMarkets().size() > 0) {
                                     // rec_sent.setVisibility(View.VISIBLE);
-                                    //   Log.e("datasssssss",response.body().getMarks().get(0).getTitle_ar());
+                                    //  Log.e("data",response.body().getData().get(0).getAr_title());
 
-                                    // binding.flNotification.setVisibility(View.GONE);
-                                    markDataInAdapter.notifyDataSetChanged();
+                                    binding.tvNoData.setVisibility(View.GONE);
+                                    serviceCenterAdapter.notifyDataSetChanged();
                                     //   total_page = response.body().getMeta().getLast_page();
 
                                 } else {
-                                    markDataInAdapter.notifyDataSetChanged();
+                                    serviceCenterAdapter.notifyDataSetChanged();
 
-                                    //     binding.llNoNotification.setVisibility(View.VISIBLE);
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
                             } else {
-                                markDataInAdapter.notifyDataSetChanged();
+                                serviceCenterAdapter.notifyDataSetChanged();
 
-                                //   binding.llNoNotification.setVisibility(View.VISIBLE);
+                                binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 try {
@@ -354,10 +370,10 @@ public class Fragment_Service extends Fragment {
                         }
 
                         @Override
-                        public void onFailure(Call<MarksDataModel> call, Throwable t) {
+                        public void onFailure(Call<ServiceCentersModel> call, Throwable t) {
                             try {
                                 binding.progBar.setVisibility(View.GONE);
-                                //binding.llNoNotification.setVisibility(View.VISIBLE);
+                                binding.tvNoData.setVisibility(View.VISIBLE);
 
 
                             } catch (Exception e) {
@@ -366,7 +382,7 @@ public class Fragment_Service extends Fragment {
                     });
         } catch (Exception e) {
             binding.progBar.setVisibility(View.GONE);
-            // binding.ll.setVisibility(View.VISIBLE);
+            binding.tvNoData.setVisibility(View.VISIBLE);
 
         }
     }

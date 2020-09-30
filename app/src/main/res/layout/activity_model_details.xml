@@ -10,7 +10,9 @@
         <variable
             name="lang"
             type="String" />
-
+<variable
+    name="model"
+    type="com.ghiar.models.MarkModel" />
 
 
 
@@ -59,6 +61,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:civ_border_width="0dp"
+                    image="@{model.image}"
                     />
                 <TextView
 
@@ -70,6 +73,7 @@
                     android:clickable="false"
                     android:longClickable="false"
                     android:textColor="@color/white"
+                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
                     android:textSize="15sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

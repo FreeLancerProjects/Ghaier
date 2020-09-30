@@ -110,7 +110,7 @@ public class Fragment_Spare_Parts extends Fragment {
         list.add(getResources().getString(R.string.choose));
         list.add(getResources().getString(R.string.news));
         list.add(getResources().getString(R.string.used));
-        markDataInAdapter=new MarkDataInAdapter(activity,markDataInModelList);
+        markDataInAdapter = new MarkDataInAdapter(activity, markDataInModelList);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recView.setAdapter(markDataInAdapter);
 
@@ -129,7 +129,7 @@ public class Fragment_Spare_Parts extends Fragment {
                 } else {
                     model_id = modelModelList.get(position).getId() + "";
                     modelModel.setId(modelModelList.get(position).getId());
-getFilterData();
+                    getFilterData();
                 }
             }
 
@@ -148,22 +148,32 @@ getFilterData();
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String query = binding.editQuery.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.editQuery);
-                    title=query;
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
                     getFilterData();
                     return false;
                 }
             }
             return false;
         });
-
+        binding.imsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = binding.editQuery.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
+                    getFilterData();
+                }
+            }
+        });
         binding.spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                 } else {
                     country_id = cityList.get(position).getId_city() + "";
-getFilterData();
+                    getFilterData();
                 }
             }
 
@@ -179,7 +189,7 @@ getFilterData();
                 if (position == 0) {
                 } else {
                     status = list2.get(position - 1);
-                getFilterData();
+                    getFilterData();
                 }
             }
 

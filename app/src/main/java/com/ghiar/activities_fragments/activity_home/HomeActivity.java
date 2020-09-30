@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private MarkAdapter markAdapter;
     private List<MarkModel> markModelList;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -97,15 +98,15 @@ public class HomeActivity extends AppCompatActivity {
         initView();
 
         if (savedInstanceState == null) {
-            Log.e("gg","gg");
+            Log.e("gg", "gg");
             displayFragmentHome();
 
         }
 
         if (userModel != null) {
 
-            Log.e("bbbbbbbb",userModel.getName()+"");
-           // EventBus.getDefault().register(this);
+            Log.e("bbbbbbbb", userModel.getName() + "");
+            // EventBus.getDefault().register(this);
             updateToken();
 
         }
@@ -131,15 +132,15 @@ public class HomeActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void initView() {
-        markModelList=new ArrayList<>();
+        markModelList = new ArrayList<>();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
-        toggle = new ActionBarDrawerToggle(this,binding.drawer,binding.toolBar,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolBar, R.string.open, R.string.close);
         toggle.syncState();
         fragmentManager = getSupportFragmentManager();
 
         // init marks recyclerview
-        markAdapter = new MarkAdapter(this,markModelList);
+        markAdapter = new MarkAdapter(this, markModelList);
         binding.recViewModel.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewModel.setAdapter(markAdapter);
         getDrawerMarks();
@@ -148,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     // get marks data for navigation drawer
-    private void getDrawerMarks(){
+    private void getDrawerMarks() {
 
         markModelList.clear();
         markAdapter.notifyDataSetChanged();
@@ -168,22 +169,22 @@ public class HomeActivity extends AppCompatActivity {
                                 markModelList.addAll(response.body().getMarks());
                                 if (response.body().getMarks().size() > 0) {
                                     // rec_sent.setVisibility(View.VISIBLE);
-                                   //   Log.e("datasssssss",response.body().getMarks().get(0).getTitle_ar());
+                                    //   Log.e("datasssssss",response.body().getMarks().get(0).getTitle_ar());
 
-                                   // binding.flNotification.setVisibility(View.GONE);
+                                    // binding.flNotification.setVisibility(View.GONE);
                                     markAdapter.notifyDataSetChanged();
                                     //   total_page = response.body().getMeta().getLast_page();
 
                                 } else {
                                     markAdapter.notifyDataSetChanged();
 
-                               //     binding.llNoNotification.setVisibility(View.VISIBLE);
+                                    //     binding.llNoNotification.setVisibility(View.VISIBLE);
 
                                 }
                             } else {
                                 markAdapter.notifyDataSetChanged();
 
-                             //   binding.llNoNotification.setVisibility(View.VISIBLE);
+                                //   binding.llNoNotification.setVisibility(View.VISIBLE);
 
                                 //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 try {
@@ -207,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
                     });
         } catch (Exception e) {
             binding.progBarModel.setVisibility(View.GONE);
-           // binding.ll.setVisibility(View.VISIBLE);
+            // binding.ll.setVisibility(View.VISIBLE);
 
         }
     }
@@ -250,14 +251,13 @@ public class HomeActivity extends AppCompatActivity {
                     displayFragmentSearch();
 
 
-
                     break;
                 case 3:
-                    if (userModel!=null){
+                    if (userModel != null) {
                         displayFragmentProfile();
 
-                    }else {
-                        Common.CreateDialogAlert(this,getString(R.string.please_sign_in_or_sign_up));
+                    } else {
+                        Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
                     }
                     break;
 
@@ -561,14 +561,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public void onBackPressed() {
         if (fragment_home != null && fragment_home.isAdded() && fragment_home.isVisible()) {
-            if (userModel==null)
-            {
+            if (userModel == null) {
                 navigateToSignInActivity();
-            }else
-            {
+            } else {
                 finish();
             }
         } else {
@@ -577,7 +576,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void navigateToSignInActivity() {
-        Intent intent =new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -593,8 +592,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void showservicecenter(int position) {
-        Intent intent=new Intent(HomeActivity.this,ModelDetailsActivity.class);
-        intent.putExtra("search",markModelList.get(position).getId()+"");
+        Intent intent = new Intent(HomeActivity.this, ModelDetailsActivity.class);
+        intent.putExtra("search", markModelList.get(position).getId() + "");
+        intent.putExtra("data",markModelList.get(position));
         startActivity(intent);
     }
 }
