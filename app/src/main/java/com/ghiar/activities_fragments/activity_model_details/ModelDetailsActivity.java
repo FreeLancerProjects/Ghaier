@@ -33,6 +33,7 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     private ViewPagerAdapter adapter;
     private List<Fragment> fragmentList;
     private List<String> titles;
+    public String markid;
 
 
     @Override
@@ -45,7 +46,16 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_model_details);
+        getDataFromIntent();
         initView();
+
+    }
+
+    private void getDataFromIntent() {
+        Intent intent=getIntent();
+        if(intent.getStringExtra("search")!=null){
+            markid=intent.getStringExtra("search");
+        }
     }
 
 

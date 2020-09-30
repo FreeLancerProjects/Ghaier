@@ -32,12 +32,14 @@
                 android:tint="@color/white"
                 />
             <EditText
+                android:id="@+id/edit_query"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:hint="@string/search2"
+                android:imeOptions="actionSearch"
                 android:textColorHint="@color/gray6"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"/>
@@ -57,6 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:spinnerMode="dialog"
                 app:backgroundTint="@color/colorPrimary"
 
                 />
@@ -66,6 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:spinnerMode="dialog"
                 app:backgroundTint="@color/colorPrimary"
 
                 />
@@ -75,6 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:spinnerMode="dialog"
                 app:backgroundTint="@color/colorPrimary"
 
                 />

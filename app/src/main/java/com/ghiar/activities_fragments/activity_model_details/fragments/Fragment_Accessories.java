@@ -2,25 +2,33 @@ package com.ghiar.activities_fragments.activity_model_details.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.adapters.CityAdapter;
+import com.ghiar.adapters.MarkDataInAdapter;
 import com.ghiar.adapters.ModelsAdapter;
 import com.ghiar.databinding.FragmentSpareAccessoriesBinding;
 import com.ghiar.models.CityDataModel;
+import com.ghiar.models.MarkDataInModel;
+import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.ModelModel;
 import com.ghiar.models.ModelsData;
 import com.ghiar.models.UserModel;
@@ -51,9 +59,12 @@ public class Fragment_Accessories extends Fragment {
     private List<CityDataModel.CityModel> cityList;
     private CityAdapter cityAdapter;
     private CityDataModel.CityModel cityModel;
+    private List<MarkDataInModel> markDataInModelList;
     private ArrayAdapter<String> adapter;
     private List<String> list;
-
+    private List<String> list2;
+    private MarkDataInAdapter markDataInAdapter;
+    private String markid, model_id, status, title, country_id;
 
     public static Fragment_Accessories newInstance() {
 
@@ -65,15 +76,20 @@ public class Fragment_Accessories extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_spare_accessories, container, false);
         initView();
+        getFilterData();
         return binding.getRoot();
     }
 
+
     private void initView() {
-        ;
+
         list = new ArrayList<>();
+        list2 = new ArrayList<>();
+        markDataInModelList = new ArrayList<>();
         modelModelList = new ArrayList<>();
         cityList = new ArrayList<>();
         activity = (ModelDetailsActivity) getActivity();
+        markid = activity.markid;
         preferences = Preferences.getInstance();
         Paper.init(activity);
         lang = Paper.book().read("lang", "ar");
@@ -90,9 +106,16 @@ public class Fragment_Accessories extends Fragment {
         list.add(getResources().getString(R.string.choose));
         list.add(getResources().getString(R.string.news));
         list.add(getResources().getString(R.string.used));
+        markDataInAdapter = new MarkDataInAdapter(activity, markDataInModelList);
+        binding.recView.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recView.setAdapter(markDataInAdapter);
 
+        list2.add("new");
+        list2.add("used");
         adapter = new ArrayAdapter<String>(activity,
                 android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         binding.spinnerState.setAdapter(adapter);
         binding.spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -100,8 +123,9 @@ public class Fragment_Accessories extends Fragment {
                 if (position == 0) {
                     modelModel.setId(0);
                 } else {
+                    model_id = modelModelList.get(position).getId() + "";
                     modelModel.setId(modelModelList.get(position).getId());
-
+                    getFilterData();
                 }
             }
 
@@ -110,7 +134,18 @@ public class Fragment_Accessories extends Fragment {
 
             }
         });
-
+        binding.editQuery.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = binding.editQuery.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
+                    getFilterData();
+                    return false;
+                }
+            }
+            return false;
+        });
 
         cityModel = new CityDataModel.CityModel();
         cityModel.setId_city("0");
@@ -123,7 +158,24 @@ public class Fragment_Accessories extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                 } else {
+                    country_id = cityList.get(position).getId_city() + "";
+                    getFilterData();
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                } else {
+                    status = list2.get(position - 1);
+                    getFilterData();
                 }
             }
 
@@ -253,6 +305,71 @@ public class Fragment_Accessories extends Fragment {
                         }
                     }
                 });
+    }
+
+
+    private void getFilterData() {
+
+        markDataInModelList.clear();
+        markDataInAdapter.notifyDataSetChanged();
+        binding.progBar.setVisibility(View.VISIBLE);
+
+        try {
+
+
+            Api.getService(Tags.base_url)
+                    .get_MarkDataIn(country_id, model_id, status, title, "accessory", markid)
+                    .enqueue(new Callback<MarksDataModel>() {
+                        @Override
+                        public void onResponse(Call<MarksDataModel> call, Response<MarksDataModel> response) {
+                            binding.progBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                                markDataInModelList.clear();
+                                markDataInModelList.addAll(response.body().getData());
+                                if (response.body().getData().size() > 0) {
+                                    // rec_sent.setVisibility(View.VISIBLE);
+                                    //   Log.e("datasssssss",response.body().getMarks().get(0).getTitle_ar());
+
+                                    // binding.flNotification.setVisibility(View.GONE);
+                                    markDataInAdapter.notifyDataSetChanged();
+                                    //   total_page = response.body().getMeta().getLast_page();
+
+                                } else {
+                                    markDataInAdapter.notifyDataSetChanged();
+
+                                    //     binding.llNoNotification.setVisibility(View.VISIBLE);
+
+                                }
+                            } else {
+                                markDataInAdapter.notifyDataSetChanged();
+
+                                //   binding.llNoNotification.setVisibility(View.VISIBLE);
+
+                                //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                try {
+                                    Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MarksDataModel> call, Throwable t) {
+                            try {
+                                binding.progBar.setVisibility(View.GONE);
+                                //binding.llNoNotification.setVisibility(View.VISIBLE);
+
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            binding.progBar.setVisibility(View.GONE);
+            // binding.ll.setVisibility(View.VISIBLE);
+
+        }
     }
 
 

@@ -4,6 +4,7 @@ import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
 import com.ghiar.models.MainServiceModel;
 import com.ghiar.models.MarkModel;
+import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.MarksModel;
 import com.ghiar.models.ModelModel;
 import com.ghiar.models.ModelsData;
@@ -167,6 +168,7 @@ public interface Service {
 
 
     );
+
     @Multipart
     @POST("api/addNewAuctionRequest")
     Call<ResponseBody> auctionwithimage(
@@ -184,6 +186,7 @@ public interface Service {
             @Part("user_id") RequestBody user_id,
             @Part MultipartBody.Part images,
             @Part List<MultipartBody.Part> image);
+
     @Multipart
     @POST("api/addNewAuctionRequest")
     Call<ResponseBody> auctionwithimage(
@@ -200,6 +203,7 @@ public interface Service {
 
             @Part("user_id") RequestBody user_id,
             @Part MultipartBody.Part images);
+
     @GET("api/my-notifications")
     Call<NotificationDataModel> getnotification(
             @Query("page") int page,
@@ -208,4 +212,15 @@ public interface Service {
 
     );
 
+    @GET("api/mark-filter")
+    Call<MarksDataModel> get_MarkDataIn(
+            @Query("country_id") String country_id,
+            @Query("model_id") String model_id,
+            @Query("status") String status,
+            @Query("title") String title,
+            @Query("type") String type,
+            @Query("mark_id") String mark_id
+
+
+    );
 }
