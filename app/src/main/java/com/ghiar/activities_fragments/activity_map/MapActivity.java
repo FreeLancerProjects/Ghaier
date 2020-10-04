@@ -96,9 +96,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        if (intent!=null){
-            lat = intent.getDoubleExtra("lat",0.0);
-            lng = intent.getDoubleExtra("lng",0.0);
+        if (intent != null) {
+            lat = intent.getDoubleExtra("lat", 0.0);
+            lng = intent.getDoubleExtra("lng", 0.0);
             address = intent.getStringExtra("address");
         }
     }
@@ -108,12 +108,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setBackListener(this);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.edtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String query = binding.edtSearch.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(MapActivity.this,binding.edtSearch);
+                    Common.CloseKeyBoard(MapActivity.this, binding.edtSearch);
                     Search(query);
                     return false;
                 }
@@ -121,23 +121,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             return false;
         });
         binding.btnSelect.setOnClickListener(view -> {
-            SelectedLocationModel selectedLocation = new SelectedLocationModel(lat,lng,address);
+            if (address.isEmpty()) {
+                address = binding.edtSearch.getText().toString();
+            }
+            SelectedLocationModel selectedLocation = new SelectedLocationModel(lat, lng, address);
             Intent intent = getIntent();
-            if (intent!=null)
-            {
-                intent.putExtra("location",selectedLocation);
-                setResult(RESULT_OK,intent);
+            if (intent != null) {
+                intent.putExtra("location", selectedLocation);
+                setResult(RESULT_OK, intent);
             }
             finish();
         });
         updateUI();
-        if (lat==0.0&&lng==0.0){
+        if (lat == 0.0 && lng == 0.0) {
             binding.llSearch.setVisibility(View.VISIBLE);
             binding.btnSelect.setVisibility(View.VISIBLE);
             CheckPermission();
 
 
-        }else {
+        } else {
             binding.llSearch.setVisibility(View.GONE);
             binding.btnSelect.setVisibility(View.GONE);
 
@@ -145,15 +147,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void CheckPermission()
-    {
-        if (ActivityCompat.checkSelfPermission(this,fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
+    private void CheckPermission() {
+        if (ActivityCompat.checkSelfPermission(this, fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{fineLocPerm}, loc_req);
         } else {
 
             initGoogleApi();
         }
     }
+
     private void initGoogleApi() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -181,17 +183,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setBuildingsEnabled(false);
             mMap.setIndoorEnabled(true);
 
-            if (lat==0.0&&lng==0.0){
+            if (lat == 0.0 && lng == 0.0) {
                 mMap.setOnMapClickListener(latLng -> {
                     lat = latLng.latitude;
                     lng = latLng.longitude;
-                    AddMarker(lat,lng, address);
-                    getGeoData(lat,lng);
+                    AddMarker(lat, lng, address);
+                    getGeoData(lat, lng);
 
                 });
 
-            }else {
-                AddMarker(lat,lng,address);
+            } else {
+                AddMarker(lat, lng, address);
 
             }
 
@@ -332,7 +334,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                         try {
-                            status.startResolutionForResult(MapActivity.this,100);
+                            status.startResolutionForResult(MapActivity.this, 100);
                         } catch (IntentSender.SendIntentException e) {
                             e.printStackTrace();
                         }
@@ -346,8 +348,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onConnectionSuspended(int i) {
-        if (googleApiClient!=null)
-        {
+        if (googleApiClient != null) {
             googleApiClient.connect();
         }
     }
@@ -359,28 +360,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     @SuppressLint("MissingPermission")
-    private void startLocationUpdate()
-    {
-        locationCallback = new LocationCallback()
-        {
+    private void startLocationUpdate() {
+        locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
         LocationServices.getFusedLocationProviderClient(this)
-                .requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
+                .requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
     @Override
     public void onLocationChanged(Location location) {
         lat = location.getLatitude();
         lng = location.getLongitude();
-        AddMarker(lat,lng, address);
-        getGeoData(lat,lng);
+        AddMarker(lat, lng, address);
+        getGeoData(lat, lng);
 
-        if (googleApiClient!=null)
-        {
+        if (googleApiClient != null) {
             LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
             googleApiClient.disconnect();
         }
@@ -389,10 +387,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (googleApiClient!=null)
-        {
-            if (locationCallback!=null)
-            {
+        if (googleApiClient != null) {
+            if (locationCallback != null) {
                 LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
                 googleApiClient.disconnect();
                 googleApiClient = null;
@@ -404,13 +400,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == loc_req)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == loc_req) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initGoogleApi();
-            }else
-            {
+            } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -420,8 +413,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100&&resultCode== Activity.RESULT_OK)
-        {
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
 
             startLocationUpdate();
         }

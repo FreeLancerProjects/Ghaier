@@ -2,6 +2,7 @@ package com.ghiar.services;
 
 import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
+import com.ghiar.models.Create_Order_Model;
 import com.ghiar.models.MainServiceModel;
 import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarkModel;
@@ -246,4 +247,7 @@ public interface Service {
 
 
     );
+    @POST("api/store-order")
+    Call<ResponseBody> accept_orders(
+            @Body Create_Order_Model add_order_model);
 }

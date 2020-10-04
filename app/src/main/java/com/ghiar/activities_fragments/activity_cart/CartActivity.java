@@ -7,12 +7,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Address;
@@ -26,12 +28,19 @@ import com.ghiar.models.AddOrderModel;
 import com.ghiar.models.Create_Order_Model;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
+import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
+import com.ghiar.tags.Tags;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityCartBinding binding;
@@ -114,19 +123,25 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void getdata() {
-        if (preferences.getUserOrder(this) != null) {
+        if (create_order_model == null) {
             binding.flBack.setVisibility(View.GONE);
             binding.flNext.setVisibility(View.GONE);
             binding.ll.setVisibility(View.GONE);
             binding.llAction.setVisibility(View.GONE);
+            Log.e("dlldldldl","dlldldl");
         }
-
+else {
+            binding.flBack.setVisibility(View.VISIBLE);
+            binding.flNext.setVisibility(View.VISIBLE);
+            binding.ll.setVisibility(View.VISIBLE);
+            binding.llAction.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (preferences != null && preferences.getUserOrder(this) != null) {
+        if (preferences != null && preferences.getUserOrder(this) == null) {
             binding.flBack.setVisibility(View.GONE);
             binding.flNext.setVisibility(View.GONE);
             binding.ll.setVisibility(View.GONE);
@@ -309,4 +324,42 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     public void onBackPressed() {
         back();
     }
+    private void accept_order() {
+
+        final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url).accept_orders( create_order_model).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    getdata();
+// Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
+
+                    //  activity.refresh(Send_Data.getType());
+                } else {
+                    Common.CreateDialogAlert(CartActivity.this, getString(R.string.failed));
+
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    dialog.dismiss();
+                    Toast.makeText(CartActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
 }
