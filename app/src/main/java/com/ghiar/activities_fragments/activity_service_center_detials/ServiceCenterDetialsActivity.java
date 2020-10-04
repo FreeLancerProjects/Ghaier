@@ -1,30 +1,48 @@
 package com.ghiar.activities_fragments.activity_service_center_detials;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
+import com.ghiar.adapters.ProductSlideAdapter;
 import com.ghiar.databinding.ActivityServicesCenterBinding;
 import com.ghiar.databinding.ActivityServicesCenterDetialsBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.ServiceCenterModel;
+import com.ghiar.models.ServiceCentersModel;
 import com.ghiar.models.SingleAuctionModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -34,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ServiceCenterDetialsActivity extends AppCompatActivity implements Listeners.BackListener {
+public class ServiceCenterDetialsActivity extends AppCompatActivity implements Listeners.BackListener, OnMapReadyCallback {
     private ActivityServicesCenterDetialsBinding binding;
     private String lang;
     // private List<NotificationDataModel.NotificationModel> notificationModelList;
@@ -42,7 +60,13 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
     private Preferences preferences;
     private UserModel.User userModel;
     private String search_id;
-
+    private ServiceCentersModel singleadversimet;
+    private double lat = 0.0, lng = 0.0;
+    private GoogleMap mMap;
+    private Marker marker;
+    private float zoom = 15.0f;
+    private Intent intent;
+    private static final int REQUEST_PHONE_CALL = 1;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -57,12 +81,54 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
         initView();
         getdatafromintent();
         getsingleservicecenter();
+        updateUI();
+
+    }
+
+    private void updateUI() {
+
+        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        fragment.getMapAsync(this);
+
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        if (googleMap != null) {
+            mMap = googleMap;
+            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps));
+            mMap.setTrafficEnabled(false);
+            mMap.setBuildingsEnabled(false);
+            mMap.setIndoorEnabled(true);
+            AddMarker(lat, lng);
+
+
+        }
+    }
+
+
+    private void AddMarker(double lat, double lng) {
+
+        this.lat = lat;
+        this.lng = lng;
+
+        if (marker == null) {
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+        } else {
+            marker.setPosition(new LatLng(lat, lng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+
+
+        }
     }
 
     private void getdatafromintent() {
-        Intent intent=getIntent();
-        if(intent.getStringExtra("search")!=null){
-            search_id=intent.getStringExtra("search");
+        Intent intent = getIntent();
+        if (intent.getStringExtra("search") != null) {
+            search_id = intent.getStringExtra("search");
         }
     }
 
@@ -82,6 +148,14 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
         binding.setLang(lang);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
+        binding.btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (singleadversimet != null) {
+                    call(singleadversimet.getMarket().getPhone_code() + singleadversimet.getMarket().getPhone());
+                }
+            }
+        });
 
 
     }
@@ -109,16 +183,16 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
 
             Api.getService(Tags.base_url)
                     .get_singleservicecenter(search_id)
-                    .enqueue(new Callback<ServiceCenterModel>() {
+                    .enqueue(new Callback<ServiceCentersModel>() {
                         @Override
-                        public void onResponse(Call<ServiceCenterModel> call, Response<ServiceCenterModel> response) {
+                        public void onResponse(Call<ServiceCentersModel> call, Response<ServiceCentersModel> response) {
                             dialog.dismiss();
                             Log.e("Error_code", response.code() + "");
 
                             //  binding.progBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null) {
                                 //binding.coord1.scrollTo(0,0);
-
+                                setdata(response.body());
 
                             } else {
                                 Log.e("Error_code", response.code() + "");
@@ -133,7 +207,7 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
                         }
 
                         @Override
-                        public void onFailure(Call<ServiceCenterModel> call, Throwable t) {
+                        public void onFailure(Call<ServiceCentersModel> call, Throwable t) {
                             try {
 
                                 dialog.dismiss();
@@ -150,4 +224,65 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
         }
     }
 
+    private void setdata(ServiceCentersModel body) {
+        this.singleadversimet = body;
+        binding.setModel(body.getMarket());
+        lat = Double.parseDouble(body.getMarket().getGoogle_lat());
+        lng = Double.parseDouble(body.getMarket().getGoogle_long());
+        AddMarker(lat, lng);
+        String service = "";
+        for (int i = 0; i < body.getMarket().getServices().size(); i++) {
+            if (lang.equals("ar")) {
+                service += body.getMarket().getServices().get(i).getTitle_ar();
+            } else {
+                service += body.getMarket().getServices().get(i).getTitle_en();
+            }
+        }
+        binding.tvservice.setText(service);
+    }
+
+    private void call(String s) {
+        intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", s, null));
+
+
+        if (intent != null) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                } else {
+                    startActivity(intent);
+                }
+            } else {
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (this.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    Activity#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for Activity#requestPermissions for more details.
+                            return;
+                        }
+                    }
+                    startActivity(intent);
+                } else {
+
+                }
+                return;
+            }
+        }
+    }
 }

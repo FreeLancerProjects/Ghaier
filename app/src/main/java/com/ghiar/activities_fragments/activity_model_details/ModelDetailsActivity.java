@@ -21,11 +21,14 @@ import com.ghiar.activities_fragments.activity_accessories_spare_details.Accesso
 import com.ghiar.activities_fragments.activity_model_details.fragments.Fragment_Accessories;
 import com.ghiar.activities_fragments.activity_model_details.fragments.Fragment_Service;
 import com.ghiar.activities_fragments.activity_model_details.fragments.Fragment_Spare_Parts;
+import com.ghiar.activities_fragments.activity_service_center.ServiceCenterActivity;
+import com.ghiar.activities_fragments.activity_service_center_detials.ServiceCenterDetialsActivity;
 import com.ghiar.adapters.ViewPagerAdapter;
 import com.ghiar.databinding.ActivityAboutAppBinding;
 import com.ghiar.databinding.ActivityModelDetailsBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
+import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarkModel;
 
 import java.util.ArrayList;
@@ -90,10 +93,10 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
         adapter.addFragments_Titles(fragmentList, titles);
         binding.pager.setAdapter(adapter);
         binding.pager.setOffscreenPageLimit(3);
-        binding.image.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AccessoriesSparePartsDetailsActivity.class);
-            startActivity(intent);
-        });
+//        binding.image.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, AccessoriesSparePartsDetailsActivity.class);
+//            startActivity(intent);
+//        });
 
     }
 
@@ -139,11 +142,17 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
                 }
                 return;
             }
-        }}
-
-        @Override
-        public void back () {
-            finish();
         }
-
     }
+
+    @Override
+    public void back() {
+        finish();
+    }
+
+    public void showservicecenter(MarkDataInModel a) {
+        Intent intent = new Intent(ModelDetailsActivity.this, AccessoriesSparePartsDetailsActivity.class);
+        intent.putExtra("search", a.getId() + "");
+        startActivity(intent);
+    }
+}

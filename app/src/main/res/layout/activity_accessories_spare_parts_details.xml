@@ -404,6 +404,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".7"
+                                android:text='@{lang.equals("ar")?model.city.ar_city_title:model.city.en_city_title}'
                                 android:textColor="@color/gray10"
                                 android:textSize="15sp" />
 
@@ -437,6 +438,7 @@
                                 android:layout_weight=".7"
                                 android:textColor="@color/gray10"
                                 android:textSize="15sp"
+                                android:text="@{model.market.address}"
 
                                 />
 
@@ -679,7 +681,29 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="@string/most_seller"
+                        android:text="@string/same_adversiment"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/all"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
 
@@ -688,7 +712,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -727,6 +750,7 @@
                 </FrameLayout>
 
                 <ImageView
+                    android:id="@+id/imincrease"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/circle_primary"
@@ -735,6 +759,7 @@
                     android:tint="@color/white" />
 
                 <TextView
+                    android:id="@+id/tvamount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -744,6 +769,7 @@
                     android:textSize="18sp" />
 
                 <ImageView
+                    android:id="@+id/imdecrease"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/circle_gray"

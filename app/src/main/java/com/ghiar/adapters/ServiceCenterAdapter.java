@@ -47,6 +47,20 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
 
         holder.binding.setServiceCenter(list.get(position));
         holder.binding.setLang("ar");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(context instanceof ServiceCenterActivity){
+                    ServiceCenterActivity serviceCenterActivity=(ServiceCenterActivity)context;
+                    serviceCenterActivity.show(list.get(position).getId());
+                }
+                else {
+                    ModelDetailsActivity modelDetailsActivity=(ModelDetailsActivity)context;
+                    modelDetailsActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
+
+                }
+            }
+        });
         holder.binding.linearCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

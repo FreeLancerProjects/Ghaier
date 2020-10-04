@@ -154,6 +154,12 @@
     <string name="bidit">مزايدة حتى الان</string>
     <string name="r_s">R.s</string>
     <string name="add_main_image">Add Main Image</string>
+    <string name="same_adversiment">Same Adversiment</string>
+    <string name="all">All</string>
+    <string name="km">ك.م</string>
+    <string name="direction">Direction</string>
+    <string name="marketlocation">موقع مركز الخدمه</string>
+    <string name="ryal">Ryal</string>
 
     <string-array name="type_arrays">
         <item>خدمة</item>

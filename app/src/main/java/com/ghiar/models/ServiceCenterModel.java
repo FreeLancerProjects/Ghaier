@@ -26,7 +26,8 @@ public class ServiceCenterModel {
     private String created_at;
     private String updated_at;
     private CityDataModel.CityModel city;
-    private ServiceModel services;
+    private List<ServiceModel> services;
+    private double miles;
 
     public int getId() {
         return id;
@@ -112,7 +113,11 @@ public class ServiceCenterModel {
         return city;
     }
 
-    public ServiceModel getServices() {
+    public List<ServiceModel> getServices() {
         return services;
+    }
+
+    public double getMiles() {
+        return miles;
     }
 }

@@ -3,12 +3,14 @@ package com.ghiar.services;
 import com.ghiar.models.AuctionModel;
 import com.ghiar.models.CityDataModel;
 import com.ghiar.models.MainServiceModel;
+import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarkModel;
 import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.MarksModel;
 import com.ghiar.models.ModelModel;
 import com.ghiar.models.ModelsData;
 import com.ghiar.models.NotificationDataModel;
+import com.ghiar.models.PlaceDirectionModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ProductModel;
@@ -52,6 +54,13 @@ public interface Service {
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
 
+    @GET("directions/json")
+    Call<PlaceDirectionModel> getDirection(@Query("origin") String origin,
+                                           @Query("destination") String destination,
+                                           @Query("transit_mode") String transit_mode,
+                                           @Query("key") String key
+    );
+
     @GET("api/get-main-services")
     Call<MainServiceModel> getHomeServices();
 
@@ -69,11 +78,13 @@ public interface Service {
             @Query("mark_id") String mark_id,
             @Query("city_id") String city_id,
             @Query("name") String name,
-            @Query("services_id") String services_id
+            @Query("services_id") String services_id,
+            @Query("google_lat") Double google_lat,
+            @Query("google_long") Double google_long
     );
 
     @GET("api/one-market")
-    Call<ServiceCenterModel> get_singleservicecenter(
+    Call<ServiceCentersModel> get_singleservicecenter(
             @Query("market_id") String market_id
 
 
@@ -170,6 +181,13 @@ public interface Service {
     @GET("api/get-one-auction")
     Call<SingleAuctionModel> get_singleauction(
             @Query("auction_id") String auction_id
+
+
+    );
+
+    @GET("api/advertsment")
+    Call<MarksDataModel> get_singleadversiment(
+            @Query("advertsment_id") String advertsment_id
 
 
     );

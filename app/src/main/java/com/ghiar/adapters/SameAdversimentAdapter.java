@@ -11,23 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
-import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
-import com.ghiar.databinding.ItemDrawerMarkBinding;
 import com.ghiar.databinding.MarkdatainRowBinding;
+import com.ghiar.databinding.SameproductRowBinding;
 import com.ghiar.models.MarkDataInModel;
-import com.ghiar.models.MarkModel;
 
 import java.util.List;
 
-public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.MarkViewholder> {
+public class SameAdversimentAdapter extends RecyclerView.Adapter<SameAdversimentAdapter.MarkViewholder> {
 
-   private List<MarkDataInModel> list ;
+   private List<MarkDataInModel.Like> list ;
     private Context context;
 
 
 
 
-    public MarkDataInAdapter(Context context, List<MarkDataInModel> list) {
+    public SameAdversimentAdapter(Context context, List<MarkDataInModel.Like> list) {
         this.list = list;
         this.context = context;
 
@@ -36,7 +34,7 @@ public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.Ma
     @NonNull
     @Override
     public MarkViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-MarkdatainRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.markdatain_row, parent, false);
+SameproductRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.sameproduct_row, parent, false);
         return new MarkViewholder(binding);
     }
 
@@ -49,9 +47,9 @@ MarkdatainRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(conte
 holder.itemView.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        if(context instanceof ModelDetailsActivity){
-            ModelDetailsActivity activity=(ModelDetailsActivity) context;
-            activity.showservicecenter(list.get(position));
+        if(context instanceof HomeActivity){
+            HomeActivity activity=(HomeActivity)context;
+            activity.showservicecenter(holder.getLayoutPosition());
         }
     }
 });
@@ -65,8 +63,8 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
 
 
     public class MarkViewholder extends RecyclerView.ViewHolder {
-        MarkdatainRowBinding binding;
-        public MarkViewholder(@NonNull MarkdatainRowBinding binding) {
+        SameproductRowBinding binding;
+        public MarkViewholder(@NonNull SameproductRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

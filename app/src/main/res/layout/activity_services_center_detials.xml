@@ -10,7 +10,6 @@
         <variable
             name="backListener"
             type="com.ghiar.interfaces.Listeners.BackListener" />
-
         <variable
             name="lang"
             type="String" />
@@ -227,7 +226,7 @@
                         />
 
                     <Button
-                        android:id="@+id/btnSend"
+                        android:id="@+id/btnCall"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:layout_gravity="center_horizontal"
@@ -294,6 +293,7 @@
                                 />
 
                             <TextView
+                                android:id="@+id/tvservice"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -304,7 +304,8 @@
                                 android:gravity="center"
                                 android:longClickable="false"
                                 android:textColor="@color/black"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                />
 
 
                         </LinearLayout>
@@ -351,6 +352,7 @@
                                 android:longClickable="false"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
+                                android:text="@{model.user_type}"
 
                                 />
 
@@ -398,6 +400,7 @@
                                 android:gravity="center"
                                 android:longClickable="false"
                                 android:textColor="@color/black"
+                                android:text="@{model.name}"
                                 android:textSize="16sp" />
 
 
@@ -415,6 +418,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:padding="8dp"
+                            android:visibility="gone"
 
                             >
 

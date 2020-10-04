@@ -63,7 +63,7 @@
                     android:clickable="false"
                     android:gravity="end"
                     android:longClickable="false"
-                    android:text='@{lang.equals("ar")?serviceCenter.services.title_ar:serviceCenter.services.title_en}'
+                    android:text='@{serviceCenter.name}'
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:layout_weight="1"
@@ -75,7 +75,7 @@
                     android:clickable="false"
                     android:longClickable="false"
                     android:padding="8dp"
-                    image="@{serviceCenter.services.image}"
+                    image="@{serviceCenter.image}"
                     />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

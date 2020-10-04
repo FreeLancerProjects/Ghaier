@@ -3,9 +3,13 @@ package com.ghiar.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ghiar.models.Create_Order_Model;
 import com.ghiar.models.UserModel;
 import com.ghiar.tags.Tags;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 public class Preferences {
 
@@ -113,6 +117,24 @@ public class Preferences {
         edit.apply();
     }
 
+    public void create_update_order(Context context, Create_Order_Model buy_models){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("order",Context.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String user_order=gson.toJson(buy_models);
 
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("user_order",user_order);
+        editor.apply();
+        editor.commit();
+    }
+    public Create_Order_Model getUserOrder(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("order",Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String user_order = preferences.getString("user_order",null);
+        Type type=new TypeToken<Create_Order_Model>(){}.getType();
+        Create_Order_Model buy_models=gson.fromJson(user_order,type);
+        return buy_models;
+    }
 
 }
