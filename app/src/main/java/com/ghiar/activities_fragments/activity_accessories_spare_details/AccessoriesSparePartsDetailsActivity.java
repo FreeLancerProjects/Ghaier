@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_map_show_location.MapShowLocationActivity;
+import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
 import com.ghiar.adapters.AllAdversimentAdapter;
 import com.ghiar.adapters.ProductSlideAdapter;
@@ -60,8 +61,8 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     private MarksDataModel singleadversimet;
     private Intent intent;
     private static final int REQUEST_PHONE_CALL = 1;
-private Preferences preferences;
-    private int amount=1;
+    private Preferences preferences;
+    private int amount = 1;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -93,7 +94,7 @@ private Preferences preferences;
         binding.setLang(lang);
         allList = new ArrayList<>();
         likeList = new ArrayList<>();
-        preferences=Preferences.getInstance();
+        preferences = Preferences.getInstance();
         sameAdversimentAdapter = new SameAdversimentAdapter(this, likeList);
         allAdversimentAdapter = new AllAdversimentAdapter(this, allList);
         binding.recViewMostSeller.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -117,16 +118,17 @@ private Preferences preferences;
         binding.imincrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                amount+=1;
-                binding.tvamount.setText(amount+"");
+                amount += 1;
+                binding.tvamount.setText(amount + "");
             }
         });
         binding.imdecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(amount>1){
-                amount-=1;}
-                binding.tvamount.setText(amount+"");
+                if (amount > 1) {
+                    amount -= 1;
+                }
+                binding.tvamount.setText(amount + "");
 
             }
         });
@@ -135,7 +137,7 @@ private Preferences preferences;
             public void onClick(View v) {
                 Create_Order_Model add_order_model = preferences.getUserOrder(AccessoriesSparePartsDetailsActivity.this);
                 if (add_order_model != null) {
-                    if ((add_order_model.getMarket_id() + "").equals(singleadversimet.getAdvertsment().getMarket().getId()+"")) {
+                    if ((add_order_model.getMarket_id() + "").equals(singleadversimet.getAdvertsment().getMarket().getId() + "")) {
                         List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
                         List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
 
@@ -146,7 +148,7 @@ private Preferences preferences;
                         for (int i = 0; i < order_details.size(); i++) {
                             if (singleadversimet.getAdvertsment().getId() == order_details.get(i).getAdv_id()) {
                                 orderDetails1 = order_details.get(i);
-                                products1=productDetails.get(i);
+                                products1 = productDetails.get(i);
                                 pos = i;
                             }
                         }
@@ -159,7 +161,7 @@ private Preferences preferences;
                             productDetails.add(pos, products1);
                             products1.setAmount(amount + order_details.get(pos).getAmount());
                             // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
-                            orderDetails1.setCost( (Double.parseDouble(singleadversimet.getAdvertsment().getPrice()) ));
+                            orderDetails1.setCost((Double.parseDouble(singleadversimet.getAdvertsment().getPrice())));
                             orderDetails1.setAdv_id(singleadversimet.getAdvertsment().getId());
                             orderDetails1.setAmount(amount + order_details.get(pos).getAmount());
                             order_details.remove(pos);
@@ -169,9 +171,9 @@ private Preferences preferences;
                             products1 = new Create_Order_Model.ProductDetails();
                             products1.setAmount(amount);
                             products1.setTotal_cost(Double.parseDouble(singleadversimet.getAdvertsment().getPrice()) * amount);
-                            if(lang.equals("ar")) {
+                            if (lang.equals("ar")) {
                                 products1.setName(singleadversimet.getAdvertsment().getTitle_ar());
-                            }else {
+                            } else {
                                 products1.setName(singleadversimet.getAdvertsment().getTitle_en());
 
                             }
@@ -180,36 +182,34 @@ private Preferences preferences;
                             orderDetails1 = new Create_Order_Model.OrderDetails();
                             orderDetails1.setAmount(amount);
                             orderDetails1.setCost(Double.parseDouble(singleadversimet.getAdvertsment().getPrice()));
-                           orderDetails1.setAdv_id(singleadversimet.getAdvertsment().getId());
+                            orderDetails1.setAdv_id(singleadversimet.getAdvertsment().getId());
                             order_details.add(orderDetails1);
                         }
                         add_order_model.setProductDetails(productDetails);
                         add_order_model.setDetails(order_details);
-                       // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
+                        // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
 
+                    } else {
+                        // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
                     }
-                    else {
-                       // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
-                    }
-                }
-                else {
+                } else {
                     add_order_model = new Create_Order_Model();
                     List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
                     List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
 
-                    add_order_model.setMarket_id(singleadversimet.getAdvertsment().getMarket().getId()+"");
+                    add_order_model.setMarket_id(singleadversimet.getAdvertsment().getMarket().getId() + "");
                     Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
                     products1.setAmount(amount);
                     products1.setTotal_cost(Double.parseDouble(singleadversimet.getAdvertsment().getPrice()) * amount);
-                    if(lang.equals("ar")) {
+                    if (lang.equals("ar")) {
                         products1.setName(singleadversimet.getAdvertsment().getTitle_ar());
-                    }else {
+                    } else {
                         products1.setName(singleadversimet.getAdvertsment().getTitle_en());
 
                     }
                     products1.setImage(singleadversimet.getAdvertsment().getImage());
                     productDetails.add(products1);
-                   Create_Order_Model.OrderDetails orderDetails1 = new Create_Order_Model.OrderDetails();
+                    Create_Order_Model.OrderDetails orderDetails1 = new Create_Order_Model.OrderDetails();
                     orderDetails1.setAmount(amount);
                     orderDetails1.setCost(Double.parseDouble(singleadversimet.getAdvertsment().getPrice()));
                     orderDetails1.setAdv_id(singleadversimet.getAdvertsment().getId());
@@ -217,11 +217,10 @@ private Preferences preferences;
                     add_order_model.setProductDetails(productDetails);
                     add_order_model.setDetails(order_details);
                 }
-                preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this,add_order_model );
+                preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
 
 
-                }
-
+            }
 
 
         });
@@ -284,11 +283,13 @@ private Preferences preferences;
         this.singleadversimet = body;
         binding.setModel(body.getAdvertsment());
         allList.clear();
-        if(body.getAdvertsment().getAll()!=null){
-        allList.addAll(body.getAdvertsment().getAll());}
+        if (body.getAdvertsment().getAll() != null) {
+            allList.addAll(body.getAdvertsment().getAll());
+        }
         likeList.clear();
-        if(body.getAdvertsment().getLike()!=null){
-        likeList.addAll(body.getAdvertsment().getLike());}
+        if (body.getAdvertsment().getLike() != null) {
+            likeList.addAll(body.getAdvertsment().getLike());
+        }
         allAdversimentAdapter.notifyDataSetChanged();
         sameAdversimentAdapter.notifyDataSetChanged();
         productSlideAdapter = new ProductSlideAdapter(this, body.getAdvertsment().getImages());
@@ -296,15 +297,17 @@ private Preferences preferences;
         binding.pager.setAdapter(productSlideAdapter);
 
     }
+
     private void navigateToSMapActivity() {
         Intent intent = new Intent(this, MapShowLocationActivity.class);
 
-            intent.putExtra("lat", Double.parseDouble(singleadversimet.getAdvertsment().getMarket().getGoogle_lat()));
-            intent.putExtra("lng", Double.parseDouble(singleadversimet.getAdvertsment().getMarket().getGoogle_long()));
+        intent.putExtra("lat", Double.parseDouble(singleadversimet.getAdvertsment().getMarket().getGoogle_lat()));
+        intent.putExtra("lng", Double.parseDouble(singleadversimet.getAdvertsment().getMarket().getGoogle_long()));
 
         startActivity(intent);
         //  finish();
     }
+
     private void call(String s) {
         intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", s, null));
 
@@ -353,6 +356,182 @@ private Preferences preferences;
     @Override
     public void back() {
         finish();
+    }
+
+    public void addtocart(MarkDataInModel.All markDataInModel) {
+        Create_Order_Model add_order_model = preferences.getUserOrder(AccessoriesSparePartsDetailsActivity.this);
+        if (add_order_model != null) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {
+                List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
+                List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
+
+                Create_Order_Model.OrderDetails orderDetails1 = null;
+                Create_Order_Model.ProductDetails products1 = null;
+
+                int pos = 0;
+                for (int i = 0; i < order_details.size(); i++) {
+                    if (markDataInModel.getId() == order_details.get(i).getAdv_id()) {
+                        orderDetails1 = order_details.get(i);
+                        products1 = productDetails.get(i);
+                        pos = i;
+                    }
+                }
+                if (products1 != null) {
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    products1.setTotal_cost(products1.getTotal_cost() + (Double.parseDouble(markDataInModel.getPrice()) * 1));
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.remove(pos);
+                    productDetails.add(pos, products1);
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    orderDetails1.setCost((Double.parseDouble(markDataInModel.getPrice())));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    orderDetails1.setAmount(1 + order_details.get(pos).getAmount());
+                    order_details.remove(pos);
+                    order_details.add(pos, orderDetails1);
+
+                } else {
+                    products1 = new Create_Order_Model.ProductDetails();
+                    products1.setAmount(1);
+                    products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+                    if (lang.equals("ar")) {
+                        products1.setName(markDataInModel.getTitle_ar());
+                    } else {
+                        products1.setName(markDataInModel.getTitle_en());
+
+                    }
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.add(products1);
+                    orderDetails1 = new Create_Order_Model.OrderDetails();
+                    orderDetails1.setAmount(1);
+                    orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    order_details.add(orderDetails1);
+                }
+                add_order_model.setProductDetails(productDetails);
+                add_order_model.setDetails(order_details);
+                // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
+
+            } else {
+                // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
+            }
+        } else {
+            add_order_model = new Create_Order_Model();
+            List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
+            List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
+
+            add_order_model.setMarket_id(markDataInModel.getMarket().getId() + "");
+            Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
+            products1.setAmount(1);
+            products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+            if (lang.equals("ar")) {
+                products1.setName(markDataInModel.getTitle_ar());
+            } else {
+                products1.setName(markDataInModel.getTitle_en());
+
+            }
+            products1.setImage(markDataInModel.getImage());
+            productDetails.add(products1);
+            Create_Order_Model.OrderDetails orderDetails1 = new Create_Order_Model.OrderDetails();
+            orderDetails1.setAmount(1);
+            orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+            orderDetails1.setAdv_id(markDataInModel.getId());
+            order_details.add(orderDetails1);
+            add_order_model.setProductDetails(productDetails);
+            add_order_model.setDetails(order_details);
+        }
+        preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
+
+
+    }
+
+    public void addtocart(MarkDataInModel.Like markDataInModel) {
+        Create_Order_Model add_order_model = preferences.getUserOrder(AccessoriesSparePartsDetailsActivity.this);
+        if (add_order_model != null) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {
+                List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
+                List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
+
+                Create_Order_Model.OrderDetails orderDetails1 = null;
+                Create_Order_Model.ProductDetails products1 = null;
+
+                int pos = 0;
+                for (int i = 0; i < order_details.size(); i++) {
+                    if (markDataInModel.getId() == order_details.get(i).getAdv_id()) {
+                        orderDetails1 = order_details.get(i);
+                        products1 = productDetails.get(i);
+                        pos = i;
+                    }
+                }
+                if (products1 != null) {
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    products1.setTotal_cost(products1.getTotal_cost() + (Double.parseDouble(markDataInModel.getPrice()) * 1));
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.remove(pos);
+                    productDetails.add(pos, products1);
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    orderDetails1.setCost((Double.parseDouble(markDataInModel.getPrice())));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    orderDetails1.setAmount(1 + order_details.get(pos).getAmount());
+                    order_details.remove(pos);
+                    order_details.add(pos, orderDetails1);
+
+                } else {
+                    products1 = new Create_Order_Model.ProductDetails();
+                    products1.setAmount(1);
+                    products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+                    if (lang.equals("ar")) {
+                        products1.setName(markDataInModel.getTitle_ar());
+                    } else {
+                        products1.setName(markDataInModel.getTitle_en());
+
+                    }
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.add(products1);
+                    orderDetails1 = new Create_Order_Model.OrderDetails();
+                    orderDetails1.setAmount(1);
+                    orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    order_details.add(orderDetails1);
+                }
+                add_order_model.setProductDetails(productDetails);
+                add_order_model.setDetails(order_details);
+                // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
+
+            } else {
+                // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
+            }
+        } else {
+            add_order_model = new Create_Order_Model();
+            List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
+            List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
+
+            add_order_model.setMarket_id(markDataInModel.getMarket().getId() + "");
+            Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
+            products1.setAmount(1);
+            products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+            if (lang.equals("ar")) {
+                products1.setName(markDataInModel.getTitle_ar());
+            } else {
+                products1.setName(markDataInModel.getTitle_en());
+
+            }
+            products1.setImage(markDataInModel.getImage());
+            productDetails.add(products1);
+            Create_Order_Model.OrderDetails orderDetails1 = new Create_Order_Model.OrderDetails();
+            orderDetails1.setAmount(1);
+            orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+            orderDetails1.setAdv_id(markDataInModel.getId());
+            order_details.add(orderDetails1);
+            add_order_model.setProductDetails(productDetails);
+            add_order_model.setDetails(order_details);
+        }
+        preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
+
+
     }
 
 }

@@ -92,21 +92,22 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
                     displayFragmentPaymentType();
                 }
 
-            }
-            else if (fragment_payment_type != null && fragment_payment_type.isAdded() && fragment_payment_type.isVisible()) {
+            } else if (fragment_payment_type != null && fragment_payment_type.isAdded() && fragment_payment_type.isVisible()) {
 
                 //createOrder
-                if (usermodel != null){
+                if (usermodel != null) {
                     create_order_model.setAddress(addOrderModel.getAddress());
-                create_order_model.setFull_name(addOrderModel.getName());
-                create_order_model.setUser_id(usermodel.getId() + "");
-                create_order_model.setPayment_method(addOrderModel.getPayment_type());
-                create_order_model.setPhone(addOrderModel.getPhone_code() + addOrderModel.getPhone());
-                create_order_model.setGoogle_lat(addOrderModel.getLat() + "");
-                create_order_model.setGoogle_long(addOrderModel.getLng() + "");
-            } else {
-                Common.CreateDialogAlert(this, getResources().getString(R.string.please_sign_in_or_sign_up));
-            }}
+                    create_order_model.setFull_name(addOrderModel.getName());
+                    create_order_model.setUser_id(usermodel.getId() + "");
+                    create_order_model.setPayment_method(addOrderModel.getPayment_type());
+                    create_order_model.setPhone(addOrderModel.getPhone_code() + addOrderModel.getPhone());
+                    create_order_model.setGoogle_lat(addOrderModel.getLat() + "");
+                    create_order_model.setGoogle_long(addOrderModel.getLng() + "");
+                    accept_order();
+                } else {
+                    Common.CreateDialogAlert(this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                }
+            }
         });
 
         binding.flBack.setOnClickListener(v -> {
@@ -128,9 +129,8 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             binding.flNext.setVisibility(View.GONE);
             binding.ll.setVisibility(View.GONE);
             binding.llAction.setVisibility(View.GONE);
-            Log.e("dlldldldl","dlldldl");
-        }
-else {
+            Log.e("dlldldldl", "dlldldl");
+        } else {
             binding.flBack.setVisibility(View.VISIBLE);
             binding.flNext.setVisibility(View.VISIBLE);
             binding.ll.setVisibility(View.VISIBLE);
@@ -324,12 +324,13 @@ else {
     public void onBackPressed() {
         back();
     }
+
     private void accept_order() {
 
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).accept_orders( create_order_model).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).accept_orders(create_order_model).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 

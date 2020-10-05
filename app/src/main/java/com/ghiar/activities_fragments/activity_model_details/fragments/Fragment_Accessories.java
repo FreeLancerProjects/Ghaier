@@ -189,8 +189,8 @@ public class Fragment_Accessories extends Fragment {
             public void onClick(View v) {
                 String query = binding.editQuery.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.editQuery);
-                    title=query;
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
                     getFilterData();
                 }
             }

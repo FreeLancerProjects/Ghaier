@@ -21,10 +21,8 @@ import java.util.List;
 
 public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.MarkViewholder> {
 
-   private List<MarkDataInModel> list ;
+    private List<MarkDataInModel> list;
     private Context context;
-
-
 
 
     public MarkDataInAdapter(Context context, List<MarkDataInModel> list) {
@@ -36,25 +34,34 @@ public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.Ma
     @NonNull
     @Override
     public MarkViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-MarkdatainRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.markdatain_row, parent, false);
+        MarkdatainRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.markdatain_row, parent, false);
         return new MarkViewholder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MarkViewholder holder, int position) {
 
-    holder.binding.setModel(list.get(position));
-    holder.binding.setLang("ar");
+        holder.binding.setModel(list.get(position));
+        holder.binding.setLang("ar");
 
-holder.itemView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(context instanceof ModelDetailsActivity){
-            ModelDetailsActivity activity=(ModelDetailsActivity) context;
-            activity.showservicecenter(list.get(position));
-        }
-    }
-});
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof ModelDetailsActivity) {
+                    ModelDetailsActivity activity = (ModelDetailsActivity) context;
+                    activity.showservicecenter(list.get(position));
+                }
+            }
+        });
+        holder.binding.flAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof ModelDetailsActivity) {
+                    ModelDetailsActivity activity = (ModelDetailsActivity) context;
+                    activity.addtocart(list.get(position));
+                }
+            }
+        });
     }
 
     @Override
@@ -63,9 +70,9 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
     }
 
 
-
     public class MarkViewholder extends RecyclerView.ViewHolder {
         MarkdatainRowBinding binding;
+
         public MarkViewholder(@NonNull MarkdatainRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.databinding.AllproductRowBinding;
 import com.ghiar.databinding.SameproductRowBinding;
@@ -45,10 +46,10 @@ public class AllAdversimentAdapter extends RecyclerView.Adapter<AllAdversimentAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (context instanceof HomeActivity) {
-                    HomeActivity activity = (HomeActivity) context;
-                    activity.showservicecenter(holder.getLayoutPosition());
-                }
+if(context instanceof AccessoriesSparePartsDetailsActivity){
+    AccessoriesSparePartsDetailsActivity accessoriesSparePartsDetailsActivity=(AccessoriesSparePartsDetailsActivity)context;
+    accessoriesSparePartsDetailsActivity.addtocart(list.get(position));
+}
             }
         });
     }

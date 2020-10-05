@@ -30,7 +30,6 @@ import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_service_center.ServiceCenterActivity;
 import com.ghiar.adapters.CityAdapter;
-import com.ghiar.adapters.MarkDataInAdapter;
 import com.ghiar.adapters.ModelsAdapter;
 import com.ghiar.adapters.ServiceCenterAdapter;
 import com.ghiar.databinding.FragmentServicesBinding;

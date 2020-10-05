@@ -167,6 +167,7 @@ public class MarkDataInModel implements Serializable {
         private String model_id;
         private String created_at;
         private String updated_at;
+        private ServiceCenterModel market;
 
         public int getId() {
             return id;
@@ -238,6 +239,10 @@ public class MarkDataInModel implements Serializable {
 
         public String getUpdated_at() {
             return updated_at;
+        }
+
+        public ServiceCenterModel getMarket() {
+            return market;
         }
     }
 
@@ -260,6 +265,7 @@ public class MarkDataInModel implements Serializable {
         private String model_id;
         private String created_at;
         private String updated_at;
+        private ServiceCenterModel market;
 
         public int getId() {
             return id;
@@ -331,6 +337,10 @@ public class MarkDataInModel implements Serializable {
 
         public String getUpdated_at() {
             return updated_at;
+        }
+
+        public ServiceCenterModel getMarket() {
+            return market;
         }
     }
 }
