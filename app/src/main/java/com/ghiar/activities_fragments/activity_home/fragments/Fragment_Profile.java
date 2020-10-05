@@ -56,8 +56,6 @@ public class Fragment_Profile extends Fragment {
         binding.setLang(lang);
 
 
-
-
     }
 
 
