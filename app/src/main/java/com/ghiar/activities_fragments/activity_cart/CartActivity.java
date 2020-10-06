@@ -52,7 +52,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private AddOrderModel addOrderModel;
     private Preferences preferences;
     private Create_Order_Model create_order_model;
-    private UserModel.User usermodel;
+    private UserModel usermodel;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -98,7 +98,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
                 if (usermodel != null) {
                     create_order_model.setAddress(addOrderModel.getAddress());
                     create_order_model.setFull_name(addOrderModel.getName());
-                    create_order_model.setUser_id(usermodel.getId() + "");
+                    create_order_model.setUser_id(usermodel.getUser().getId() + "");
                     create_order_model.setPayment_method(addOrderModel.getPayment_type());
                     create_order_model.setPhone(addOrderModel.getPhone_code() + addOrderModel.getPhone());
                     create_order_model.setGoogle_lat(addOrderModel.getLat() + "");

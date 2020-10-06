@@ -194,7 +194,7 @@ public interface Service {
     );
 
     @Multipart
-    @POST("api/addNewAuctionRequest")
+    @POST("api/add-auction")
     Call<ResponseBody> auctionwithimage(
             @Part("title_ar") RequestBody title_ar,
             @Part("title_en") RequestBody title_en,
@@ -212,7 +212,7 @@ public interface Service {
             @Part List<MultipartBody.Part> image);
 
     @Multipart
-    @POST("api/addNewAuctionRequest")
+    @POST("api/add-auction")
     Call<ResponseBody> auctionwithimage(
             @Part("title_ar") RequestBody title_ar,
             @Part("title_en") RequestBody title_en,
@@ -247,6 +247,7 @@ public interface Service {
 
 
     );
+
     @POST("api/store-order")
     Call<ResponseBody> accept_orders(
             @Body Create_Order_Model add_order_model);

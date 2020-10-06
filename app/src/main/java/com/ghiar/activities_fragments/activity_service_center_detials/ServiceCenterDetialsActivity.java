@@ -58,7 +58,7 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
     // private List<NotificationDataModel.NotificationModel> notificationModelList;
     //private NotificationAdapter adapter;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private String search_id;
     private ServiceCentersModel singleadversimet;
     private double lat = 0.0, lng = 0.0;

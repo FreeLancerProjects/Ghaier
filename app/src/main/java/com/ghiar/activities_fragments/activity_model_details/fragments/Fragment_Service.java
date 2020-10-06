@@ -75,7 +75,7 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
 
     private ModelDetailsActivity activity;
     private FragmentServicesBinding binding;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private String lang;
     private Preferences preferences;
     private List<ModelModel> modelModelList;

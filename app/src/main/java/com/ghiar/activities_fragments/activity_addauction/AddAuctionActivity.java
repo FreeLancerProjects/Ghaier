@@ -64,12 +64,12 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
     private String lang;
 
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private final int IMG_REQ1 = 3, IMG_REQ2 = 2;
-    private Uri url, uri = null;
+    private Uri url, uri ;
     private List<Uri> urlList;
     private LinearLayoutManager manager;
     private ImagesAdapter imagesAdapter;
@@ -143,8 +143,12 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
                                 auctionwithoutimages(addAuctionModel);
                             }
                         }
-                    } else {
-                        Toast.makeText(AddAuctionActivity.this, getResources().getString(R.string.add_main_image), Toast.LENGTH_LONG).show();
+                        else {
+                            Toast.makeText(AddAuctionActivity.this, getResources().getString(R.string.add_main_image), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else {
+                      //  Toast.makeText(AddAuctionActivity.this,"dlldkdkdk",Toast.LENGTH_LONG).show();
                     }
                 } else {
                     // Common.CreateNoSignAlertDialog(AddAuctionActivity.this);
@@ -179,7 +183,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
             RequestBody price_part = Common.getRequestBodyText(addAuctionModel.getPrice());
             RequestBody time_part = Common.getRequestBodyText(addAuctionModel.getTime());
             RequestBody date_part = Common.getRequestBodyText(addAuctionModel.getDate());
-            RequestBody user_part = Common.getRequestBodyText(userModel.getId() + "");
+            RequestBody user_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
 
 
             MultipartBody.Part imagepart = Common.getMultiPart(this, uri, "main_image");
@@ -243,7 +247,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
             RequestBody price_part = Common.getRequestBodyText(addAuctionModel.getPrice());
             RequestBody time_part = Common.getRequestBodyText(addAuctionModel.getTime());
             RequestBody date_part = Common.getRequestBodyText(addAuctionModel.getDate());
-            RequestBody user_part = Common.getRequestBodyText(userModel.getId() + "");
+            RequestBody user_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
 
 
             MultipartBody.Part imagepart = Common.getMultiPart(this, uri, "main_image");
@@ -349,7 +353,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
         //datePickerDialog.setCancelText(getString(R.string.cancel));
         timePickerDialog.setLocale(new Locale(lang));
         timePickerDialog.setVersion(TimePickerDialog.Version.VERSION_2);
-        timePickerDialog.setMinTime(calendar1.get(Calendar.HOUR_OF_DAY), calendar1.get(Calendar.MINUTE), calendar1.get(Calendar.SECOND));
+        timePickerDialog.setMinTime(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
     }
 
 
@@ -361,7 +365,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
         calendar.set(Calendar.SECOND, second);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
-        time = dateFormat.format(calendar);
+        time = dateFormat.format(calendar.getTime());
         addAuctionModel.setTime(time);
         binding.tvdate.setText(date + "  " + time);
     }
@@ -460,7 +464,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
             } else {
                 uri = url;
                 binding.llimage.setVisibility(View.GONE);
-                Picasso.get().load(url.getPath()).into(binding.imageFill);
+                Picasso.get().load(url).into(binding.imageFill);
             }
 
         } else if (requestCode == IMG_REQ1 && resultCode == Activity.RESULT_OK && data != null) {
@@ -472,7 +476,7 @@ public class AddAuctionActivity extends AppCompatActivity implements Listeners.B
             } else {
                 uri = url;
                 binding.llimage.setVisibility(View.GONE);
-                Picasso.get().load(url.getPath()).into(binding.imageFill);
+                Picasso.get().load(url).into(binding.imageFill);
             }
         }
 

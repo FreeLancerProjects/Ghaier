@@ -104,7 +104,8 @@
                         android:background="@color/white"
                         android:padding="5dp"
                         android:singleLine="true"
-                        android:text="@{model.title_ar}"
+                        android:text="@={model.title_ar}"
+                        error="@{model.error_title_ar}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
@@ -149,8 +150,10 @@
                         android:background="@color/white"
                         android:padding="5dp"
                         android:singleLine="true"
-                        android:text="@{model.title_en}"
+                        android:text="@={model.title_en}"
                         android:textColor="@color/black"
+                        error="@{model.error_title_en}"
+
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />
 
@@ -312,7 +315,7 @@
                         android:inputType="number"
                         android:padding="5dp"
                         android:singleLine="true"
-                        android:text="@{model.amount}"
+                        android:text="@={model.amount}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp" />

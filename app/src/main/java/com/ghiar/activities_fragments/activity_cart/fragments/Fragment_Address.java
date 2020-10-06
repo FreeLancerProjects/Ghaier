@@ -69,7 +69,7 @@ public class Fragment_Address extends Fragment implements Listeners.LoginListene
     private AlertDialog dialog;
     private String phone_code = "+966";
     private AddOrderModel addOrderModel;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private Preferences preferences;
 
 
@@ -143,9 +143,9 @@ public class Fragment_Address extends Fragment implements Listeners.LoginListene
 
         if (userModel!=null){
             if (addOrderModel!=null){
-                addOrderModel.setName(userModel.getName());
-                addOrderModel.setPhone_code(userModel.getPhone_code());
-                addOrderModel.setPhone(userModel.getPhone());
+                addOrderModel.setName(userModel.getUser().getName());
+                addOrderModel.setPhone_code(userModel.getUser().getPhone_code());
+                addOrderModel.setPhone(userModel.getUser().getPhone());
 
             }
         }

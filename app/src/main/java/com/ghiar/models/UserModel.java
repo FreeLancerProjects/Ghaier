@@ -12,9 +12,6 @@ public class UserModel implements Serializable {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public static class User implements Serializable {
         private int id;
@@ -32,16 +29,7 @@ public class UserModel implements Serializable {
 
         private String fireBaseToken;
 
-        public User() {
-        }
 
-        public User(int id, String name, String phone_code, String phone, String image, String token) {
-            this.id = id;
-            this.name = name;
-            this.phone_code = phone_code;
-            this.phone = phone;
-            this.image = image;
-        }
 
         public int getId() {
             return id;

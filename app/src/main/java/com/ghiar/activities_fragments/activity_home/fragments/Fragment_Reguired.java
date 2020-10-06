@@ -64,19 +64,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Reguired extends Fragment implements Listeners.AddRequiredListener{
+public class Fragment_Reguired extends Fragment implements Listeners.AddRequiredListener {
 
     private HomeActivity activity;
     private FragmentRequiredBinding binding;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private AddWantedModel addWantedModel;
     private String lang;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private final int READ_REQ = 1, CAMERA_REQ = 2;
-    private final int IMG_REQ1 = 3, IMG_REQ2 = 4, IMG_REQ3 = 5;
     private Uri imgUri1 = null;
     private Uri uri = null;
     private int selectedType;
@@ -103,7 +102,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     private void initView() {
         markModelList = new ArrayList<>();
         modelModelList = new ArrayList<>();
-        addWantedModel=new AddWantedModel();
+        addWantedModel = new AddWantedModel();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         Paper.init(activity);
@@ -163,7 +162,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("bbbb","  "+userModel.getId());
+                Log.e("bbbb", "  " + userModel.getUser().getId());
                 checkDataValid();
             }
         });
@@ -171,7 +170,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         binding.imageFill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateImageAlertDialog(IMG_REQ1);
+                CreateImageAlertDialog(READ_REQ);
             }
         });
     }
@@ -304,7 +303,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
         RequestBody title_ar_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_ar()));
         RequestBody title_en_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_en()));
-        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getId()));
+        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getUser().getId()));
         RequestBody model_id_part = Common.getRequestBodyText(addWantedModel.getModel_id());
         RequestBody mark_id_part = Common.getRequestBodyText(addWantedModel.getMark_id());
         RequestBody status_part = Common.getRequestBodyText(addWantedModel.getStatus());
@@ -359,28 +358,30 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     }
 
     private void addًWantedswithoutImage() {
+        Log.e("ccccc", addWantedModel.getTitle_ar() + " " + addWantedModel.getTitle_en() + " " + userModel.getUser().getId() + " " + addWantedModel.getModel_id());
 
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         RequestBody title_ar_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_ar()));
         RequestBody title_en_part = Common.getRequestBodyText(String.valueOf(addWantedModel.getTitle_en()));
-        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getId()));
+        RequestBody user_id_part = Common.getRequestBodyText(String.valueOf(userModel.getUser().getId()));
         RequestBody model_id_part = Common.getRequestBodyText(addWantedModel.getModel_id());
         RequestBody mark_id_part = Common.getRequestBodyText(addWantedModel.getMark_id());
         RequestBody status_part = Common.getRequestBodyText(addWantedModel.getStatus());
         RequestBody amount_part = Common.getRequestBodyText(addWantedModel.getAmount());
         RequestBody type_part = Common.getRequestBodyText(addWantedModel.getType());
 
-        Log.e("ccccc",addWantedModel.getTitle_ar()+" " +addWantedModel.getTitle_en()+" "+ userModel.getId()+ " "+ addWantedModel.getModel_id()+" "+  " "+model_id_part+" " +status_part+" "+ amount_part+" "+type_part);
         Api.getService(Tags.base_url)
-                .addWantedWithOutImage(user_id_part,title_ar_part, title_en_part, model_id_part, mark_id_part, amount_part, status_part, type_part)
+                .addWantedWithOutImage(user_id_part, title_ar_part, title_en_part, model_id_part, mark_id_part, amount_part, status_part, type_part)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                            activity.finish();
+                            // activity.finish();
+                            addWantedModel = new AddWantedModel();
+                            binding.setModel(addWantedModel);
                             Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                         } else {
                             try {
@@ -423,9 +424,10 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if (requestCode == READ_REQ && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == READ_REQ && resultCode == Activity.RESULT_OK && data != null) {
 
             uri = data.getData();
+
             if (uri != null) {
                 Log.e("uri", uri + "_");
                 addWantedModel.setImage(uri);
@@ -439,7 +441,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                     Picasso.get().load(uri).fit().into(binding.imageFill);
 
                 }
-                binding.image.setVisibility(View.GONE);
+                binding.llimage.setVisibility(View.GONE);
             }
 
 
@@ -458,12 +460,12 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                     Picasso.get().load(uri).fit().into(binding.imageFill);
 
                 }
+                binding.llimage.setVisibility(View.GONE);
+
             }
 
 
         }
-
-
 
 
     }
@@ -518,18 +520,30 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         binding.expandLayout.collapse(true);
 
     }
+
     @Override
     public void checkDataValid() {
-       addWantedModel.setType(String.valueOf(binding.spinnertype.getSelectedItem()));
+
+        List<String> list = new ArrayList<>();
+        list.add("service");
+        list.add("product");
+        list.add("accessory");
+
+        Log.e("lllll", addWantedModel.getTitle_ar());
+
+        addWantedModel.setType(list.get(binding.spinnertype.getSelectedItemPosition() - 1));
+        addWantedModel.setMark_id(markModel.getId() + "");
+        addWantedModel.setModel_id(modelModel.getId() + "");
         if (binding.rbChoose1.isChecked()) {
             addWantedModel.setStatus("new");
         } else if (binding.rbChoose2.isChecked()) {
             addWantedModel.setStatus("old");
 
         }
+        Log.e("lllllsss", addWantedModel.getTitle_ar());
         binding.setModel(addWantedModel);
-        if (!addWantedModel.isDataValid(activity)) {
-            Log.e("kkkkkk","5555");
+        if (addWantedModel.isDataValid(activity)) {
+            Log.e("kkkkkk", "5555");
             if (imgUri1 != null) {
                 addWanted();
             } else {

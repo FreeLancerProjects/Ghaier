@@ -51,7 +51,7 @@ public class Fragment_Accessories extends Fragment {
     private ModelDetailsActivity activity;
     private FragmentSpareAccessoriesBinding binding;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private String lang;
     private List<ModelModel> modelModelList;
     private ModelsAdapter modelsAdapter;

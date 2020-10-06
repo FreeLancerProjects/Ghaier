@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private FragmentManager fragmentManager;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private Fragment_Home fragment_home;
     private Fragment_Auction fragment_auction;
     private Fragment_Reguired fragment_reguired;
@@ -105,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (userModel != null) {
 
-            Log.e("bbbbbbbb", userModel.getName() + "");
+            Log.e("bbbbbbbb", userModel.getUser().getName() + "");
             // EventBus.getDefault().register(this);
             updateToken();
 
@@ -506,13 +506,14 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void Logout() {
+        Log.e("mmmmm", userModel.getUser().getId()+userModel.getUser().getName() + userModel.getUser().getFireBaseToken() + "");
+
         if (userModel != null) {
             final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
-            userModel = preferences.getUserData(this);
+         //   userModel = preferences.getUserData(this);
             dialog.show();
-            Log.e("mmmmm", userModel.getId() + userModel.getFireBaseToken() + "");
             Api.getService(Tags.base_url)
-                    .logout(userModel.getId(), userModel.getFireBaseToken())
+                    .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

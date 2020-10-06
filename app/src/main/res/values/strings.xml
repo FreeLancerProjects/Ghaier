@@ -162,6 +162,8 @@
     <string name="direction">Direction</string>
     <string name="marketlocation">Service Center Location</string>
     <string name="ryal">Ryal</string>
+    <string name="arabic_descripsion">Arabic Descripsion</string>
+    <string name="english_descripsion">English Descripsion</string>
     <string-array name="type_arrays">
         <item>service</item>
         <item>product</item>

@@ -5,9 +5,9 @@ import java.util.List;
 
 public class AuctionModel {
 
-  private List<SingleAuctionModel> auction;
+  private List<SingleAuctionModel> auctions;
 
     public List<SingleAuctionModel> getAuction() {
-        return auction;
+        return auctions;
     }
 }

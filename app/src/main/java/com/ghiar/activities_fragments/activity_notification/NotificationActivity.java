@@ -48,7 +48,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     private List<NotificationDataModel.NotificationModel> notificationModelList;
     private Notification_Adapter adapter;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private int current_page=1;
     private boolean isLoading=false;
     private boolean isFromFirebase = false;
@@ -124,7 +124,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     {
         try {
             Api.getService(Tags.base_url)
-                    .getnotification(current_page,userModel.getId()+"",lang)
+                    .getnotification(current_page,userModel.getUser().getId()+"",lang)
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -187,7 +187,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         try {
 
             Api.getService(Tags.base_url)
-                    .getnotification(page,userModel.getId()+"",lang)
+                    .getnotification(page,userModel.getUser().getId()+"",lang)
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {

@@ -44,7 +44,7 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
     private String lang;
 
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private String search_id;
     private List<SingleAuctionModel.Images> imagesList;
     private Image_Adapter image_adapter;
@@ -190,7 +190,7 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
             dialog.setCancelable(false);
             dialog.show();
             Api.getService(Tags.base_url)
-                    .sendAuction(price, search_id, userModel.getId() + "")
+                    .sendAuction(price, search_id, userModel.getUser().getId() + "")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -54,7 +54,7 @@ public class Fragment_Auction extends Fragment {
     private HomeActivity activity;
     private FragmentAuctionBinding binding;
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
     private String lang;
     private List<SingleAuctionModel> singleAuctionModelList;
     private AuctionAdapter auctionAdapter;
@@ -116,14 +116,14 @@ public class Fragment_Auction extends Fragment {
                     }
                 } else {
                     auctionAdapter.notifyDataSetChanged();
-
+                  //  Log.e("Error_code", response.code()+""+singleAuctionModelList.size());
                     // binding.llNoStore.setVisibility(View.VISIBLE);
 
                     //Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                     try {
                         Log.e("Error_code", response.code() + "_" + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                       // e.printStackTrace();
                     }
                 }
 
@@ -173,7 +173,7 @@ public class Fragment_Auction extends Fragment {
             dialog.setCancelable(false);
             dialog.show();
             Api.getService(Tags.base_url)
-                    .sendAuction(price, singleAuctionModelList.get(pos).getId() + "", userModel.getId() + "")
+                    .sendAuction(price, singleAuctionModelList.get(pos).getId() + "", userModel.getUser().getId() + "")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

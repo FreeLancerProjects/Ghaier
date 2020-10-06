@@ -257,6 +257,7 @@
                             android:background="@color/white"
                             android:padding="5dp"
                             android:singleLine="true"
+                            android:inputType="numberDecimal"
                             android:text="@={model.price}"
                             error="@{model.error_price}"
                             android:textColor="@color/black"
@@ -303,6 +304,7 @@
                             android:background="@color/white"
                             android:padding="5dp"
                             android:singleLine="true"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray4"
                             android:textSize="14sp"
@@ -347,6 +349,7 @@
                             android:layout_marginRight="5dp"
                             android:background="@color/white"
                             android:padding="5dp"
+                            android:inputType="number"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray4"
@@ -488,7 +491,7 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:singleLine="true"
-                        android:text="@string/description"
+                        android:text="@string/arabic_descripsion"
                         android:textColor="@color/register"
                         android:textSize="17sp"
 
@@ -517,11 +520,58 @@
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray4"
+                            android:textSize="14sp"
+                            android:text="@={model.arabic_detials}"
+                            error="@{model.error_arabic_detilas}"
+                            />
+
+
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:singleLine="true"
+                        android:text="@string/english_descripsion"
+                        android:textColor="@color/register"
+                        android:textSize="17sp"
+
+                        />
+
+                    <FrameLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edtsmall_rounded_whiteshape"
+                        android:padding="5dp"
+
+
+                        >
+
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/white"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:text="@={model.english_detials}"
+                            error="@{model.error_english_detials}"
+                            android:textColorHint="@color/gray4"
                             android:textSize="14sp" />
 
 
                     </FrameLayout>
-
                     <Button
                         android:id="@+id/btnSend"
                         android:layout_width="wrap_content"

@@ -27,7 +27,7 @@ public class Fragment_Profile extends Fragment {
     private String lang;
 
     private Preferences preferences;
-    private UserModel.User userModel;
+    private UserModel userModel;
 
     public static Fragment_Profile newInstance() {
         return new Fragment_Profile();
@@ -52,7 +52,7 @@ public class Fragment_Profile extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
-        binding.setUserModel(userModel);
+        binding.setUserModel(userModel.getUser());
         binding.setLang(lang);
 
 
