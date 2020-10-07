@@ -124,7 +124,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     {
         try {
             Api.getService(Tags.base_url)
-                    .getnotification(current_page,userModel.getUser().getId()+"",lang)
+                    .getnotification(current_page,userModel.getUser().getId()+"")
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -187,7 +187,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         try {
 
             Api.getService(Tags.base_url)
-                    .getnotification(page,userModel.getUser().getId()+"",lang)
+                    .getnotification(page,userModel.getUser().getId()+"")
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {

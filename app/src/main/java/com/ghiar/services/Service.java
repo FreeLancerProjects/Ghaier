@@ -228,12 +228,10 @@ public interface Service {
             @Part("user_id") RequestBody user_id,
             @Part MultipartBody.Part images);
 
-    @GET("api/my-notifications")
+    @GET("api/my-notification")
     Call<NotificationDataModel> getnotification(
             @Query("page") int page,
-            @Header("Authorization") String Authorization,
-            @Header("lang") String lang
-
+            @Query("user_id") String user_id
     );
 
     @GET("api/mark-filter")

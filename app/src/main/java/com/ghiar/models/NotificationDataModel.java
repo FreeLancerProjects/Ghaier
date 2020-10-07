@@ -5,10 +5,10 @@ import java.util.List;
 
 public class NotificationDataModel implements Serializable {
 
-    private List<NotificationModel> data;
+    private List<NotificationModel> notifications;
 private int current_page;
     public List<NotificationModel> getData() {
-        return data;
+        return notifications;
     }
 
     public int getCurrent_page() {
