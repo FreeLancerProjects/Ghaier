@@ -281,14 +281,21 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
     private void setdata(MarksDataModel body) {
         this.singleadversimet = body;
+        Log.e("lslslls",body.getAdvertsment().getLike().size()+"");
         binding.setModel(body.getAdvertsment());
         allList.clear();
         if (body.getAdvertsment().getAll() != null) {
             allList.addAll(body.getAdvertsment().getAll());
         }
+        else {
+            binding.tv2.setVisibility(View.GONE);
+        }
         likeList.clear();
         if (body.getAdvertsment().getLike() != null) {
             likeList.addAll(body.getAdvertsment().getLike());
+        }
+        else {
+            binding.tv1.setVisibility(View.GONE);
         }
         allAdversimentAdapter.notifyDataSetChanged();
         sameAdversimentAdapter.notifyDataSetChanged();
