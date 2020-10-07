@@ -50,13 +50,12 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(context instanceof ServiceCenterActivity){
-                    ServiceCenterActivity serviceCenterActivity=(ServiceCenterActivity)context;
+                if (context instanceof ServiceCenterActivity) {
+                    ServiceCenterActivity serviceCenterActivity = (ServiceCenterActivity) context;
                     serviceCenterActivity.show(list.get(position).getId());
-                }
-                else {
-                    ModelDetailsActivity modelDetailsActivity=(ModelDetailsActivity)context;
-                    modelDetailsActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
+                } else {
+                    ModelDetailsActivity modelDetailsActivity = (ModelDetailsActivity) context;
+                    modelDetailsActivity.show(list.get(position).getId());
 
                 }
             }
@@ -64,13 +63,12 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
         holder.binding.linearCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(context instanceof ServiceCenterActivity){
-                    ServiceCenterActivity serviceCenterActivity=(ServiceCenterActivity)context;
-                    serviceCenterActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
-                }
-                else {
-                    ModelDetailsActivity modelDetailsActivity=(ModelDetailsActivity)context;
-                    modelDetailsActivity.call(list.get(position).getPhone_code()+list.get(position).getPhone());
+                if (context instanceof ServiceCenterActivity) {
+                    ServiceCenterActivity serviceCenterActivity = (ServiceCenterActivity) context;
+                    serviceCenterActivity.call(list.get(position).getPhone_code() + list.get(position).getPhone());
+                } else {
+                    ModelDetailsActivity modelDetailsActivity = (ModelDetailsActivity) context;
+                    modelDetailsActivity.call(list.get(position).getPhone_code() + list.get(position).getPhone());
 
                 }
             }
@@ -81,7 +79,6 @@ public class ServiceCenterAdapter extends RecyclerView.Adapter<ServiceCenterAdap
     public int getItemCount() {
         return list.size();
     }
-
 
 
     public class ServiceCenterAdapterVH extends RecyclerView.ViewHolder {

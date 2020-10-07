@@ -249,4 +249,9 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
 
 
     }
+    public void show(int id) {
+        Intent intent=new Intent(ModelDetailsActivity.this, ServiceCenterDetialsActivity.class);
+        intent.putExtra("search",id+"");
+        startActivity(intent);
+    }
 }
