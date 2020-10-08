@@ -15,18 +15,19 @@ import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.databinding.MarkdatainRowBinding;
 import com.ghiar.databinding.SameproductRowBinding;
 import com.ghiar.models.MarkDataInModel;
+import com.ghiar.models.MarksDataModel;
 
 import java.util.List;
 
 public class SameAdversimentAdapter extends RecyclerView.Adapter<SameAdversimentAdapter.MarkViewholder> {
 
-   private List<MarkDataInModel.Like> list ;
+   private List<MarksDataModel.Like> list ;
     private Context context;
 
 
 
 
-    public SameAdversimentAdapter(Context context, List<MarkDataInModel.Like> list) {
+    public SameAdversimentAdapter(Context context, List<MarksDataModel.Like> list) {
         this.list = list;
         this.context = context;
 

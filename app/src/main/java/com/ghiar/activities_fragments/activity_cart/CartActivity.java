@@ -136,6 +136,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             binding.ll.setVisibility(View.VISIBLE);
             binding.llAction.setVisibility(View.VISIBLE);
         }
+        finish();
     }
 
     @Override
@@ -293,16 +294,16 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         this.addOrderModel = addOrderModel;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        List<Fragment> fragmentList = fragmentManager.getFragments();
-        for (Fragment fragment : fragmentList) {
-            fragment.onActivityResult(requestCode, resultCode, data);
-        }
-
-
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        List<Fragment> fragmentList = fragmentManager.getFragments();
+//        for (Fragment fragment : fragmentList) {
+//            fragment.onActivityResult(requestCode, resultCode, data);
+//        }
+//
+//
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -326,7 +327,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void accept_order() {
-
+create_order_model.setTotal_cost(fragment_cart_purchases.total+"");
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -335,6 +336,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
+                Log.e("kkmkmkm",response.code()+"");
                 if (response.isSuccessful()) {
                     getdata();
 // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));

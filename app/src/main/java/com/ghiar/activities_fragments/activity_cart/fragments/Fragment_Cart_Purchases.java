@@ -39,6 +39,7 @@ public class Fragment_Cart_Purchases extends Fragment {
     private List<Create_Order_Model.ProductDetails> dataList;
     private List<Create_Order_Model.OrderDetails> orderDetailsList;
     private Preferences preferences;
+    public double total;
 
     public static Fragment_Cart_Purchases newInstance(AddOrderModel addOrderModel) {
         Bundle bundle = new Bundle();
@@ -99,12 +100,11 @@ public class Fragment_Cart_Purchases extends Fragment {
 
     private void gettotal() {
 
-        double total = 0;
+         total = 0;
         for (int i = 0; i < dataList.size(); i++) {
             total += dataList.get(i).getTotal_cost();
 
         }
-
 
         //  binding.tvquatity.setText(total + "");
     }

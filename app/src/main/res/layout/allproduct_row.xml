@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.ghiar.models.MarkDataInModel.All" />
+            type="com.ghiar.models.MarksDataModel.All" />
 
         <import type="android.view.View" />
 

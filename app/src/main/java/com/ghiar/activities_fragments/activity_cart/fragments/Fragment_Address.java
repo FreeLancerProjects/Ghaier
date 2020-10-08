@@ -215,7 +215,7 @@ public class Fragment_Address extends Fragment implements Listeners.LoginListene
         if (requestCode==100&&resultCode==Activity.RESULT_OK&&data!=null){
             SelectedLocationModel selectedLocationModel = (SelectedLocationModel) data.getSerializableExtra("location");
             if (addOrderModel!=null){
-               // Log.e("dllflfllf",selectedLocationModel.getAddress());
+                Log.e("dllflfllf",selectedLocationModel.getAddress());
                 addOrderModel.setAddress(selectedLocationModel.getAddress());
                 addOrderModel.setLat(selectedLocationModel.getLat());
                 addOrderModel.setLng(selectedLocationModel.getLng());

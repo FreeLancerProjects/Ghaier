@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Insets;
 import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
@@ -121,7 +122,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             return false;
         });
         binding.btnSelect.setOnClickListener(view -> {
-            if (address.isEmpty()) {
+            if ( address==null) {
                 address = binding.edtSearch.getText().toString();
             }
             SelectedLocationModel selectedLocation = new SelectedLocationModel(lat, lng, address);

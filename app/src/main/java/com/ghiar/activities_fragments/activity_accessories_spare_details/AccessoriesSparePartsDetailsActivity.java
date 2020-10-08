@@ -53,8 +53,8 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     private ActivityAccessoriesSparePartsDetailsBinding binding;
     private String lang;
     private String search_id;
-    private List<MarkDataInModel.All> allList;
-    private List<MarkDataInModel.Like> likeList;
+    private List<MarksDataModel.All> allList;
+    private List<MarksDataModel.Like> likeList;
     private AllAdversimentAdapter allAdversimentAdapter;
     private SameAdversimentAdapter sameAdversimentAdapter;
     private ProductSlideAdapter productSlideAdapter;
@@ -281,18 +281,18 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
     private void setdata(MarksDataModel body) {
         this.singleadversimet = body;
-        Log.e("lslslls",body.getAdvertsment().getLike().size()+"");
+//        Log.e("lslslls",body.getAdvertsment().getLike().size()+"");
         binding.setModel(body.getAdvertsment());
         allList.clear();
-        if (body.getAdvertsment().getAll() != null) {
-            allList.addAll(body.getAdvertsment().getAll());
+        if (body.getAll() != null) {
+            allList.addAll(body.getAll());
         }
         else {
             binding.tv2.setVisibility(View.GONE);
         }
         likeList.clear();
-        if (body.getAdvertsment().getLike() != null) {
-            likeList.addAll(body.getAdvertsment().getLike());
+        if (body.getLike() != null) {
+            likeList.addAll(body.getLike());
         }
         else {
             binding.tv1.setVisibility(View.GONE);
@@ -365,7 +365,7 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
         finish();
     }
 
-    public void addtocart(MarkDataInModel.All markDataInModel) {
+    public void addtocart(MarksDataModel.All markDataInModel) {
         Create_Order_Model add_order_model = preferences.getUserOrder(AccessoriesSparePartsDetailsActivity.this);
         if (add_order_model != null) {
             if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {
@@ -453,7 +453,7 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
     }
 
-    public void addtocart(MarkDataInModel.Like markDataInModel) {
+    public void addtocart(MarksDataModel.Like markDataInModel) {
         Create_Order_Model add_order_model = preferences.getUserOrder(AccessoriesSparePartsDetailsActivity.this);
         if (add_order_model != null) {
             if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {

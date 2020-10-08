@@ -689,7 +689,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recViewall"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -712,7 +714,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recViewMostSeller"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        />
                 </LinearLayout>
 
             </LinearLayout>
