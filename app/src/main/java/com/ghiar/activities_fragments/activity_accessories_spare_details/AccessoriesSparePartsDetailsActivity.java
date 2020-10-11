@@ -43,6 +43,7 @@ import com.ghiar.tags.Tags;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -64,11 +65,9 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     private Preferences preferences;
     private int amount = 1;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +88,8 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
     private void initView() {
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
-        binding.setBackListener(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+binding.setBackListener(this);
         binding.setLang(lang);
         allList = new ArrayList<>();
         likeList = new ArrayList<>();

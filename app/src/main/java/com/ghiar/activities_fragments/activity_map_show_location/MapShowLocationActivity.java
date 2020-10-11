@@ -81,14 +81,9 @@ public class MapShowLocationActivity extends AppCompatActivity implements OnMapR
     private String address;
     private double lat1, lng1;
     private ProgressDialog dialog;
-    private int type = 1;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
+    private int type = 1;   protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -50,11 +50,9 @@ public class VerificationCodeActivity extends AppCompatActivity {
     private Preferences preferences;
 
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +77,8 @@ public class VerificationCodeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
-      //  binding.tvResendCode.setOnClickListener(view -> sendSmsCode());
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+//  binding.tvResendCode.setOnClickListener(view -> sendSmsCode());
 
         binding.btnConfirm.setOnClickListener(view -> {
             String code = binding.edtCode.getText().toString().trim();

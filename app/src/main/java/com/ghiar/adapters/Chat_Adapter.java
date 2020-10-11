@@ -169,20 +169,18 @@ eventHolder.binding.setLang(lang);
     public int getItemViewType(int position) {
         MessageModel messageModel = messageModelList.get(position);
 
-        if (messageModel.getTo_user_id() == current_user_id) {
+        if (messageModel.getTo_user_id().equals( current_user_id+"")) {
           //  Log.e("type",messageModel.getType());
-            if (messageModel.getType().equals("text")) {
+            if (messageModel.getType().equals("message")) {
                 return ITEM_MESSAGE_LEFT;
             }
-            else if(messageModel.getType().equals("address")){
-                return ITEM_address_LEFT;
-            }
+
             else  {
                 return ITEM_image_LEFT;
             }
         }
         else {
-            if (messageModel.getType().equals("text")) {
+            if (messageModel.getType().equals("message")) {
                 return ITEM_MESSAGE_RIGHT;
             }
 

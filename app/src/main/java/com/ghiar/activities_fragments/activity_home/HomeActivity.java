@@ -27,8 +27,8 @@ import com.ghiar.activities_fragments.activity_cart.CartActivity;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Auction;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_More;
-import com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.Fragment_Profile;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Reguired;
+import com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.fragments.Fragment_Profile;
 import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
@@ -73,12 +73,9 @@ public class HomeActivity extends AppCompatActivity {
     private List<MarkModel> markModelList;
     private String lang;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
-
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +118,8 @@ public class HomeActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolBar, R.string.open, R.string.close);
         toggle.syncState();
         fragmentManager = getSupportFragmentManager();
-        lang = Paper.book().read("lang", "ar");
-
-        // init marks recyclerview
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+// init marks recyclerview
         markAdapter = new MarkAdapter(this, markModelList);
         binding.recViewModel.setLayoutManager(new LinearLayoutManager(this));
         binding.recViewModel.setAdapter(markAdapter);

@@ -34,11 +34,9 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     private String lang;
     private int type;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +58,8 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     private void initView()
     {
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
-        binding.setBackListener(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+binding.setBackListener(this);
         binding.setLang(lang);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 

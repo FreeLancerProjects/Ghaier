@@ -63,6 +63,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -71,7 +72,7 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Fragment_Service extends Fragment implements  GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
+public class Fragment_Service extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private ModelDetailsActivity activity;
     private FragmentServicesBinding binding;
@@ -87,9 +88,9 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
     private ArrayAdapter<String> adapter;
     private List<String> list;
     private List<String> list2;
-//    private MarkDataInAdapter markDataInAdapter;
+    //    private MarkDataInAdapter markDataInAdapter;
     private String markid, model_id, status, title, country_id;
-//    private List<MarkDataInModel> markDataInModelList;
+    //    private List<MarkDataInModel> markDataInModelList;
     private ServiceCenterAdapter serviceCenterAdapter;
     private List<ServiceCenterModel> serviceCenterModelList;
     private final String gps_perm = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -100,6 +101,7 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
     private LocationCallback locationCallback;
     private String address;
     private double lat, lng;
+
     public static Fragment_Service newInstance() {
 
         return new Fragment_Service();
@@ -120,14 +122,14 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
 
         list = new ArrayList<>();
         list2 = new ArrayList<>();
-        serviceCenterModelList=new ArrayList<>();
+        serviceCenterModelList = new ArrayList<>();
         modelModelList = new ArrayList<>();
         cityList = new ArrayList<>();
         activity = (ModelDetailsActivity) getActivity();
         markid = activity.markid;
         preferences = Preferences.getInstance();
         Paper.init(activity);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         userModel = preferences.getUserData(activity);
         binding.setLang(lang);
         modelsAdapter = new ModelsAdapter(modelModelList, activity);
@@ -197,8 +199,8 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String query = binding.editQuery.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.editQuery);
-                    title=query;
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
                     getSerciceCenerData();
                     return false;
                 }
@@ -210,8 +212,8 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
             public void onClick(View v) {
                 String query = binding.editQuery.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.editQuery);
-                    title=query;
+                    Common.CloseKeyBoard(activity, binding.editQuery);
+                    title = query;
                     getSerciceCenerData();
                 }
             }
@@ -365,7 +367,7 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
 
 
             Api.getService(Tags.base_url)
-                    .getServiceCenterData(markid, country_id, title, "",lat,lng)
+                    .getServiceCenterData(markid, country_id, title, "", lat, lng)
                     .enqueue(new Callback<ServiceCentersModel>() {
                         @Override
                         public void onResponse(Call<ServiceCentersModel> call, Response<ServiceCentersModel> response) {
@@ -418,16 +420,18 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
 
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case gps_req:{
-                if ( grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            case gps_req: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     initGoogleApiClient();
                 }
-            }}
+            }
+        }
     }
 
     private void CheckPermission() {
@@ -477,7 +481,6 @@ public class Fragment_Service extends Fragment implements  GoogleApiClient.OnCon
             }
         }*/
     }
-
 
 
     private void intLocationRequest() {

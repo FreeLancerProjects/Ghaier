@@ -16,6 +16,8 @@ import com.ghiar.language.Language;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.tags.Tags;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 public class SplashActivity extends AppCompatActivity {
@@ -23,11 +25,9 @@ public class SplashActivity extends AppCompatActivity {
     private ActivitySplashBinding binding;
     private Preferences preferences;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -66,7 +66,7 @@
                         android:longClickable="false"
                         android:padding="8dp"
                         android:rotation='@{lang.equals("en")?180:0}'
-                        android:src="@drawable/ic_arrow_right"
+                        android:src="@drawable/ic_right_arrow"
                         android:tint="@color/white"
                         tools:ignore="VectorDrawableCompat"
                         android:onClick="@{()->backListener.back()}"
@@ -173,9 +173,10 @@
                     android:id="@+id/image_send"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/circle_gradient"
+                    android:background="@drawable/circle_bg"
                     android:padding="10dp"
                     android:src="@drawable/ic_send"
+                    android:rotation='@{lang.equals("ar")?180:0}'
                     android:tint="@color/white"
                     tools:ignore="VectorDrawableCompat" />
 
@@ -188,20 +189,13 @@
                     android:tint="@color/gray4"
                     tools:ignore="VectorDrawableCompat" />
 
-                <ImageView
-                    android:id="@+id/image_address"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_map"
-                    android:tint="@color/gray4"
-                    tools:ignore="VectorDrawableCompat" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
-                    android:background="@drawable/edt_bg"
+                    android:background="@drawable/edit_shape"
                     android:orientation="horizontal"
 
                     >
@@ -215,7 +209,7 @@
                         android:layout_marginRight="8dp"
                         android:background="@color/transparent"
                         android:gravity="center_vertical"
-                        android:hint="@string/type_amessage"
+                        android:hint="@string/type_message"
                         android:inputType="textMultiLine"
                         android:maxLines="3"
                         android:minHeight="37dp"

@@ -18,7 +18,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
-            profileImage="@{userroommodel.other_user_avatar}"
+            image="@{userroommodel.image}"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginStart="5dp"
@@ -39,7 +39,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:singleLine="true"
-            android:text="@{userroommodel.other_user_name}"
+            android:text="@{userroommodel.name}"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"

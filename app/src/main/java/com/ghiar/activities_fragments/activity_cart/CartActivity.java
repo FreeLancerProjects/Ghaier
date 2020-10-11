@@ -54,11 +54,9 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private Create_Order_Model create_order_model;
     private UserModel usermodel;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +75,8 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         usermodel = preferences.getUserData(this);
         create_order_model = preferences.getUserOrder(this);
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
-        binding.setBackListener(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+binding.setBackListener(this);
         binding.setLang(lang);
 
 

@@ -44,6 +44,7 @@ import com.ghiar.tags.Tags;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -96,8 +97,8 @@ public class Fragment_Spare_Parts extends Fragment {
         markid = activity.markid;
         preferences = Preferences.getInstance();
         Paper.init(activity);
-        lang = Paper.book().read("lang", "ar");
-        userModel = preferences.getUserData(activity);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+userModel = preferences.getUserData(activity);
         binding.setLang(lang);
         modelsAdapter = new ModelsAdapter(modelModelList, activity);
         binding.spinnerModel.setAdapter(modelsAdapter);

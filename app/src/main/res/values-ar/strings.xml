@@ -164,6 +164,10 @@
     <string name="english_descripsion">English Descripsion</string>
     <string name="current">Current</string>
     <string name="previous">Previous</string>
+    <string name="type_message">Type Message</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_auction">My Auction</string>
+    <string name="require">My Reruire</string>
 
     <string-array name="type_arrays">
         <item>خدمة</item>

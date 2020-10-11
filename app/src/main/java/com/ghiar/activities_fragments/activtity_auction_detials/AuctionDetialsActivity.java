@@ -50,12 +50,9 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
     private Image_Adapter image_adapter;
     private AuctionSlideAdapter sliderAdapter;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-    }
-
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

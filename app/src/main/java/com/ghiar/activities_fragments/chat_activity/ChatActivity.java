@@ -75,14 +75,9 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
     private final int IMG_REQ1 = 3, IMG_REQ2 = 2;
     private Uri url = null;
     private ChatUserModel chatUserModel;
-
-
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

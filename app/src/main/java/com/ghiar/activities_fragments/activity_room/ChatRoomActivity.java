@@ -49,15 +49,9 @@ public class ChatRoomActivity extends AppCompatActivity implements Listeners.Bac
     private Room_Adapter room_adapter;
     private LinearLayoutManager manager;
     private boolean isLoading = false;
-    private int current_page = 1;
-
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-
-    }
-
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +92,6 @@ public class ChatRoomActivity extends AppCompatActivity implements Listeners.Bac
                         isLoading = true;
                         userRoomModelList.add(null);
                         room_adapter.notifyItemInserted(userRoomModelList.size()-1);
-                        int page = current_page+1;
                       //  loadMore(page);
                     }
 

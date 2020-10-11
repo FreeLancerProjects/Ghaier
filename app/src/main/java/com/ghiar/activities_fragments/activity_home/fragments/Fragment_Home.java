@@ -114,8 +114,8 @@ public class Fragment_Home extends Fragment {
         sliderInit();
 
         Paper.init(activity);
-        lang = Paper.book().read("lang", "ar");
-        userModel = preferences.getUserData(activity);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+userModel = preferences.getUserData(activity);
         binding.setLang(lang);
 
     }

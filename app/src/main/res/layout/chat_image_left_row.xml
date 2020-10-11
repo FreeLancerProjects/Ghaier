@@ -35,7 +35,6 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image"
-                image="@{messagemodel.to_user_avatar}"
 
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -54,8 +53,8 @@
 
                 <ImageView
                     android:id="@+id/tv_message_content"
-                    imageActivityEndPoint="@{messagemodel.message}"
-                   type="@{3}"
+                    image="@{messagemodel.image}"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 

@@ -11,13 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.endpoint.ghair.R;
-import com.endpoint.ghair.activities_fragments.activity_home.HomeActivity;
-import com.endpoint.ghair.adapters.ViewPagerAdapter;
-import com.endpoint.ghair.databinding.FragmentProfileBinding;
-import com.endpoint.ghair.models.Slider_Model;
-import com.endpoint.ghair.models.UserModel;
-import com.endpoint.ghair.preferences.Preferences;
+
+import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.adapters.View2PagerAdapter;
+import com.ghiar.adapters.ViewPagerAdapter;
+import com.ghiar.databinding.FragmentProfileBinding;
+import com.ghiar.models.UserModel;
+import com.ghiar.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,8 @@ public class Fragment_Profile extends Fragment {
     private String lang;
     private List<Fragment> fragmentList;
     private List<String> titles;
-    private ViewPagerAdapter adapter;
+    private View2PagerAdapter adapter;
 
-    private List<Slider_Model.Data> dataList;
     private Preferences preferences;
     private UserModel userModel;
 
@@ -63,9 +63,9 @@ public class Fragment_Profile extends Fragment {
         binding.tab.setupWithViewPager(binding.pager);
         addFragments_Titles();
         binding.pager.setOffscreenPageLimit(fragmentList.size());
-binding.setUsermodel(userModel);
+binding.setUserModel(userModel.getUser());
 binding.setLang(lang);
-        adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter = new View2PagerAdapter(getChildFragmentManager());
         adapter.addFragments(fragmentList);
         adapter.addTitles(titles);
         binding.pager.setAdapter(adapter);
@@ -78,17 +78,10 @@ binding.setLang(lang);
         fragmentList.add(FragmentMyAuction.newInstance());
 
         fragmentList.add(FragmentRequired.newInstance());
-        fragmentList.add(FragmentMyServices.newInstance());
         titles.add(getString(R.string.my_orders));
         titles.add(getString(R.string.my_auction));
         titles.add(getString(R.string.require));
-        titles.add(getString(R.string.my_services));
 
-        if (!userModel.getUser_type().equals("client")) {
-            fragmentList.add(FragmentMyProducts.newInstance());
-            titles.add(getString(R.string.my_products));
-
-        }
 
     }
 

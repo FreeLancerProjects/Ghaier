@@ -9,14 +9,14 @@ import com.ghiar.language.Language;
 
 import java.util.Locale;
 
+import io.paperdb.Paper;
+
 
 public class App extends MultiDexApplication {
 
-    @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Language.updateResources(newBase, "ar"));
-    }
-
+        Paper.init(newBase);
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     public void onCreate() {

@@ -77,8 +77,8 @@ public class Fragment_Auction extends Fragment {
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         Paper.init(activity);
-        lang = Paper.book().read("lang", "ar");
-        userModel = preferences.getUserData(activity);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+userModel = preferences.getUserData(activity);
         auctionAdapter = new AuctionAdapter(activity, singleAuctionModelList, this);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recView.setAdapter(auctionAdapter);

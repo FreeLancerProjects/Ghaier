@@ -35,6 +35,7 @@ import com.ghiar.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 
@@ -50,11 +51,9 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     private static final int REQUEST_PHONE_CALL = 1;
     private Preferences preferences;
 
-    @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
-    }
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +78,8 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
         titles = new ArrayList<>();
         preferences=Preferences.getInstance();
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
-        binding.setBackListener(this);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+binding.setBackListener(this);
         binding.setLang(lang);
 
 

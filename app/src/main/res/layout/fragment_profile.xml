@@ -208,11 +208,39 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@color/black"
+                    app:tabSelectedTextColor="@color/black"
+                    app:tabIndicatorHeight="4dp"
+                    app:tabIndicatorColor="@color/white"
+                    />
 
 
 
 
-            </LinearLayout>
+
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" ></androidx.viewpager.widget.ViewPager>
+
+
+
+
+
+
+
+    </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
