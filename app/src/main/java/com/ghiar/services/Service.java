@@ -8,14 +8,20 @@ import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarkModel;
 import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.MarksModel;
+import com.ghiar.models.MessageDataModel;
+import com.ghiar.models.MessageModel;
 import com.ghiar.models.ModelModel;
 import com.ghiar.models.ModelsData;
+import com.ghiar.models.MyAuctionModel;
+import com.ghiar.models.MyRequiredModel;
 import com.ghiar.models.NotificationDataModel;
+import com.ghiar.models.Order_Model;
 import com.ghiar.models.PlaceDirectionModel;
 import com.ghiar.models.PlaceGeocodeData;
 import com.ghiar.models.PlaceMapDetailsData;
 import com.ghiar.models.ProductModel;
 import com.ghiar.models.ProductsModel;
+import com.ghiar.models.RoomIdModel;
 import com.ghiar.models.ServiceCenterModel;
 import com.ghiar.models.ServiceCentersModel;
 import com.ghiar.models.ServiceModel;
@@ -23,6 +29,7 @@ import com.ghiar.models.SingleAuctionModel;
 import com.ghiar.models.SliderModel;
 import com.ghiar.models.SettingModel;
 import com.ghiar.models.UserModel;
+import com.ghiar.models.UserRoomModelData;
 
 import java.util.List;
 
@@ -230,7 +237,7 @@ public interface Service {
 
     @GET("api/my-notification")
     Call<NotificationDataModel> getnotification(
-            @Query("page") int page,
+
             @Query("user_id") String user_id
     );
 
@@ -249,4 +256,75 @@ public interface Service {
     @POST("api/store-order")
     Call<ResponseBody> accept_orders(
             @Body Create_Order_Model add_order_model);
+
+    @FormUrlEncoded
+    @POST("api/my-rooms")
+    Call<UserRoomModelData> getRooms(@Field("client_id") int client_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/single-chat-room")
+    Call<MessageDataModel> getRoomMessages(
+            @Field("room_id") int room_id
+    );
+
+
+    @FormUrlEncoded
+    @POST("api/send-messgae")
+    Call<MessageModel> sendmessagetext(
+            @Field("from_id") String from_id,
+
+            @Field("to_id") String to_id,
+            @Field("type") String type,
+            @Field("room_id") String room_id,
+            @Field("message") String message
+
+
+
+
+            );
+
+    @FormUrlEncoded
+    @POST("api/chatRoom/get")
+    Call<RoomIdModel> getRoomId(@Field("from_user_id") int from_user_id,
+                                @Field("to_user_id") int to_user_id
+
+
+    );
+
+    @Multipart
+    @POST("api/send-messgae")
+    Call<MessageModel> sendmessagewithimage
+            (
+                    @Part("from_id") RequestBody from_id,
+
+                    @Part("to_id") RequestBody to_id,
+                    @Part("type") RequestBody type,
+                    @Part("room_id") RequestBody room_id,
+
+                    @Part MultipartBody.Part imagepart
+
+//
+            );
+
+    @GET("api/get-my-auction")
+    Call<MyAuctionModel> getmyauction(
+            @Query("user_id") String user_id
+
+    );
+
+    @GET("api/my-wanted")
+    Call<MyRequiredModel> getclentcurrentrequired(
+            @Query("user_id") String user_id
+
+
+    );
+
+    @GET("api/client/currentOrders")
+    Call<Order_Model> getclentcurrentorder(
+            @Query("user_id") String user_id,
+            @Query("order_type") String order_type
+
+
+    );
 }

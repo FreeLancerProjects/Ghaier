@@ -162,6 +162,8 @@
     <string name="ryal">Ryal</string>
     <string name="arabic_descripsion">Arabic Descripsion</string>
     <string name="english_descripsion">English Descripsion</string>
+    <string name="current">Current</string>
+    <string name="previous">Previous</string>
 
     <string-array name="type_arrays">
         <item>خدمة</item>

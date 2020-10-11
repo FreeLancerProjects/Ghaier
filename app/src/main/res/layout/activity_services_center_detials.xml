@@ -10,9 +10,11 @@
         <variable
             name="backListener"
             type="com.ghiar.interfaces.Listeners.BackListener" />
+
         <variable
             name="lang"
             type="String" />
+
         <variable
             name="model"
             type="com.ghiar.models.ServiceCenterModel" />
@@ -86,12 +88,12 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        image="@{model.image}"
                         android:layout_width="match_parent"
                         android:layout_height="230dp"
                         android:layout_marginBottom="10dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/back"
-                        image="@{model.image}"
 
                         />
 
@@ -304,8 +306,7 @@
                                 android:gravity="center"
                                 android:longClickable="false"
                                 android:textColor="@color/black"
-                                android:textSize="16sp"
-                                />
+                                android:textSize="16sp" />
 
 
                         </LinearLayout>
@@ -350,9 +351,9 @@
                                 android:clickable="false"
                                 android:gravity="center"
                                 android:longClickable="false"
+                                android:text="@{model.user_type}"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
-                                android:text="@{model.user_type}"
 
                                 />
 
@@ -399,8 +400,8 @@
                                 android:clickable="false"
                                 android:gravity="center"
                                 android:longClickable="false"
-                                android:textColor="@color/black"
                                 android:text="@{model.name}"
+                                android:textColor="@color/black"
                                 android:textSize="16sp" />
 
 
@@ -559,6 +560,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -577,9 +579,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="8dp"
                         android:text="@string/show_all"
-                        android:visibility="gone"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -603,7 +605,8 @@
                         android:id="@+id/progBar"
                         android:layout_width="27dp"
                         android:layout_height="35dp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -628,6 +631,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -646,9 +650,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="8dp"
                         android:text="@string/show_all"
-                        android:visibility="gone"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -660,6 +664,7 @@
                     >
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@id/recViewall"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="5dp">
@@ -668,9 +673,11 @@
 
 
                     <ProgressBar
+                        android:id="@+id/progBarall"
                         android:layout_width="27dp"
                         android:layout_height="35dp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/llNoNotification"

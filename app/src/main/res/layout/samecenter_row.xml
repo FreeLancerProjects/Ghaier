@@ -116,7 +116,7 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/tv"
+                        android:id="@+id/linear_call"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_phone"
@@ -130,7 +130,7 @@
                         android:src="@drawable/ic_share"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tv"
+                        app:layout_constraintEnd_toStartOf="@+id/linear_call"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="RtlCompat" />
                     <TextView

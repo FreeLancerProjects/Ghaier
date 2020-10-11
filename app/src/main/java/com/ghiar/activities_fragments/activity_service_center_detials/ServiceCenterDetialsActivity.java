@@ -17,10 +17,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_service_center.ServiceCenterActivity;
 import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
+import com.ghiar.adapters.AllCenterAdapter;
 import com.ghiar.adapters.ProductSlideAdapter;
+import com.ghiar.adapters.SameServiceCenterAdapter;
 import com.ghiar.databinding.ActivityServicesCenterBinding;
 import com.ghiar.databinding.ActivityServicesCenterDetialsBinding;
 import com.ghiar.interfaces.Listeners;
@@ -45,6 +49,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
@@ -67,6 +73,10 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
     private float zoom = 15.0f;
     private Intent intent;
     private static final int REQUEST_PHONE_CALL = 1;
+    private List<ServiceCentersModel.All> allList;
+    private List<ServiceCentersModel.Like> likeList;
+    private SameServiceCenterAdapter sameServiceCenterAdapter;
+    private AllCenterAdapter allCenterAdapter;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -134,6 +144,8 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
 
 
     private void initView() {
+        allList = new ArrayList<>();
+        likeList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -146,8 +158,13 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
+        sameServiceCenterAdapter = new SameServiceCenterAdapter(this, likeList);
+        allCenterAdapter = new AllCenterAdapter(this, allList);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        binding.recView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        binding.recViewall.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        binding.recViewall.setAdapter(allCenterAdapter);
+        binding.recView.setAdapter(sameServiceCenterAdapter);
         binding.btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,9 +256,22 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
             }
         }
         binding.tvservice.setText(service);
+     //   Log.e("ddldlld", singleadversimet.getAll().size() + "");
+        if (singleadversimet.getAll() != null) {
+            allList.addAll(singleadversimet.getAll());
+            allCenterAdapter.notifyDataSetChanged();
+        } else {
+            binding.tv1.setVisibility(View.GONE);
+        }
+        if (singleadversimet.getLike() != null) {
+            likeList.addAll(singleadversimet.getLike());
+            sameServiceCenterAdapter.notifyDataSetChanged();
+        } else {
+            binding.tv2.setVisibility(View.GONE);
+        }
     }
 
-    private void call(String s) {
+    public void call(String s) {
         intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", s, null));
 
 
@@ -284,5 +314,11 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
                 return;
             }
         }
+    }
+
+    public void show(int id) {
+        Intent intent = new Intent(ServiceCenterDetialsActivity.this, ServiceCenterDetialsActivity.class);
+        intent.putExtra("search", id + "");
+        startActivity(intent);
     }
 }

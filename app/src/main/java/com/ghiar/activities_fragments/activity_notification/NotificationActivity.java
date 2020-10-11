@@ -42,22 +42,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener{
+public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityNotificationBinding binding;
     private String lang;
     private List<NotificationDataModel.NotificationModel> notificationModelList;
     private Notification_Adapter adapter;
     private Preferences preferences;
     private UserModel userModel;
-    private int current_page=1;
-    private boolean isLoading=false;
+    private int current_page = 1;
+    private boolean isLoading = false;
     private boolean isFromFirebase = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,19 +69,18 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        if (intent!=null&&intent.hasExtra("not")){
-            isFromFirebase= true;
+        if (intent != null && intent.hasExtra("not")) {
+            isFromFirebase = true;
         }
     }
 
 
-    private void initView()
-    {
+    private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
@@ -89,9 +89,9 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Notification_Adapter(notificationModelList,this);
+        adapter = new Notification_Adapter(notificationModelList, this);
         binding.recView.setAdapter(adapter);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -120,11 +120,10 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     }
 
-    private void getNotification()
-    {
+    private void getNotification() {
         try {
             Api.getService(Tags.base_url)
-                    .getnotification(current_page,userModel.getUser().getId()+"")
+                    .getnotification( userModel.getUser().getId() + "")
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -142,7 +141,14 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
                                 }
                             } else {
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 if (response.code() == 500) {
+
                                     Toast.makeText(NotificationActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
@@ -182,12 +188,11 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         }
     }
 
-    private void loadMore(int page)
-    {
+    private void loadMore(int page) {
         try {
 
             Api.getService(Tags.base_url)
-                    .getnotification(page,userModel.getUser().getId()+"")
+                    .getnotification( userModel.getUser().getId() + "")
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -198,13 +203,13 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
-                                int oldPos = notificationModelList.size()-1;
+                                int oldPos = notificationModelList.size() - 1;
 
                                 notificationModelList.addAll(response.body().getData());
 
                                 if (response.body().getData().size() > 0) {
                                     current_page = response.body().getCurrent_page();
-                                    adapter.notifyItemRangeChanged(oldPos,notificationModelList.size()-1);
+                                    adapter.notifyItemRangeChanged(oldPos, notificationModelList.size() - 1);
 
                                 }
                             } else {
@@ -256,7 +261,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     @Override
     public void back() {
-        if (isFromFirebase){
+        if (isFromFirebase) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }

@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -20,16 +18,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity;
 import com.ghiar.activities_fragments.activity_cart.CartActivity;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Auction;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Home;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_More;
-import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Profile;
+import com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.Fragment_Profile;
 import com.ghiar.activities_fragments.activity_home.fragments.Fragment_Reguired;
 import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
@@ -37,17 +35,15 @@ import com.ghiar.activities_fragments.activity_notification.NotificationActivity
 import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
+import com.ghiar.models.Create_Order_Model;
 import com.ghiar.models.MarkModel;
 import com.ghiar.models.MarksModel;
-import com.ghiar.models.ServiceCenterModel;
+import com.ghiar.models.ProductModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private MarkAdapter markAdapter;
     private List<MarkModel> markModelList;
+    private String lang;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -111,20 +108,6 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
-        binding.flNotification.setOnClickListener(v -> {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivity(intent);
-        });
-
-        binding.imageCart.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CartActivity.class);
-            startActivity(intent);
-        });
-
-        binding.imageChat.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ModelDetailsActivity.class);
-            startActivity(intent);
-        });
 
 
     }
@@ -138,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
         toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolBar, R.string.open, R.string.close);
         toggle.syncState();
         fragmentManager = getSupportFragmentManager();
+        lang = Paper.book().read("lang", "ar");
 
         // init marks recyclerview
         markAdapter = new MarkAdapter(this, markModelList);
@@ -145,6 +129,21 @@ public class HomeActivity extends AppCompatActivity {
         binding.recViewModel.setAdapter(markAdapter);
         getDrawerMarks();
         setUpBottomNavigation();
+        binding.flNotification.setOnClickListener(v -> {
+            Intent intent = new Intent(this, NotificationActivity.class);
+            startActivity(intent);
+        });
+
+        binding.imageCart.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+
+        binding.imageChat.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, Cha.class);
+//            startActivity(intent);
+        });
+
     }
 
 
@@ -598,4 +597,101 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("data",markModelList.get(position));
         startActivity(intent);
     }
+
+    public void showservicecenter(ProductModel productModel) {
+        Intent intent = new Intent(HomeActivity.this, AccessoriesSparePartsDetailsActivity.class);
+        intent.putExtra("search", productModel.getId() + "");
+        startActivity(intent);
+
+    }
+    public void addtocart(ProductModel markDataInModel) {
+        Create_Order_Model add_order_model = preferences.getUserOrder(HomeActivity.this);
+        if (add_order_model != null) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getId()+"")) {
+                List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
+                List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
+
+                Create_Order_Model.OrderDetails orderDetails1 = null;
+                Create_Order_Model.ProductDetails products1 = null;
+
+                int pos = 0;
+                for (int i = 0; i < order_details.size(); i++) {
+                    if (markDataInModel.getId() == order_details.get(i).getAdv_id()) {
+                        orderDetails1 = order_details.get(i);
+                        products1=productDetails.get(i);
+                        pos = i;
+                    }
+                }
+                if (products1 != null) {
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    products1.setTotal_cost(products1.getTotal_cost() + (Double.parseDouble(markDataInModel.getPrice()) * 1));
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.remove(pos);
+                    productDetails.add(pos, products1);
+                    products1.setAmount(1 + order_details.get(pos).getAmount());
+                    // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
+                    orderDetails1.setCost( (Double.parseDouble(markDataInModel.getPrice()) ));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    orderDetails1.setAmount(1 + order_details.get(pos).getAmount());
+                    order_details.remove(pos);
+                    order_details.add(pos, orderDetails1);
+
+                } else {
+                    products1 = new Create_Order_Model.ProductDetails();
+                    products1.setAmount(1);
+                    products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+                    if(lang.equals("ar")) {
+                        products1.setName(markDataInModel.getTitle_ar());
+                    }else {
+                        products1.setName(markDataInModel.getTitle_en());
+
+                    }
+                    products1.setImage(markDataInModel.getImage());
+                    productDetails.add(products1);
+                    orderDetails1 = new Create_Order_Model.OrderDetails();
+                    orderDetails1.setAmount(1);
+                    orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+                    orderDetails1.setAdv_id(markDataInModel.getId());
+                    order_details.add(orderDetails1);
+                }
+                add_order_model.setProductDetails(productDetails);
+                add_order_model.setDetails(order_details);
+                // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
+
+            }
+            else {
+                // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
+            }
+        }
+        else {
+            add_order_model = new Create_Order_Model();
+            List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
+            List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
+
+            add_order_model.setMarket_id(markDataInModel.getId()+"");
+            Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
+            products1.setAmount(1);
+            products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
+            if(lang.equals("ar")) {
+                products1.setName(markDataInModel.getTitle_ar());
+            }else {
+                products1.setName(markDataInModel.getTitle_en());
+
+            }
+            products1.setImage(markDataInModel.getImage());
+            productDetails.add(products1);
+            Create_Order_Model.OrderDetails orderDetails1 = new Create_Order_Model.OrderDetails();
+            orderDetails1.setAmount(1);
+            orderDetails1.setCost(Double.parseDouble(markDataInModel.getPrice()));
+            orderDetails1.setAdv_id(markDataInModel.getId());
+            order_details.add(orderDetails1);
+            add_order_model.setProductDetails(productDetails);
+            add_order_model.setDetails(order_details);
+        }
+        preferences.create_update_order(HomeActivity.this,add_order_model );
+
+
+    }
+
 }

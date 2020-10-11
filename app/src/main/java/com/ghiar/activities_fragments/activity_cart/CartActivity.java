@@ -136,7 +136,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             binding.ll.setVisibility(View.VISIBLE);
             binding.llAction.setVisibility(View.VISIBLE);
         }
-        finish();
+        //  finish();
     }
 
     @Override
@@ -327,7 +327,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void accept_order() {
-create_order_model.setTotal_cost(fragment_cart_purchases.total+"");
+        create_order_model.setTotal_cost(fragment_cart_purchases.total + "");
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -336,9 +336,15 @@ create_order_model.setTotal_cost(fragment_cart_purchases.total+"");
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
-                Log.e("kkmkmkm",response.code()+"");
+                Log.e("kkmkmkm", response.code() + "");
                 if (response.isSuccessful()) {
+                    create_order_model = new Create_Order_Model();
+                    preferences.create_update_order(CartActivity.this
+
+
+                            , null);
                     getdata();
+                    finish();
 // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
                     //  activity.refresh(Send_Data.getType());

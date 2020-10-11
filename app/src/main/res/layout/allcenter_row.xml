@@ -58,6 +58,7 @@
                     android:text='@{lang.equals("ar")?model.name:model.name}'
                     android:textColor="@color/black"
                     android:textSize="13sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="23dp"
@@ -73,6 +74,7 @@
                     android:text='@{lang.equals("ar")?model.details:model.details}'
                     android:textColor="@color/gray3"
                     android:textSize="13sp" />
+
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/simplarate"
                     rate="@{Double.parseDouble(model.rate)}"
@@ -116,23 +118,25 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/tv"
+                        android:id="@+id/linear_call"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_phone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
                     <ImageView
                         android:id="@+id/tv2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_share"
                         android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_share"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tv"
+                        app:layout_constraintEnd_toStartOf="@+id/linear_call"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="RtlCompat" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,11 +145,11 @@
 
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintBottom_toBottomOf="parent"
-
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/tv2"
+
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

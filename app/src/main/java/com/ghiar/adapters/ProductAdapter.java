@@ -3,6 +3,7 @@ package com.ghiar.adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.databinding.ItemProductBinding;
 import com.ghiar.databinding.ItemServiceBinding;
 import com.ghiar.models.ProductModel;
@@ -47,7 +50,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductA
         holder.binding.setProduct(list.get(position));
         holder.binding.setLang("ar");
         holder.binding.ratingBar.setRating((Float.parseFloat(list.get(position).getRate())));
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof HomeActivity) {
+                    HomeActivity activity = (HomeActivity) context;
+                    activity.showservicecenter(list.get(position));
+                }
+            }
+        });
+        holder.binding.cardImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof ModelDetailsActivity) {
+                    HomeActivity activity = (HomeActivity) context;
+                    activity.addtocart(list.get(position));
+                }
+            }
+        });
 
 
     }
