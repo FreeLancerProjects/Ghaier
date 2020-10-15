@@ -40,14 +40,15 @@ public class Chat_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int current_user_id;
     private Context context;
     private LayoutInflater inflater;
-private ChatActivity activity;
+    private ChatActivity activity;
+
     public Chat_Adapter(List<MessageModel> messageModelList, int current_user_id, Context context) {
         this.messageModelList = messageModelList;
         this.current_user_id = current_user_id;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
-        activity=(ChatActivity)context;
+        activity = (ChatActivity) context;
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
     }
@@ -55,28 +56,20 @@ private ChatActivity activity;
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType==ITEM_MESSAGE_RIGHT)
-        {
-            ChatMessageRightRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.chat_message_right_row,parent,false);
+        if (viewType == ITEM_MESSAGE_RIGHT) {
+            ChatMessageRightRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_message_right_row, parent, false);
             return new RightMessageEventHolder(binding);
 
-        }
-        else  if (viewType==ITEM_MESSAGE_LEFT)
-        {
-            ChatMessageLeftRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.chat_message_left_row,parent,false);
+        } else if (viewType == ITEM_MESSAGE_LEFT) {
+            ChatMessageLeftRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_message_left_row, parent, false);
             return new LeftMessageEventHolder(binding);
 
-        }
-        else  if (viewType==ITEM_image_LEFT)
-        {
-            ChatImageLeftRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.chat_image_left_row,parent,false);
+        } else if (viewType == ITEM_image_LEFT) {
+            ChatImageLeftRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_image_left_row, parent, false);
             return new LeftImageEventHolder(binding);
 
-        }
-
-        else
-        {
-            ChatImageRightRowBinding binding  = DataBindingUtil.inflate(inflater, R.layout.chat_image_right_row,parent,false);
+        } else {
+            ChatImageRightRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_image_right_row, parent, false);
             return new RightImageEventHolder(binding);
 
         }
@@ -84,36 +77,29 @@ private ChatActivity activity;
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-      MessageModel messageModel = messageModelList.get(position);
-        if (holder instanceof RightImageEventHolder)
-        {
+        MessageModel messageModel = messageModelList.get(position);
+        if (holder instanceof RightImageEventHolder) {
             RightImageEventHolder eventHolder = (RightImageEventHolder) holder;
 
             eventHolder.binding.setMessagemodel(messageModel);
-eventHolder.binding.setLang(lang);
+            eventHolder.binding.setLang(lang);
 
 
-        }
-        else   if (holder instanceof LeftImageEventHolder)
-        {
+        } else if (holder instanceof LeftImageEventHolder) {
             LeftImageEventHolder eventHolder = (LeftImageEventHolder) holder;
 
             eventHolder.binding.setMessagemodel(messageModel);
             eventHolder.binding.setLang(lang);
 
 
-        }
-        else   if (holder instanceof RightMessageEventHolder)
-        {
+        } else if (holder instanceof RightMessageEventHolder) {
             RightMessageEventHolder eventHolder = (RightMessageEventHolder) holder;
 
             eventHolder.binding.setMessagemodel(messageModel);
             eventHolder.binding.setLang(lang);
 
 
-        }
-        else   if (holder instanceof LeftMessageEventHolder)
-        {
+        } else if (holder instanceof LeftMessageEventHolder) {
             LeftMessageEventHolder eventHolder = (LeftMessageEventHolder) holder;
 
             eventHolder.binding.setMessagemodel(messageModel);
@@ -132,6 +118,7 @@ eventHolder.binding.setLang(lang);
 
     public class RightMessageEventHolder extends RecyclerView.ViewHolder {
         public ChatMessageRightRowBinding binding;
+
         public RightMessageEventHolder(@NonNull ChatMessageRightRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -141,22 +128,27 @@ eventHolder.binding.setLang(lang);
 
     public class LeftMessageEventHolder extends RecyclerView.ViewHolder {
         public ChatMessageLeftRowBinding binding;
+
         public LeftMessageEventHolder(@NonNull ChatMessageLeftRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
         }
     }
+
     public class LeftImageEventHolder extends RecyclerView.ViewHolder {
         public ChatImageLeftRowBinding binding;
+
         public LeftImageEventHolder(@NonNull ChatImageLeftRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 
         }
     }
+
     public class RightImageEventHolder extends RecyclerView.ViewHolder {
         public ChatImageRightRowBinding binding;
+
         public RightImageEventHolder(@NonNull ChatImageRightRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -169,22 +161,17 @@ eventHolder.binding.setLang(lang);
     public int getItemViewType(int position) {
         MessageModel messageModel = messageModelList.get(position);
 
-        if (messageModel.getTo_user_id().equals( current_user_id+"")) {
-          //  Log.e("type",messageModel.getType());
+        if (messageModel.getTo_user_id().equals(current_user_id + "")) {
+            //  Log.e("type",messageModel.getType());
             if (messageModel.getType().equals("message")) {
                 return ITEM_MESSAGE_LEFT;
-            }
-
-            else  {
+            } else {
                 return ITEM_image_LEFT;
             }
-        }
-        else {
+        } else {
             if (messageModel.getType().equals("message")) {
                 return ITEM_MESSAGE_RIGHT;
-            }
-
-            else  {
+            } else {
                 return ITEM_image_RIGHT;
             }
 
@@ -192,4 +179,5 @@ eventHolder.binding.setLang(lang);
         }
 
 
-}}
+    }
+}

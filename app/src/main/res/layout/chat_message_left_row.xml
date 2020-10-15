@@ -35,7 +35,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="top"
-            image="@{messagemodel.image}"
+            image="@{messagemodel.from.logo}"
 
             />
         <LinearLayout

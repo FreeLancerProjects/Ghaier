@@ -98,7 +98,7 @@ public class Fragment_Spare_Parts extends Fragment {
         preferences = Preferences.getInstance();
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-userModel = preferences.getUserData(activity);
+        userModel = preferences.getUserData(activity);
         binding.setLang(lang);
         modelsAdapter = new ModelsAdapter(modelModelList, activity);
         binding.spinnerModel.setAdapter(modelsAdapter);

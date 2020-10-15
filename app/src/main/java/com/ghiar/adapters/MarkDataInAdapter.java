@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
+import com.ghiar.activities_fragments.activity_search.SearchActivity;
 import com.ghiar.databinding.ItemDrawerMarkBinding;
 import com.ghiar.databinding.MarkdatainRowBinding;
 import com.ghiar.models.MarkDataInModel;
@@ -58,6 +59,10 @@ public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.Ma
             public void onClick(View v) {
                 if (context instanceof ModelDetailsActivity) {
                     ModelDetailsActivity activity = (ModelDetailsActivity) context;
+                    activity.addtocart(list.get(position));
+                }
+                else   if (context instanceof SearchActivity) {
+                    SearchActivity activity = (SearchActivity) context;
                     activity.addtocart(list.get(position));
                 }
             }

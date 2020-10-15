@@ -11,9 +11,13 @@ private RoomData room;
     public RoomData getRoom() {
         return room;
     }
-
+private MessageModel data;
     public Messages getMessages() {
         return messages;
+    }
+
+    public MessageModel getData() {
+        return data;
     }
 
     public class RoomData implements Serializable

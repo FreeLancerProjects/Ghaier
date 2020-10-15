@@ -327,4 +327,9 @@ public interface Service {
 
 
     );
+    @GET("api/search")
+    Call<MarksDataModel> searchByName(@Query("search") String search,
+                                        @Query("paginate") String paginate
+
+    );
 }

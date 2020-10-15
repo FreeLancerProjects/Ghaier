@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activity_search.SearchActivity;
 import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.adapters.ProductAdapter;
 import com.ghiar.adapters.ServicesAdapter;
@@ -115,8 +118,21 @@ public class Fragment_Home extends Fragment {
 
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-userModel = preferences.getUserData(activity);
+        userModel = preferences.getUserData(activity);
         binding.setLang(lang);
+        binding.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = binding.edsearch.getText().toString();
+                if (!query.isEmpty()) {
+                    Intent intent = new Intent(activity, SearchActivity.class);
+                    intent.putExtra("search", query);
+                    startActivity(intent);
+                } else {
+                    binding.edsearch.setError(getResources().getString(R.string.field_req));
+                }
+            }
+        });
 
     }
 
