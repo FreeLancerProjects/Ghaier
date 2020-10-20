@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import androidx.databinding.DataBindingUtil;
 
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.databinding.DialogAlertBinding;
 
 import java.io.File;
@@ -41,8 +43,11 @@ public class Common {
         DialogAlertBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_alert, null, false);
 
         binding.tvMsg.setText(msg);
-        binding.btnCancel.setOnClickListener(v -> dialog.dismiss()
-
+        binding.btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent =  new Intent(context, LoginActivity.class);
+            context.startActivity(intent);
+                }
         );
         dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);

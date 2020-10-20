@@ -71,7 +71,8 @@ public class Fragment_Home extends Fragment {
     private ProductAdapter partsAdapter;
     private List<ProductModel> productModelList, productModelsspare;
     private List<ServiceModel> serviceModelList;
-    private List<SliderModel> sliderModelList, sliderModels;
+    private List<SliderModel> sliderTopList, sliderBottomList;
+    private SliderAdapter sliderAdapter1;
 
 
     public static Fragment_Home newInstance() {
@@ -95,8 +96,8 @@ public class Fragment_Home extends Fragment {
         productModelList = new ArrayList<>();
         serviceModelList = new ArrayList<>();
         productModelsspare = new ArrayList<>();
-        sliderModelList = new ArrayList<>();
-        sliderModels = new ArrayList<>();
+        sliderTopList = new ArrayList<>();
+        sliderBottomList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
 
@@ -139,7 +140,7 @@ public class Fragment_Home extends Fragment {
     //initiate slider ui
     private void sliderInit() {
         //top slider
-        sliderAdapter = new SliderAdapter(activity, sliderModelList);
+        sliderAdapter = new SliderAdapter(activity, sliderTopList);
         binding.imageSliderTop.setSliderAdapter(sliderAdapter);
         binding.imageSliderTop.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         binding.imageSliderTop.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -151,7 +152,6 @@ public class Fragment_Home extends Fragment {
         binding.imageSliderTop.startAutoCycle();
 
         //bottom slider
-        sliderAdapter = new SliderAdapter(activity, sliderModels);
         binding.imageSliderBottom.setSliderAdapter(sliderAdapter);
         binding.imageSliderBottom.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         binding.imageSliderBottom.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -221,14 +221,15 @@ public class Fragment_Home extends Fragment {
             public void onResponse(Call<SliderModel> call, Response<SliderModel> response) {
 
                 if (response.code() == 200 && response.body() != null) {
-                    sliderModelList.addAll(response.body().getTop());
+                    sliderTopList.addAll(response.body().getTop());
                     sliderAdapter.notifyDataSetChanged();
                     binding.imageSliderTop.setSliderAdapter(sliderAdapter);
 
 
-                    sliderModels.addAll(response.body().getBottom());
-                    sliderAdapter.notifyDataSetChanged();
-                    binding.imageSliderBottom.setSliderAdapter(sliderAdapter);
+                    sliderAdapter1 = new SliderAdapter(getActivity(), sliderBottomList);
+                    sliderBottomList.addAll(response.body().getBottom());
+                    sliderAdapter1.notifyDataSetChanged();
+                    binding.imageSliderBottom.setSliderAdapter(sliderAdapter1);
                 }
 
             }

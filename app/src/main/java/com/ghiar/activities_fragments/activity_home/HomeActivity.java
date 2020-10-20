@@ -126,8 +126,15 @@ public class HomeActivity extends AppCompatActivity {
         getDrawerMarks();
         setUpBottomNavigation();
         binding.flNotification.setOnClickListener(v -> {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivity(intent);
+            if (userModel == null) {
+
+                Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
+
+            } else {
+                Intent intent = new Intent(this, NotificationActivity.class);
+                startActivity(intent);
+            }
+
         });
 
         binding.imageCart.setOnClickListener(v -> {

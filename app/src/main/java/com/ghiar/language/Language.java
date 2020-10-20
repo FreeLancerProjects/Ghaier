@@ -37,6 +37,11 @@ public class Language {
 
     }
 
+    public static String getLanguage(Context c) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
+        return sharedPreferences.getString("lang", Locale.getDefault().getLanguage());
+    }
 
     private static void persistLanguage(Context c, String language) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);

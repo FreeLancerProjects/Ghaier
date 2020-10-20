@@ -14,9 +14,11 @@ import io.paperdb.Paper;
 
 public class App extends MultiDexApplication {
 
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+    }
 
     @Override
     public void onCreate() {
