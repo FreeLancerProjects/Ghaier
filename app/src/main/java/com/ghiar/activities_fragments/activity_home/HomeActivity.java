@@ -128,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.flNotification.setOnClickListener(v -> {
             if (userModel == null) {
 
-                Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
+                Common.CreateDialogAlert2(this, getString(R.string.please_sign_in_or_sign_up));
 
             } else {
                 Intent intent = new Intent(this, NotificationActivity.class);
@@ -259,7 +259,7 @@ public class HomeActivity extends AppCompatActivity {
                         displayFragmentProfile();
 
                     } else {
-                        Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
+                        Common.CreateDialogAlert2(this, getString(R.string.please_sign_in_or_sign_up));
                     }
                     break;
 
@@ -499,7 +499,7 @@ public class HomeActivity extends AppCompatActivity {
     public void logout() {
         if (userModel == null) {
 
-            Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(this, getString(R.string.please_sign_in_or_sign_up));
 
         } else {
             Logout();

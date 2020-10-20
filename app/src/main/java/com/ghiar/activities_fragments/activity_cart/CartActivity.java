@@ -103,7 +103,7 @@ binding.setBackListener(this);
                     create_order_model.setGoogle_long(addOrderModel.getLng() + "");
                     accept_order();
                 } else {
-                    Common.CreateDialogAlert(this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                    Common.CreateDialogAlert2(this, getResources().getString(R.string.please_sign_in_or_sign_up));
                 }
             }
         });

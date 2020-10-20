@@ -43,10 +43,23 @@ public class Common {
         DialogAlertBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_alert, null, false);
 
         binding.tvMsg.setText(msg);
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(binding.getRoot());
+        dialog.show();
+    }
+    public static void CreateDialogAlert2(Context context,String msg) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .create();
+
+        DialogAlertBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_alert, null, false);
+
+        binding.tvMsg.setText(msg);
         binding.btnCancel.setOnClickListener(v -> {
-            dialog.dismiss();
-            Intent intent =  new Intent(context, LoginActivity.class);
-            context.startActivity(intent);
+                    dialog.dismiss();
+                    Intent intent =  new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
                 }
         );
         dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
@@ -54,7 +67,6 @@ public class Common {
         dialog.setView(binding.getRoot());
         dialog.show();
     }
-
     public static void CloseKeyBoard(Context context, View view) {
         if (context != null && view != null) {
             InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
