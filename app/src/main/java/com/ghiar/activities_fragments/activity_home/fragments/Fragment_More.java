@@ -65,7 +65,13 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
         userModel = preferences.getUserData(activity);
         binding.setLang(lang);
         binding.setAction(this);
-
+        if (lang.equals("ar")) {
+            binding.tvAr.setBackgroundResource(R.drawable.small_rounded_btn_primary);
+            binding.tvEn.setBackgroundResource(R.drawable.small_rounded_btn_second);
+        } else {
+            binding.tvAr.setBackgroundResource(R.drawable.small_rounded_btn_second);
+            binding.tvEn.setBackgroundResource(R.drawable.small_rounded_btn_primary);
+        }
     }
 
 
