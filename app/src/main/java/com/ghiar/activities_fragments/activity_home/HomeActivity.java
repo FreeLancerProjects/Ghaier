@@ -116,7 +116,9 @@ public class HomeActivity extends AppCompatActivity {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolBar, R.string.open, R.string.close);
+       // toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
+
         fragmentManager = getSupportFragmentManager();
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 // init marks recyclerview
