@@ -14,28 +14,32 @@
 
 
     </data>
-    <LinearLayout
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/white"
         >
 
-        <androidx.core.widget.NestedScrollView
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:fillViewport="true"
-            android:background="@color/white"
-            >
+            android:layout_height="wrap_content"
 
+            android:background="@color/gray0">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@null"
+            app:titleEnabled="false">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-
                 >
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fl"
                     android:layout_width="match_parent"
@@ -208,19 +212,27 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab"
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed"
-                    app:tabTextColor="@color/black"
-                    app:tabSelectedTextColor="@color/black"
-                    app:tabIndicatorHeight="4dp"
-                    app:tabIndicatorColor="@color/white"
-                    />
+
+            </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/white"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorHeight="4dp"
+                app:tabIndicatorColor="@color/second"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
 
 
 
@@ -232,7 +244,11 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" ></androidx.viewpager.widget.ViewPager>
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+        </androidx.viewpager.widget.ViewPager>
 
 
 
@@ -240,9 +256,7 @@
 
 
 
-    </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

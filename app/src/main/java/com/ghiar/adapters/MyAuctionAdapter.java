@@ -1,8 +1,10 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
 import com.ghiar.databinding.LoadMoreBinding;
 import com.ghiar.databinding.MyauctionRowBinding;
 import com.ghiar.models.MyAuctionModel;
@@ -31,24 +35,24 @@ public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     String title;
     private final int ITEM_DATA = 1;
     private final int LOAD = 2;
+
     public MyAuctionAdapter(List<SingleAuctionModel> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
- lang = Paper.book().read("lang", Locale.getDefault().getLanguage());}
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+    }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType==ITEM_DATA) {
+        if (viewType == ITEM_DATA) {
             MyauctionRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.myauction_row, parent, false);
             return new EventHolder(binding);
-        }
-        else
-        {
-            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more,parent,false);
+        } else {
+            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more, parent, false);
             return new LoadHolder(binding);
         }
 
@@ -59,6 +63,17 @@ public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (holder instanceof EventHolder) {
             EventHolder eventHolder = (EventHolder) holder;
             eventHolder.binding.setAuctionmodel(orderlist.get(position));
+            eventHolder.binding.btnSend.setVisibility(View.GONE);
+            eventHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(context instanceof HomeActivity){
+                        Intent intent = new Intent(context, AuctionDetialsActivity.class);
+                        intent.putExtra("search", orderlist.get(position).getId() + "");
+                        context.startActivity(intent);
+                    }
+                }
+            });
 /*
 if(i==position){
     if(i!=0) {
@@ -97,10 +112,8 @@ if(i!=position) {
 
 
 }*/
-        }
-        else
-        {
-           LoadHolder loadHolder = (LoadHolder) holder;
+        } else {
+            LoadHolder loadHolder = (LoadHolder) holder;
             loadHolder.binding.progBar.setIndeterminate(true);
         }
     }
@@ -119,24 +132,24 @@ if(i!=position) {
 
         }
     }
+
     public class LoadHolder extends RecyclerView.ViewHolder {
         private LoadMoreBinding binding;
+
         public LoadHolder(@NonNull LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-       SingleAuctionModel order_Model = orderlist.get(position);
-        if (order_Model!=null)
-        {
+        SingleAuctionModel order_Model = orderlist.get(position);
+        if (order_Model != null) {
             return ITEM_DATA;
-        }else
-        {
+        } else {
             return LOAD;
         }
 

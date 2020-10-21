@@ -145,9 +145,9 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/auction-action")
     Call<ResponseBody> sendAuction(
-            @Field("price") String price,
+            @Field("value") String value,
             @Field("auction_id") String auction_id,
-            @Field("value") String value
+            @Field("user_id") String user_id
 
 
     );
@@ -320,7 +320,7 @@ public interface Service {
 
     );
 
-    @GET("api/client/currentOrders")
+    @GET("api/my-order")
     Call<Order_Model> getclentcurrentorder(
             @Query("user_id") String user_id,
             @Query("order_type") String order_type

@@ -66,10 +66,12 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     private static final int REQUEST_PHONE_CALL = 1;
     private Preferences preferences;
     private int amount = 1;
+    private Create_Order_Model add_order_model;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +93,17 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
     private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-binding.setBackListener(this);
+        binding.setBackListener(this);
         binding.setLang(lang);
         allList = new ArrayList<>();
         likeList = new ArrayList<>();
         preferences = Preferences.getInstance();
+        add_order_model = preferences.getUserOrder(this);
+        if (add_order_model == null) {
+            binding.setCartCount(0);
+        } else {
+            binding.setCartCount(add_order_model.getDetails().size());
+        }
         sameAdversimentAdapter = new SameAdversimentAdapter(this, likeList);
         allAdversimentAdapter = new AllAdversimentAdapter(this, allList);
         binding.recViewMostSeller.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
@@ -291,15 +299,13 @@ binding.setBackListener(this);
         allList.clear();
         if (body.getAll() != null) {
             allList.addAll(body.getAll());
-        }
-        else {
+        } else {
             binding.tv2.setVisibility(View.GONE);
         }
         likeList.clear();
         if (body.getLike() != null) {
             likeList.addAll(body.getLike());
-        }
-        else {
+        } else {
             binding.tv1.setVisibility(View.GONE);
         }
         allAdversimentAdapter.notifyDataSetChanged();

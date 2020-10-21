@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<variable
+    name="model"
+    type="com.ghiar.models.AddOrderModel" />
     </data>
 
     <ScrollView
@@ -35,7 +37,6 @@
                 app:cardCornerRadius="5dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="3dp"
-                android:visibility="invisible"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
@@ -72,6 +73,7 @@
                             android:layout_marginEnd="5dp"
                             />
                         <TextView
+                            android:id="@+id/tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight=".6"
@@ -85,6 +87,7 @@
                         android:layout_height="1px"
                         android:background="@color/gray4"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         />
 
                     <LinearLayout
@@ -93,6 +96,7 @@
                         android:orientation="horizontal"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp"
                         >
                         <TextView
@@ -124,6 +128,7 @@
                         android:layout_height="1px"
                         android:background="@color/gray4"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         />
 
                     <LinearLayout
@@ -133,6 +138,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         >
                         <TextView
                             android:layout_width="0dp"

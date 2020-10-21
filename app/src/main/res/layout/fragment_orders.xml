@@ -14,10 +14,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabTextColor="@color/black"
-            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
             app:tabIndicatorHeight="4dp"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/second"
 
             >
             <com.google.android.material.tabs.TabItem

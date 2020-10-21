@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_cart.CartActivity;
+import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Cart_Purchases;
 import com.ghiar.databinding.CartRowBinding;
 import com.ghiar.models.Create_Order_Model;
 
@@ -26,14 +27,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-private CartActivity cartActivity;
-    public CartAdapter(List<Create_Order_Model.ProductDetails> orderlist, Context context) {
+    private CartActivity cartActivity;
+    private Fragment_Cart_Purchases fragment_cart_purchases;
+
+    public CartAdapter(List<Create_Order_Model.ProductDetails> orderlist, Context context, Fragment_Cart_Purchases fragment_cart_purchases) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-
+        this.fragment_cart_purchases = fragment_cart_purchases;
 
     }
 
@@ -53,7 +56,7 @@ private CartActivity cartActivity;
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         EventHolder eventHolder = (EventHolder) holder;
-       eventHolder.binding.setLang(lang);
+        eventHolder.binding.setLang(lang);
         eventHolder.binding.setModel(orderlist.get(position));
 //eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
 //    @Override
@@ -64,24 +67,22 @@ private CartActivity cartActivity;
 //        }
 //    }
 //});
-//eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View v) {
-//        if(context instanceof  CartActivity){
-//            cartActivity=(CartActivity)context;
-//            cartActivity.additem(eventHolder.getLayoutPosition());
-//        }
-//    }
-//});
-//eventHolder.binding.imgDecrease.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View v) {
-//        if(context instanceof  CartActivity){
-//            cartActivity=(CartActivity)context;
-//            cartActivity.minusitem(eventHolder.getLayoutPosition());
-//        }
-//    }
-//});
+        eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    fragment_cart_purchases.additem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
+        eventHolder.binding.imgDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    fragment_cart_purchases.minusitem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
     }
 
     @Override

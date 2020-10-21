@@ -94,7 +94,7 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
                 }
             }
             else {
-
+Common.CreateDialogAlert2(AuctionDetialsActivity.this,getResources().getString(R.string.please_sign_in_or_sign_up));
                 }
             }
         });
@@ -167,6 +167,7 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
     private void setdata(SingleAuctionModel body) {
         binding.setModel(body);
         if (body.getImages() != null) {
+            imagesList.clear();
             imagesList.addAll(body.getImages());
             image_adapter.notifyDataSetChanged();
             sliderAdapter = new AuctionSlideAdapter(this, body.getImages());
@@ -194,6 +195,8 @@ public class AuctionDetialsActivity extends AppCompatActivity implements Listene
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
                                 Toast.makeText(AuctionDetialsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+                                binding.edprice.setText("");
+                                getsingleauction();
                             } else {
 
                                 try {

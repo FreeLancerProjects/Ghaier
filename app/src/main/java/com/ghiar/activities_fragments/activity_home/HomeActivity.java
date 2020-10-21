@@ -72,10 +72,12 @@ public class HomeActivity extends AppCompatActivity {
     private MarkAdapter markAdapter;
     private List<MarkModel> markModelList;
     private String lang;
+    private Create_Order_Model add_order_model;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
-
     }
 
 
@@ -114,9 +115,15 @@ public class HomeActivity extends AppCompatActivity {
     private void initView() {
         markModelList = new ArrayList<>();
         preferences = Preferences.getInstance();
+        add_order_model = preferences.getUserOrder(this);
+        if (add_order_model == null) {
+            binding.setCartCount(0);
+        } else {
+            binding.setCartCount(add_order_model.getDetails().size());
+        }
         userModel = preferences.getUserData(this);
         toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.toolBar, R.string.open, R.string.close);
-       // toggle.setDrawerIndicatorEnabled(false);
+        // toggle.setDrawerIndicatorEnabled(false);
         toggle.syncState();
 
         fragmentManager = getSupportFragmentManager();
@@ -252,8 +259,13 @@ public class HomeActivity extends AppCompatActivity {
                     displayFragmentAuction();
                     break;
                 case 2:
-                    displayFragmentSearch();
+                    if (userModel == null) {
 
+                        Common.CreateDialogAlert2(this, getString(R.string.please_sign_in_or_sign_up));
+
+                    } else {
+                        displayFragmentSearch();
+                    }
 
                     break;
                 case 3:
@@ -510,11 +522,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void Logout() {
-        Log.e("mmmmm", userModel.getUser().getId()+userModel.getUser().getName() + userModel.getUser().getFireBaseToken() + "");
+        Log.e("mmmmm", userModel.getUser().getId() + userModel.getUser().getName() + userModel.getUser().getFireBaseToken() + "");
 
         if (userModel != null) {
             final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
-         //   userModel = preferences.getUserData(this);
+            //   userModel = preferences.getUserData(this);
             dialog.show();
             Api.getService(Tags.base_url)
                     .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
@@ -599,7 +611,7 @@ public class HomeActivity extends AppCompatActivity {
     public void showservicecenter(int position) {
         Intent intent = new Intent(HomeActivity.this, ModelDetailsActivity.class);
         intent.putExtra("search", markModelList.get(position).getId() + "");
-        intent.putExtra("data",markModelList.get(position));
+        intent.putExtra("data", markModelList.get(position));
         startActivity(intent);
     }
 
@@ -609,10 +621,11 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
     public void addtocart(ProductModel markDataInModel) {
         Create_Order_Model add_order_model = preferences.getUserOrder(HomeActivity.this);
         if (add_order_model != null) {
-            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getId()+"")) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getId() + "")) {
                 List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
                 List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
 
@@ -623,7 +636,7 @@ public class HomeActivity extends AppCompatActivity {
                 for (int i = 0; i < order_details.size(); i++) {
                     if (markDataInModel.getId() == order_details.get(i).getAdv_id()) {
                         orderDetails1 = order_details.get(i);
-                        products1=productDetails.get(i);
+                        products1 = productDetails.get(i);
                         pos = i;
                     }
                 }
@@ -636,7 +649,7 @@ public class HomeActivity extends AppCompatActivity {
                     productDetails.add(pos, products1);
                     products1.setAmount(1 + order_details.get(pos).getAmount());
                     // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
-                    orderDetails1.setCost( (Double.parseDouble(markDataInModel.getPrice()) ));
+                    orderDetails1.setCost((Double.parseDouble(markDataInModel.getPrice())));
                     orderDetails1.setAdv_id(markDataInModel.getId());
                     orderDetails1.setAmount(1 + order_details.get(pos).getAmount());
                     order_details.remove(pos);
@@ -646,9 +659,9 @@ public class HomeActivity extends AppCompatActivity {
                     products1 = new Create_Order_Model.ProductDetails();
                     products1.setAmount(1);
                     products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
-                    if(lang.equals("ar")) {
+                    if (lang.equals("ar")) {
                         products1.setName(markDataInModel.getTitle_ar());
-                    }else {
+                    } else {
                         products1.setName(markDataInModel.getTitle_en());
 
                     }
@@ -664,23 +677,21 @@ public class HomeActivity extends AppCompatActivity {
                 add_order_model.setDetails(order_details);
                 // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
 
-            }
-            else {
+            } else {
                 // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
             }
-        }
-        else {
+        } else {
             add_order_model = new Create_Order_Model();
             List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
             List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
 
-            add_order_model.setMarket_id(markDataInModel.getId()+"");
+            add_order_model.setMarket_id(markDataInModel.getId() + "");
             Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
             products1.setAmount(1);
             products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
-            if(lang.equals("ar")) {
+            if (lang.equals("ar")) {
                 products1.setName(markDataInModel.getTitle_ar());
-            }else {
+            } else {
                 products1.setName(markDataInModel.getTitle_en());
 
             }
@@ -694,7 +705,7 @@ public class HomeActivity extends AppCompatActivity {
             add_order_model.setProductDetails(productDetails);
             add_order_model.setDetails(order_details);
         }
-        preferences.create_update_order(HomeActivity.this,add_order_model );
+        preferences.create_update_order(HomeActivity.this, add_order_model);
 
 
     }

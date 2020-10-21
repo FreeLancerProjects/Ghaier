@@ -51,7 +51,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private Fragment_Payment_Type fragment_payment_type;
     private AddOrderModel addOrderModel;
     private Preferences preferences;
-    private Create_Order_Model create_order_model;
+    public Create_Order_Model create_order_model;
     private UserModel usermodel;
 
     protected void attachBaseContext(Context newBase) {
@@ -213,6 +213,8 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     public void displayFragmentPaymentType() {
+        create_order_model.setTotal_cost(fragment_cart_purchases.total + "");
+
         try {
             if (fragment_payment_type == null) {
                 fragment_payment_type = Fragment_Payment_Type.newInstance(addOrderModel);
@@ -254,6 +256,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
         binding.imagePayment.setColorFilter(ContextCompat.getColor(this, R.color.gray6));
         binding.tvPayment.setTextColor(ContextCompat.getColor(this, R.color.gray6));
+        binding.tv.setText(getResources().getText(R.string.next));
 
 
     }
@@ -271,10 +274,12 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
         binding.imagePayment.setColorFilter(ContextCompat.getColor(this, R.color.gray6));
         binding.tvPayment.setTextColor(ContextCompat.getColor(this, R.color.gray6));
+        binding.tv.setText(getResources().getText(R.string.next));
 
     }
 
     private void updateUi3() {
+        binding.tv.setText(getResources().getText(R.string.send));
         binding.imagePurchases.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary));
         binding.tvPurchases.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         binding.imageArrow1.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -326,7 +331,6 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void accept_order() {
-        create_order_model.setTotal_cost(fragment_cart_purchases.total + "");
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();

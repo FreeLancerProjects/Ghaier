@@ -150,9 +150,9 @@ public class Fragment_Address extends Fragment implements Listeners.LoginListene
             }
         }
 
-        addOrderModel.setName("");
-        addOrderModel.setPhone_code("+966");
-        addOrderModel.setPhone("");
+//        addOrderModel.setName("");
+//        addOrderModel.setPhone_code("+966");
+//        addOrderModel.setPhone("");
 
 
 

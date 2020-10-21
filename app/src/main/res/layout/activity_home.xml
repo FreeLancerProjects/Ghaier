@@ -8,6 +8,9 @@
         <variable
             name="notCount"
             type="Integer" />
+        <variable
+            name="cartCount"
+            type="Integer" />
     </data>
 
 
@@ -40,7 +43,12 @@
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:popupTheme="@style/Theme.AppCompat.Light">
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_primary_trans"
 
+                        >
                     <ImageView
                         android:id="@+id/imageCart"
                         android:layout_width="45dp"
@@ -49,7 +57,20 @@
                         android:padding="10dp"
                         android:src="@drawable/ic_cart"
                         android:tint="@color/white" />
+                        <TextView
+                            android:layout_width="17dp"
+                            android:layout_height="17dp"
+                            android:layout_margin="2dp"
+                            android:background="@drawable/not_count"
+                            android:clickable="false"
+                            android:gravity="center"
+                            android:longClickable="false"
+                            android:singleLine="true"
+                            android:text='@{String.valueOf(cartCount),default="0"}'
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
 
+                    </FrameLayout>
 
                     <ImageView
                         android:id="@+id/imageChat"
@@ -86,6 +107,7 @@
                             android:tint="@color/white" />
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="17dp"
                             android:layout_height="17dp"
                             android:layout_margin="2dp"

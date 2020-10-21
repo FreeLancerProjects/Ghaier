@@ -53,7 +53,7 @@ public class Fragment_Payment_Type extends Fragment {
     private void initView() {
         activity = (CartActivity) getActivity();
 
-
+binding.tv.setText(activity.create_order_model.getTotal_cost());
         binding.cardCash.setOnClickListener(v -> {
             binding.cardCash.setCardBackgroundColor(ContextCompat.getColor(activity, R.color.colorPrimary));
             binding.tvCash.setTextColor(ContextCompat.getColor(activity, R.color.white));

@@ -73,7 +73,7 @@ public class Fragment_Cart_Purchases extends Fragment {
         preferences = Preferences.getInstance();
         activity = (CartActivity) getActivity();
 
-        cartAdapter = new CartAdapter(dataList, activity);
+        cartAdapter = new CartAdapter(dataList, activity, this);
 
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recView.setAdapter(cartAdapter);
@@ -112,7 +112,7 @@ public class Fragment_Cart_Purchases extends Fragment {
 
     private void gettotal() {
 
-         total = 0;
+        total = 0;
         for (int i = 0; i < dataList.size(); i++) {
             total += dataList.get(i).getTotal_cost();
 
@@ -123,5 +123,49 @@ public class Fragment_Cart_Purchases extends Fragment {
 
     public void setModel(AddOrderModel addOrderModel) {
         this.addOrderModel = addOrderModel;
+    }
+
+    public void additem(int layoutPosition) {
+        Create_Order_Model.OrderDetails products1 = orderDetailsList.get(layoutPosition);
+        products1.setCost((products1.getCost() / products1.getAmount()) * (products1.getAmount() + 1));
+        products1.setAmount(products1.getAmount() + 1);
+        orderDetailsList.remove(layoutPosition);
+        orderDetailsList.add(layoutPosition, products1);
+        Create_Order_Model add_order_model = preferences.getUserOrder(activity);
+        add_order_model.setDetails(orderDetailsList);
+        preferences.create_update_order(activity, add_order_model);
+        Create_Order_Model.ProductDetails products2 = dataList.get(layoutPosition);
+        products2.setTotal_cost((products2.getTotal_cost() / products2.getAmount()) * (products2.getAmount() + 1));
+        products2.setAmount(products2.getAmount() + 1);
+        dataList.remove(layoutPosition);
+        dataList.add(layoutPosition, products2);
+        add_order_model.setProductDetails(dataList);
+        preferences.create_update_order(activity, add_order_model);
+        cartAdapter.notifyDataSetChanged();
+        gettotal();
+    }
+
+    public void minusitem(int layoutPosition) {
+
+        Create_Order_Model.OrderDetails products1 = orderDetailsList.get(layoutPosition);
+        Create_Order_Model.ProductDetails products2 = dataList.get(layoutPosition);
+
+        if (products1.getAmount() > 1) {
+            products1.setCost((products1.getCost() / products1.getAmount()) * (products1.getAmount() - 1));
+            products1.setAmount(products1.getAmount() - 1);
+            orderDetailsList.remove(layoutPosition);
+            orderDetailsList.add(layoutPosition, products1);
+            Create_Order_Model add_order_model = preferences.getUserOrder(activity);
+            add_order_model.setDetails(orderDetailsList);
+            products2.setTotal_cost((products2.getTotal_cost() / products2.getAmount()) * (products2.getAmount() - 1));
+            products2.setAmount(products2.getAmount() - 1);
+            dataList.remove(layoutPosition);
+            dataList.add(layoutPosition, products2);
+            add_order_model.setProductDetails(dataList);
+            preferences.create_update_order(activity, add_order_model);
+            cartAdapter.notifyDataSetChanged();
+            gettotal();
+
+        }
     }
 }

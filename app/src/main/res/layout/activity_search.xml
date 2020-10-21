@@ -16,7 +16,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.technology.circles.apps.testahil.activities_fragments.activity_search.SearchActivity"
         android:background="@color/gray0"
         >
 
@@ -28,14 +27,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/white"
-            android:visibility="gone"
+            android:background="@color/colorAccent"
 
             >
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="50dp"
+                android:background="@color/colorAccent"
                 app:contentInsetEnd="0dp"
                 app:contentInsetLeft="0dp"
                 app:contentInsetRight="0dp"

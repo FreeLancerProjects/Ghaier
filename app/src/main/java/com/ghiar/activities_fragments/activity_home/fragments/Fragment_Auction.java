@@ -85,9 +85,15 @@ userModel = preferences.getUserData(activity);
         binding.llMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (userModel == null) {
+
+                    Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
+
+                }
+                else {
                 Intent intent = new Intent(activity, AddAuctionActivity.class);
                 startActivity(intent);
-            }
+            }}
         });
         getAuctions();
     }
