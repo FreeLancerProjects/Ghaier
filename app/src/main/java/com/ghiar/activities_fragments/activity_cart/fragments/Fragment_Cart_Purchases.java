@@ -1,5 +1,6 @@
 package com.ghiar.activities_fragments.activity_cart.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_cart.CartActivity;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.adapters.CartAdapter;
 import com.ghiar.databinding.FragmentCartPurchasesBinding;
 import com.ghiar.interfaces.Listeners;
@@ -76,8 +78,18 @@ public class Fragment_Cart_Purchases extends Fragment {
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         binding.recView.setAdapter(cartAdapter);
 
+        binding.btnShopNow.setOnClickListener(v -> {
+            navigateToHomeActivity();
+
+        });
 
         getorders();
+    }
+
+    private void navigateToHomeActivity() {
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void getorders() {

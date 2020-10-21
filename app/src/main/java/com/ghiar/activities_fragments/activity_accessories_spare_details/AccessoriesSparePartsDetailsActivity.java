@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_cart.CartActivity;
+import com.ghiar.activities_fragments.activity_home.HomeActivity;
 import com.ghiar.activities_fragments.activity_map_show_location.MapShowLocationActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
@@ -100,6 +102,10 @@ binding.setBackListener(this);
         binding.recViewall.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         binding.recViewMostSeller.setAdapter(sameAdversimentAdapter);
         binding.recViewall.setAdapter(allAdversimentAdapter);
+        binding.imageCart.setOnClickListener(v -> {
+            Intent intent = new Intent(AccessoriesSparePartsDetailsActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
         binding.flCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
