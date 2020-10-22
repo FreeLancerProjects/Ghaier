@@ -15,6 +15,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity;
@@ -244,6 +245,7 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
             add_order_model.setDetails(order_details);
         }
         preferences.create_update_order(ModelDetailsActivity.this, add_order_model);
+        Toast.makeText(ModelDetailsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
 
 
     }

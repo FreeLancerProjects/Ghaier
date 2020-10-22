@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_accessories_spare_details.AccessoriesSparePartsDetailsActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.adapters.MarkDataInAdapter;
 import com.ghiar.databinding.ActivitySearchBinding;
@@ -301,6 +302,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
             add_order_model.setDetails(order_details);
         }
         preferences.create_update_order(SearchActivity.this,add_order_model );
+        Toast.makeText(SearchActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
 
 
     }

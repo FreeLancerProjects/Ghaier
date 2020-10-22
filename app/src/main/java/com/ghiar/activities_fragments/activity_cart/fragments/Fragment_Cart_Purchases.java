@@ -95,7 +95,7 @@ public class Fragment_Cart_Purchases extends Fragment {
     private void getorders() {
         if (preferences.getUserOrder(activity) != null) {
             binding.llEmptyCart.setVisibility(View.GONE);
-
+            binding.tvTotal.setVisibility(View.VISIBLE);
             dataList.clear();
             orderDetailsList.clear();
             dataList.addAll(preferences.getUserOrder(activity).getProductDetails());
@@ -106,6 +106,7 @@ public class Fragment_Cart_Purchases extends Fragment {
 
         } else {
             // binding.consTotal.setVisibility(View.GONE);
+            binding.tvTotal.setVisibility(View.GONE);
             binding.llEmptyCart.setVisibility(View.VISIBLE);
         }
     }
@@ -118,7 +119,7 @@ public class Fragment_Cart_Purchases extends Fragment {
 
         }
 
-        //  binding.tvquatity.setText(total + "");
+        binding.tvTotal.setText(getResources().getString(R.string.total) + ":" + total + "");
     }
 
     public void setModel(AddOrderModel addOrderModel) {
