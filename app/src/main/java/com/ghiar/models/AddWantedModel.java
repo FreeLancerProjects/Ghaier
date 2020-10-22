@@ -3,6 +3,7 @@ package com.ghiar.models;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
 
 
     public boolean isDataValid(Context context) {
-
+        Log.e(";lllclckc",title_ar+" "+title_en);
 
         if (!title_ar.isEmpty() &&
                 !title_en.isEmpty()

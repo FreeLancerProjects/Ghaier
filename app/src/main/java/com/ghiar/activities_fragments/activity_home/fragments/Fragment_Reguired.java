@@ -319,8 +319,10 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                            activity.finish();
+                            addWantedModel = new AddWantedModel();
+                            binding.setModel(addWantedModel);
                             Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+
                         } else {
                             try {
                                 Log.e("error", response.code() + "__" + response.errorBody().string());
@@ -530,8 +532,9 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
         list.add("accessory");
 
         Log.e("lllll", addWantedModel.getTitle_ar());
-
-        addWantedModel.setType(list.get(binding.spinnertype.getSelectedItemPosition() - 1));
+        if (binding.spinnertype.getSelectedItemPosition() > 0) {
+            addWantedModel.setType(list.get(binding.spinnertype.getSelectedItemPosition() - 1));
+        }
         addWantedModel.setMark_id(markModel.getId() + "");
         addWantedModel.setModel_id(modelModel.getId() + "");
         if (binding.rbChoose1.isChecked()) {
