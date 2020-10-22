@@ -53,7 +53,8 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +77,12 @@ public class ModelDetailsActivity extends AppCompatActivity implements Listeners
     private void initView() {
         fragmentList = new ArrayList<>();
         titles = new ArrayList<>();
-        preferences=Preferences.getInstance();
+        preferences = Preferences.getInstance();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-binding.setBackListener(this);
+        binding.setBackListener(this);
         binding.setLang(lang);
-
+        binding.setModel(markModel);
 
         fragmentList.add(Fragment_Spare_Parts.newInstance());
         fragmentList.add(Fragment_Accessories.newInstance());
@@ -162,7 +163,7 @@ binding.setBackListener(this);
     public void addtocart(MarkDataInModel markDataInModel) {
         Create_Order_Model add_order_model = preferences.getUserOrder(ModelDetailsActivity.this);
         if (add_order_model != null) {
-            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId()+"")) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {
                 List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
                 List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
 
@@ -173,7 +174,7 @@ binding.setBackListener(this);
                 for (int i = 0; i < order_details.size(); i++) {
                     if (markDataInModel.getId() == order_details.get(i).getAdv_id()) {
                         orderDetails1 = order_details.get(i);
-                        products1=productDetails.get(i);
+                        products1 = productDetails.get(i);
                         pos = i;
                     }
                 }
@@ -186,7 +187,7 @@ binding.setBackListener(this);
                     productDetails.add(pos, products1);
                     products1.setAmount(1 + order_details.get(pos).getAmount());
                     // Log.e("to",add_order_model.getTotal_cost()+(Double.parseDouble(single_product_model.getPrice())*amount)+""+((amount+order_details.get(pos).getAmount())*Double.parseDouble(single_product_model.getPrice())));
-                    orderDetails1.setCost( (Double.parseDouble(markDataInModel.getPrice()) ));
+                    orderDetails1.setCost((Double.parseDouble(markDataInModel.getPrice())));
                     orderDetails1.setAdv_id(markDataInModel.getId());
                     orderDetails1.setAmount(1 + order_details.get(pos).getAmount());
                     order_details.remove(pos);
@@ -196,9 +197,9 @@ binding.setBackListener(this);
                     products1 = new Create_Order_Model.ProductDetails();
                     products1.setAmount(1);
                     products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
-                    if(lang.equals("ar")) {
+                    if (lang.equals("ar")) {
                         products1.setName(markDataInModel.getTitle_ar());
-                    }else {
+                    } else {
                         products1.setName(markDataInModel.getTitle_en());
 
                     }
@@ -214,23 +215,21 @@ binding.setBackListener(this);
                 add_order_model.setDetails(order_details);
                 // Common.CreateDialogAlert3(ProductDetialsActivity.this, getResources().getString(R.string.suc));
 
-            }
-            else {
+            } else {
                 // Common.CreateDialogAlert(ProductDetialsActivity.this, getResources().getString(R.string.order_pref));
             }
-        }
-        else {
+        } else {
             add_order_model = new Create_Order_Model();
             List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
             List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
 
-            add_order_model.setMarket_id(markDataInModel.getMarket().getId()+"");
+            add_order_model.setMarket_id(markDataInModel.getMarket().getId() + "");
             Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
             products1.setAmount(1);
             products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
-            if(lang.equals("ar")) {
+            if (lang.equals("ar")) {
                 products1.setName(markDataInModel.getTitle_ar());
-            }else {
+            } else {
                 products1.setName(markDataInModel.getTitle_en());
 
             }
@@ -244,13 +243,14 @@ binding.setBackListener(this);
             add_order_model.setProductDetails(productDetails);
             add_order_model.setDetails(order_details);
         }
-        preferences.create_update_order(ModelDetailsActivity.this,add_order_model );
+        preferences.create_update_order(ModelDetailsActivity.this, add_order_model);
 
 
     }
+
     public void show(int id) {
-        Intent intent=new Intent(ModelDetailsActivity.this, ServiceCenterDetialsActivity.class);
-        intent.putExtra("search",id+"");
+        Intent intent = new Intent(ModelDetailsActivity.this, ServiceCenterDetialsActivity.class);
+        intent.putExtra("search", id + "");
         startActivity(intent);
     }
 }

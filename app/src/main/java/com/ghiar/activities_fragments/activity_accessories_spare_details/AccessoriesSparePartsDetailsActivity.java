@@ -16,8 +16,10 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_cart.CartActivity;
@@ -231,11 +233,20 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
                     add_order_model.setDetails(order_details);
                 }
                 preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
-
-
+                if (add_order_model == null) {
+                    binding.setCartCount(0);
+                } else {
+                    binding.setCartCount(add_order_model.getDetails().size());
+                }
+                Toast.makeText(AccessoriesSparePartsDetailsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
             }
 
-
+        });
+        binding.flChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSMS();
+            }
         });
     }
 
@@ -552,4 +563,29 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
     }
 
+    private void sendSMS() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) // At least KitKat
+        {
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this); // Need to change the build to API 19
+
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "text");
+
+            if (defaultSmsPackageName != null)// Can be null in case that there is no default, then the user would be able to choose
+            // any app that support this intent.
+            {
+                sendIntent.setPackage(defaultSmsPackageName);
+            }
+            startActivity(sendIntent);
+
+        } else // For early versions, do what worked for you before.
+        {
+            Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+            smsIntent.setType("vnd.android-dir/mms-sms");
+            smsIntent.putExtra("address", "phoneNumber");
+            smsIntent.putExtra("sms_body", "message");
+            startActivity(smsIntent);
+        }
+    }
 }

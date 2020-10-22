@@ -168,4 +168,13 @@ public class Fragment_Cart_Purchases extends Fragment {
 
         }
     }
+
+    public void deleteItem(int adapterPosition) {
+        dataList.remove(adapterPosition);
+        cartAdapter.notifyDataSetChanged();
+        if (dataList.size() == 0) {
+            preferences.create_update_order(activity, null);
+            getorders();
+        }
+    }
 }

@@ -31,7 +31,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
 
 
     public boolean isDataValid(Context context) {
-        Log.e(";lllclckc",title_ar+" "+title_en);
+        //  Log.e(";lllclckc",title_ar+" "+title_en);
 
         if (!title_ar.isEmpty() &&
                 !title_en.isEmpty()
@@ -46,25 +46,25 @@ public class AddWantedModel extends BaseObservable implements Serializable {
 
             if (title_ar.isEmpty()) {
                 error_title_ar.set(context.getString(R.string.field_required));
-            }else {
+            } else {
                 error_title_ar.set(null);
             }
 
             if (title_en.isEmpty()) {
                 error_title_en.set(context.getString(R.string.field_required));
-            }else {
+            } else {
                 error_title_en.set(null);
             }
-
 
 
             return false;
         }
     }
 
-    public AddWantedModel(){
-        setTitle_ar("");
-        setTitle_en("");
+    public AddWantedModel() {
+        this.title_ar = "";
+
+        this.title_en = "";
         setAmount("");
         setImage(null);
         setStatus("");
@@ -73,6 +73,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
         setModel_id("");
     }
 
+    @Bindable
 
     public Uri getImage() {
         return image;
@@ -81,6 +82,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setImage(Uri image) {
         this.image = image;
     }
+    @Bindable
 
     public String getTitle_ar() {
         return title_ar;
@@ -89,6 +91,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setTitle_ar(String title_ar) {
         this.title_ar = title_ar;
     }
+    @Bindable
 
     public String getTitle_en() {
         return title_en;
@@ -98,6 +101,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
         this.title_en = title_en;
     }
 
+    @Bindable
 
     public String getModel_id() {
         return model_id;
@@ -106,6 +110,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setModel_id(String model_id) {
         this.model_id = model_id;
     }
+    @Bindable
 
     public String getMark_id() {
         return mark_id;
@@ -114,6 +119,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setMark_id(String mark_id) {
         this.mark_id = mark_id;
     }
+    @Bindable
 
     public String getAmount() {
         return amount;
@@ -122,6 +128,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+    @Bindable
 
     public String getStatus() {
         return status;
@@ -130,6 +137,7 @@ public class AddWantedModel extends BaseObservable implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+    @Bindable
 
     public String getType() {
         return type;

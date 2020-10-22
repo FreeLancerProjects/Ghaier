@@ -32,6 +32,8 @@ import com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.f
 import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
+import com.ghiar.activities_fragments.activity_room.ChatRoomActivity;
+import com.ghiar.activities_fragments.chat_activity.ChatActivity;
 import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
 import com.ghiar.language.Language;
@@ -152,8 +154,8 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         binding.imageChat.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, Cha.class);
-//            startActivity(intent);
+           Intent intent = new Intent(this, ChatRoomActivity.class);
+           startActivity(intent);
         });
 
     }

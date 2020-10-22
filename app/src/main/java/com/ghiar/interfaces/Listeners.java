@@ -61,7 +61,6 @@ public interface Listeners {
 
         void openSheet();
         void closeSheet();
-        void checkDataValid();
         void checkReadPermission();
         void checkCameraPermission();
     }

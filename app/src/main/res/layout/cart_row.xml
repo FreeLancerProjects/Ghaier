@@ -89,7 +89,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="20 "
+                            android:text='@{model.total_cost+""}'
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp"
 

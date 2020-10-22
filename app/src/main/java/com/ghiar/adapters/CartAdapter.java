@@ -58,15 +58,14 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         EventHolder eventHolder = (EventHolder) holder;
         eventHolder.binding.setLang(lang);
         eventHolder.binding.setModel(orderlist.get(position));
-//eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View v) {
-//        if(context instanceof  CartActivity){
-//            cartActivity=(CartActivity)context;
-//            cartActivity.removeitem(eventHolder.getLayoutPosition());
-//        }
-//    }
-//});
+        eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    fragment_cart_purchases.deleteItem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
         eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

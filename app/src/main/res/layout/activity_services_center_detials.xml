@@ -33,7 +33,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@color/register"
+            android:background="@color/colorPrimary"
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
@@ -133,6 +133,7 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                rate="@{Double.parseDouble(model.rate)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -144,7 +145,6 @@
                                 app:srb_starBorderWidth="3"
                                 app:srb_starSize="15dp"
                                 app:srb_starsSeparation="10dp"
-
                                 app:srb_stepSize=".5"
                                 tools:ignore="RtlCompat" />
 
@@ -224,6 +224,7 @@
                         android:text="@string/order"
                         android:textColor="@color/white"
                         android:textSize="15sp"
+                        android:visibility="gone"
 
                         />
 

@@ -8,9 +8,11 @@
         <variable
             name="backListener"
             type="com.ghiar.interfaces.Listeners.BackListener" />
+
         <variable
             name="cartCount"
             type="Integer" />
+
         <variable
             name="lang"
             type="String" />
@@ -77,11 +79,12 @@
             <FrameLayout
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/circle_primary_trans"
                 android:layout_gravity="end"
+                android:background="@drawable/circle_primary_trans"
 
 
                 >
+
                 <ImageView
                     android:id="@+id/imageCart"
                     android:layout_width="45dp"
@@ -90,6 +93,7 @@
                     android:padding="10dp"
                     android:src="@drawable/ic_cart"
                     android:tint="@color/white" />
+
                 <TextView
                     android:layout_width="17dp"
                     android:layout_height="17dp"
@@ -194,7 +198,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srb_drawBorderEnabled="true"
-                        app:srb_isIndicator="true"
+                        app:srb_isIndicator="false"
                         app:srb_numberOfStars="5"
                         app:srb_starBackgroundColor="@color/white"
                         app:srb_starBorderWidth="3"
@@ -454,9 +458,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".7"
+                                android:text="@{model.market.address}"
                                 android:textColor="@color/gray10"
                                 android:textSize="15sp"
-                                android:text="@{model.market.address}"
 
                                 />
 
@@ -530,6 +534,7 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/image"
+                            image="@{model.market.image}"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:src="@drawable/ic_avatar"
@@ -542,10 +547,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@{model.market.name}"
                             android:textColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="@id/image"
                             app:layout_constraintEnd_toEndOf="parent"
-
                             app:layout_constraintStart_toEndOf="@id/image"
                             app:layout_constraintTop_toTopOf="parent"
 
@@ -558,16 +563,14 @@
                             android:layout_marginTop="5dp"
                             app:layout_constraintStart_toStartOf="@id/tvOwnerName"
                             app:layout_constraintTop_toBottomOf="@id/tvOwnerName"
-                            app:srb_drawBorderEnabled="true"
+                            app:srb_drawBorderEnabled="false"
                             app:srb_isIndicator="true"
                             app:srb_numberOfStars="5"
                             app:srb_starBackgroundColor="@color/white"
                             app:srb_starBorderWidth="3"
                             app:srb_starSize="18dp"
                             app:srb_starsSeparation="5dp"
-                            app:srb_stepSize=".5"
-
-                            />
+                            app:srb_stepSize=".5" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
@@ -708,8 +711,7 @@
                         android:id="@+id/recViewall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        />
+                        android:layout_margin="3dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -733,8 +735,7 @@
                         android:id="@+id/recViewMostSeller"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        />
+                        android:layout_margin="3dp" />
                 </LinearLayout>
 
             </LinearLayout>

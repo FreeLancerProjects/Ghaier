@@ -523,7 +523,7 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
 
     }
 
-    @Override
+
     public void checkDataValid() {
 
         List<String> list = new ArrayList<>();
@@ -543,7 +543,8 @@ public class Fragment_Reguired extends Fragment implements Listeners.AddRequired
             addWantedModel.setStatus("old");
 
         }
-        Log.e("lllllsss", addWantedModel.getTitle_ar());
+
+       // Log.e("lllllsss", addWantedModel.getTitle_ar());
         binding.setModel(addWantedModel);
         if (addWantedModel.isDataValid(activity)) {
             Log.e("kkkkkk", "5555");
