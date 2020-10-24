@@ -133,18 +133,18 @@
                             app:layout_constraintStart_toStartOf="parent">
 
                             <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                                rate="@{Double.parseDouble(model.rate)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:gravity="center"
                                 app:srb_drawBorderEnabled="true"
-                                app:srb_isIndicator="false"
+                                app:srb_isIndicator="true"
                                 app:srb_numberOfStars="5"
                                 app:srb_starBackgroundColor="@color/white"
                                 app:srb_starBorderWidth="3"
                                 app:srb_starSize="15dp"
                                 app:srb_starsSeparation="10dp"
+                                android:visibility="gone"
                                 app:srb_stepSize=".5"
                                 tools:ignore="RtlCompat" />
 
@@ -157,6 +157,7 @@
                                 android:clickable="false"
                                 android:gravity="center"
                                 android:longClickable="false"
+                                android:visibility="gone"
                                 android:text="@string/rate_service_owner"
                                 android:textColor="@color/register"
                                 android:textSize="10sp"
@@ -169,6 +170,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llshare"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"

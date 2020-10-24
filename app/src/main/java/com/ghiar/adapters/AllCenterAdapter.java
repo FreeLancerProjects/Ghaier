@@ -1,6 +1,7 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.ghiar.databinding.AllcenterRowBinding;
 import com.ghiar.databinding.AllproductRowBinding;
 import com.ghiar.models.MarksDataModel;
 import com.ghiar.models.ServiceCentersModel;
+import com.ghiar.tags.Tags;
 
 import java.util.List;
 
@@ -62,9 +64,20 @@ public class AllCenterAdapter extends RecyclerView.Adapter<AllCenterAdapter.Mark
                 }
             }
         });
+        holder.binding.imshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(list.get(position).getId());
+            }
+        });
 
     }
-
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url+"api/RedirectLink/market/"+id);
+        context.startActivity(intent);
+    }
     @Override
     public int getItemCount() {
         return list.size();

@@ -148,12 +148,12 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         finish();
     }
 
-    public void makerate(int product_id, float rating) {
+    public void makerate(int product_id, Double rating) {
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .rate(product_id + "", userModel.getUser().getId() + "", rating + "")
+                .rate(product_id + "", userModel.getUser().getId() + "", rating)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

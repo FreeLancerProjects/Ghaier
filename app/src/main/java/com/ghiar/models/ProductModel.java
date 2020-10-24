@@ -7,9 +7,9 @@ public class ProductModel {
     private int id;
     private String title_ar;
     private String title_en;
-    private  String country_id;
+    private String country_id;
     private String price;
-    private  String mark_id;
+    private String mark_id;
     private String type;
     private String rate;
     private String details_ar;
@@ -22,9 +22,8 @@ public class ProductModel {
     private String model_id;
     private String created_at;
     private String updated_at;
-
-
-
+    private ServiceCenterModel market;
+    private double rating;
 
 
     public int getId() {
@@ -97,5 +96,13 @@ public class ProductModel {
 
     public String getUpdated_at() {
         return updated_at;
+    }
+
+    public ServiceCenterModel getMarket() {
+        return market;
+    }
+
+    public double getRating() {
+        return rating;
     }
 }

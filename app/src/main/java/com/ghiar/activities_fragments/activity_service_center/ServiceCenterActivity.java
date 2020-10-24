@@ -195,10 +195,12 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
         markModel = new MarkModel();
         markModel.setId(0);
         markModel.setTitle_ar(getString(R.string.choose));
+        markModel.setTitle_en(getString(R.string.choose));
         markModelList.add(markModel);
         cityModel = new CityDataModel.CityModel();
         cityModel.setId_city("0");
         cityModel.setAr_city_title(getString(R.string.choose));
+        cityModel.setEn_city_title(getString(R.string.choose));
         cityList.add(cityModel);
         cityAdapter = new CityAdapter(cityList, this);
         binding.spinnerCity.setAdapter(cityAdapter);

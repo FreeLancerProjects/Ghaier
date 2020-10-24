@@ -25,7 +25,7 @@ public class MarkDataInModel implements Serializable {
     private String updated_at;
     private List<Images> images;
     private City city;
-
+    private double rating;
     private ServiceCenterModel market;
 
     public int getId() {
@@ -108,8 +108,9 @@ public class MarkDataInModel implements Serializable {
         return images;
     }
 
-
-
+    public double getRating() {
+        return rating;
+    }
 
     public ServiceCenterModel getMarket() {
         return market;

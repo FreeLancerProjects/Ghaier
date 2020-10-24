@@ -173,7 +173,12 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
                 }
             }
         });
-
+        binding.llshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(Integer.parseInt(search_id));
+            }
+        });
 
     }
 
@@ -256,7 +261,7 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
             }
         }
         binding.tvservice.setText(service);
-     //   Log.e("ddldlld", singleadversimet.getAll().size() + "");
+        //   Log.e("ddldlld", singleadversimet.getAll().size() + "");
         if (singleadversimet.getAll() != null) {
             allList.addAll(singleadversimet.getAll());
             allCenterAdapter.notifyDataSetChanged();
@@ -319,6 +324,13 @@ public class ServiceCenterDetialsActivity extends AppCompatActivity implements L
     public void show(int id) {
         Intent intent = new Intent(ServiceCenterDetialsActivity.this, ServiceCenterDetialsActivity.class);
         intent.putExtra("search", id + "");
+        startActivity(intent);
+    }
+
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url + "api/RedirectLink/market/" + id);
         startActivity(intent);
     }
 }

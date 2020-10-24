@@ -1,6 +1,7 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.ghiar.databinding.ItemProductBinding;
 import com.ghiar.databinding.ItemServiceBinding;
 import com.ghiar.models.ProductModel;
 import com.ghiar.models.ServiceModel;
+import com.ghiar.tags.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +72,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductA
         });
 
 
+        holder.binding.imshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(list.get(position).getId());
+            }
+        });
+
+    }
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url+"api/RedirectLink/product/"+id);
+        context.startActivity(intent);
     }
 
     @Override

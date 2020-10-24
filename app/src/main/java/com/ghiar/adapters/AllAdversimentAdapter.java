@@ -1,6 +1,7 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.ghiar.databinding.AllproductRowBinding;
 import com.ghiar.databinding.SameproductRowBinding;
 import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarksDataModel;
+import com.ghiar.tags.Tags;
 
 import java.util.List;
 
@@ -60,7 +62,12 @@ public class AllAdversimentAdapter extends RecyclerView.Adapter<AllAdversimentAd
         return list.size();
     }
 
-
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url+"api/RedirectLink/product/"+id);
+        context.startActivity(intent);
+    }
     public class MarkViewholder extends RecyclerView.ViewHolder {
         AllproductRowBinding binding;
 

@@ -59,7 +59,7 @@ public class ProductDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
                 if (context instanceof OrderDetailsActivity) {
                     OrderDetailsActivity productDetailsActivity = (OrderDetailsActivity) context;
-                    productDetailsActivity.makerate(list.get(myHolder.getLayoutPosition()).getId(), rating);
+                    productDetailsActivity.makerate(list.get(myHolder.getLayoutPosition()).getId(), (double) rating);
                 }
             }
         });

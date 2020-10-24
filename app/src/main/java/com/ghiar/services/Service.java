@@ -336,10 +336,17 @@ public interface Service {
     @GET("api/one-order")
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
     @FormUrlEncoded
-    @POST("api/add-rate")
+    @POST("api/RateProduct")
     Call<ResponseBody> rate(
-            @Field("product_id") String product_id,
+            @Field("adv_id") String adv_id,
             @Field("user_id") String user_id,
-            @Field("rate") String rate
+            @Field("value") Double value
+    );
+    @FormUrlEncoded
+    @POST("api/store-token")
+    Call<ResponseBody> updateToken(
+            @Field("user_id") int user_id,
+            @Field("token") String token,
+            @Field("type") String type
     );
 }

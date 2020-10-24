@@ -1,6 +1,7 @@
 package com.ghiar.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.ghiar.databinding.ItemDrawerMarkBinding;
 import com.ghiar.databinding.MarkdatainRowBinding;
 import com.ghiar.models.MarkDataInModel;
 import com.ghiar.models.MarkModel;
+import com.ghiar.tags.Tags;
 
 import java.util.List;
 
@@ -67,6 +69,19 @@ public class MarkDataInAdapter extends RecyclerView.Adapter<MarkDataInAdapter.Ma
                 }
             }
         });
+        holder.binding.imshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(list.get(position).getId());
+            }
+        });
+
+    }
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url+"api/RedirectLink/product/"+id);
+        context.startActivity(intent);
     }
 
     @Override

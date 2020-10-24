@@ -44,12 +44,22 @@
                 android:text='@{lang.equals("ar")?product.title_ar:product.title_en}'
                 android:textColor="@color/register" />
 
-            <RatingBar
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
                 android:id="@+id/ratingBar"
                 style="@style/Widget.AppCompat.RatingBar.Small"
+                rate="@{product.rating}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                app:srb_drawBorderEnabled="true"
+                app:srb_isIndicator="false"
+                app:srb_numberOfStars="5"
+                app:srb_starBackgroundColor="@color/white"
+                app:srb_starBorderWidth="3"
+                app:srb_starSize="15dp"
+                app:srb_starsSeparation="10dp"
+                app:srb_stepSize=".5"
+                tools:ignore="RtlCompat"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp" />
 
@@ -63,18 +73,17 @@
                     android:layout_height="35dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_cart"
-                    android:tint="@color/gray6"/>
+                    android:tint="@color/gray6" />
 
                 <ImageView
-                    android:id="@+id/share_image"
+                    android:id="@+id/imshare"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_share"
-                    android:tint="@color/gray6"/>
-
+                    android:tint="@color/gray6" />
 
 
                 <TextView
@@ -82,8 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:textAlignment="viewEnd"
                     android:text='@{product.price+@string/currency_type}'
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/register"
                     tools:ignore="RtlCompat" />
 

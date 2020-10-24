@@ -34,6 +34,7 @@ import com.ghiar.activities_fragments.activity_login.LoginActivity;
 import com.ghiar.activities_fragments.activity_model_details.ModelDetailsActivity;
 import com.ghiar.activities_fragments.activity_notification.NotificationActivity;
 import com.ghiar.activities_fragments.activity_room.ChatRoomActivity;
+import com.ghiar.activities_fragments.activity_service_center_detials.ServiceCenterDetialsActivity;
 import com.ghiar.activities_fragments.chat_activity.ChatActivity;
 import com.ghiar.adapters.MarkAdapter;
 import com.ghiar.databinding.ActivityHomeBinding;
@@ -47,6 +48,10 @@ import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.smarteist.autoimageslider.Transformations.TossTransformation;
 
 import java.io.IOException;
@@ -77,6 +82,8 @@ public class HomeActivity extends AppCompatActivity {
     private List<MarkModel> markModelList;
     private String lang;
     private Create_Order_Model add_order_model;
+    private String id;
+    private String token;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -87,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        getDataFromIntent();
 //        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 //
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -113,7 +121,27 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent.getData() != null) {
+            List<String> pathSegments = intent.getData().getPathSegments();
+            id = pathSegments.get(pathSegments.size() - 1);
 
+            Log.e("llflfllflf", id+ pathSegments.get(pathSegments.size() - 2));
+            if( pathSegments.get(pathSegments.size() - 2).equals("product")){
+                Intent intent1 = new Intent(HomeActivity.this, AccessoriesSparePartsDetailsActivity.class);
+                intent1.putExtra("search", id + "");
+                startActivity(intent1);
+            }else if( pathSegments.get(pathSegments.size() - 2).equals("market")) {
+                Intent intent1 = new Intent(HomeActivity.this, ServiceCenterDetialsActivity.class);
+                intent1.putExtra("search", id + "");
+                startActivity(intent1);
+            }
+//            Intent intent1 = new Intent(HomeActivity.this, RestuarnantActivity.class);
+//            intent1.putExtra("restaurand_id", id);
+//            startActivity(intent1);
+        }
+    }
 
     @SuppressLint("RestrictedApi")
     private void initView() {
@@ -465,49 +493,6 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-    private void updateToken() {
-       /* FirebaseInstanceId.getInstance()
-                .getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        token = task.getResult().getToken();
-                        task.getResult().getId();
-                        Api.getService(Tags.base_url)
-                                .updateFireBaseToken(token, userModel.getData().getId(), 1)
-                                .enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                                        if (response.isSuccessful()) {
-                                            try {
-                                                userModel.getUser().setFireBaseToken(token);
-                                                preferences.create_update_userdata(HomeActivity.this, userModel);
-                                                Log.e("Success", "token updated");
-                                            } catch (Exception e) {
-                                                //  e.printStackTrace();
-                                            }
-                                        } else {
-                                            try {
-                                                Log.e("error", response.code() + "_" + response.errorBody().string());
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                        try {
-                                            Log.e("Error", t.getMessage());
-                                        } catch (Exception e) {
-                                        }
-                                    }
-                                });
-                    }
-                });*/
-    }
 
     public void refreshActivity(String lang) {
         Paper.book().write("lang", lang);
@@ -537,7 +522,7 @@ public class HomeActivity extends AppCompatActivity {
             //   userModel = preferences.getUserData(this);
             dialog.show();
             Api.getService(Tags.base_url)
-                    .logout(userModel.getUser().getId(), userModel.getUser().getFireBaseToken())
+                    .logout(userModel.getUser().getId(), token)
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -633,7 +618,7 @@ public class HomeActivity extends AppCompatActivity {
     public void addtocart(ProductModel markDataInModel) {
         Create_Order_Model add_order_model = preferences.getUserOrder(HomeActivity.this);
         if (add_order_model != null) {
-            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getId() + "")) {
+            if ((add_order_model.getMarket_id() + "").equals(markDataInModel.getMarket().getId() + "")) {
                 List<Create_Order_Model.ProductDetails> productDetails = add_order_model.getProductDetails();
                 List<Create_Order_Model.OrderDetails> order_details = add_order_model.getDetails();
 
@@ -693,7 +678,7 @@ public class HomeActivity extends AppCompatActivity {
             List<Create_Order_Model.OrderDetails> order_details = new ArrayList<>();
             List<Create_Order_Model.ProductDetails> productDetails = new ArrayList<>();
 
-            add_order_model.setMarket_id(markDataInModel.getId() + "");
+            add_order_model.setMarket_id(markDataInModel.getMarket().getId() + "");
             Create_Order_Model.ProductDetails products1 = new Create_Order_Model.ProductDetails();
             products1.setAmount(1);
             products1.setTotal_cost(Double.parseDouble(markDataInModel.getPrice()) * 1);
@@ -730,4 +715,50 @@ public class HomeActivity extends AppCompatActivity {
         binding.setCartCount(0);
         }
     }
+    private void updateToken() {
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                           token = task.getResult().getToken();
+                            task.getResult().getId();
+                            Log.e("sssssss", token);
+                            Api.getService(Tags.base_url)
+                                    .updateToken( userModel.getUser().getId(), token, "android ")
+                                    .enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                            if (response.isSuccessful()) {
+                                                try {
+                                                    Log.e("Success", "token updated");
+                                                } catch (Exception e) {
+                                                    //  e.printStackTrace();
+                                                }
+                                            } else {
+                                                try {
+                                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            try {
+                                                Log.e("Error", t.getMessage());
+                                            } catch (Exception e) {
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
 }

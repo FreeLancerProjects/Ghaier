@@ -147,6 +147,18 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
 
             }
         });
+        binding.imageShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(Integer.parseInt(search_id));
+            }
+        });
+        binding.tvshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share(Integer.parseInt(search_id));
+            }
+        });
         binding.btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -602,5 +614,11 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
         else {
             binding.setCartCount(0);
         }
+    }
+    public void share(int id) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, Tags.base_url + "api/RedirectLink/product/" + id);
+        startActivity(intent);
     }
 }

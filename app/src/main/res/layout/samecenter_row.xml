@@ -77,9 +77,9 @@
                     />
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/simplarate"
-                    rate="@{Double.parseDouble(model.rate)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     app:srb_drawBorderEnabled="true"
@@ -128,7 +128,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/tv2"
+                        android:id="@+id/imshare"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="16dp"
@@ -148,7 +148,7 @@
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tv2"
+                        app:layout_constraintEnd_toStartOf="@+id/imshare"
 
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"

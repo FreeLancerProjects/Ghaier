@@ -198,7 +198,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srb_drawBorderEnabled="true"
-                        app:srb_isIndicator="false"
+                        app:srb_isIndicator="true"
                         app:srb_numberOfStars="5"
                         app:srb_starBackgroundColor="@color/white"
                         app:srb_starBorderWidth="3"
@@ -214,6 +214,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:text="@string/rate"
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@id/rateBar"
@@ -232,6 +233,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/tvshare"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -569,6 +571,7 @@
                             app:srb_starBackgroundColor="@color/white"
                             app:srb_starBorderWidth="3"
                             app:srb_starSize="18dp"
+                            android:visibility="gone"
                             app:srb_starsSeparation="5dp"
                             app:srb_stepSize=".5" />
 

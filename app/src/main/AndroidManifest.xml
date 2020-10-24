@@ -99,7 +99,17 @@
             android:name=".activities_fragments.activity_home.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="ghair.creativeshare.sa"
+                    android:pathPrefix="/api/"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities_fragments.activity_about_app.AboutAppActivity"

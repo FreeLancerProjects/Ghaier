@@ -13,4 +13,5 @@ public class ProductsModel {
     public List<ProductModel> getAccessory() {
         return accessory;
     }
+
 }
