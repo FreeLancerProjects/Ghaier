@@ -104,7 +104,8 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,7 +318,7 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
 
 
             Api.getService(Tags.base_url)
-                    .getServiceCenterData(markid + "", country_id, "", serviceId + "",lat,lng)
+                    .getServiceCenterData(markid + "", country_id, "", serviceId + "", lat, lng)
                     .enqueue(new Callback<ServiceCentersModel>() {
                         @Override
                         public void onResponse(Call<ServiceCentersModel> call, Response<ServiceCentersModel> response) {
@@ -332,6 +333,7 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
 
                                     binding.llNoNotification.setVisibility(View.GONE);
                                     serviceCenterAdapter.notifyDataSetChanged();
+                                   // binding.setServiceCenter(response.body().getMarket());
                                     //   total_page = response.body().getMeta().getLast_page();
 
                                 } else {
@@ -427,12 +429,13 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
                 }
                 return;
             }
-            case gps_req:{
-            if ( grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            case gps_req: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                initGoogleApiClient();
+                    initGoogleApiClient();
+                }
             }
-        }}
+        }
     }
 
     private void CheckPermission() {
@@ -482,7 +485,6 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
             }
         }*/
     }
-
 
 
     private void intLocationRequest() {
@@ -563,8 +565,8 @@ public class ServiceCenterActivity extends AppCompatActivity implements Listener
     }
 
     public void show(int id) {
-        Intent intent=new Intent(ServiceCenterActivity.this, ServiceCenterDetialsActivity.class);
-        intent.putExtra("search",id+"");
+        Intent intent = new Intent(ServiceCenterActivity.this, ServiceCenterDetialsActivity.class);
+        intent.putExtra("search", id + "");
         startActivity(intent);
     }
 }

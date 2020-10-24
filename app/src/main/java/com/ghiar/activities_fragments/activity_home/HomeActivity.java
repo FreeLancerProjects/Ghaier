@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -46,6 +47,7 @@ import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
 import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
+import com.smarteist.autoimageslider.Transformations.TossTransformation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,8 +156,12 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         binding.imageChat.setOnClickListener(v -> {
-           Intent intent = new Intent(this, ChatRoomActivity.class);
-           startActivity(intent);
+            if (userModel != null) {
+                Intent intent = new Intent(this, ChatRoomActivity.class);
+                startActivity(intent);
+            } else {
+                Common.CreateDialogAlert2(this, getResources().getString(R.string.please_sign_in_or_sign_up));
+            }
         });
 
     }
@@ -707,9 +713,21 @@ public class HomeActivity extends AppCompatActivity {
             add_order_model.setProductDetails(productDetails);
             add_order_model.setDetails(order_details);
         }
+        binding.setCartCount(add_order_model.getProductDetails().size());
+        Toast.makeText(this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
         preferences.create_update_order(HomeActivity.this, add_order_model);
 
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(preferences.getUserOrder(this)!=null){
+        binding.setCartCount(preferences.getUserOrder(this).getProductDetails().size());
+    }
+    else {
+        binding.setCartCount(0);
+        }
+    }
 }

@@ -170,6 +170,13 @@
     <string name="my_orders">My Orders</string>
     <string name="my_auction">My Auction</string>
     <string name="require">My Requires</string>
+    <string name="status">Status</string>
+    <string name="amount">Amout</string>
+    <string name="new_order">Pending</string>
+    <string name="in_way">Charged</string>
+    <string name="accepted">Accepted</string>
+    <string name="refused">Refused</string>
+    <string name="completed">Completed</string>
     <string-array name="type_arrays">
         <item>service</item>
         <item>product</item>

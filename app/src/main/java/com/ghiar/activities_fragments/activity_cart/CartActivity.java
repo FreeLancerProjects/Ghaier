@@ -331,6 +331,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void accept_order() {
+        Log.e("ldllld",create_order_model.getMarket_id()+"");
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();

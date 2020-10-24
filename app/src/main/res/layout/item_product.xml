@@ -59,17 +59,19 @@
 
                 <ImageView
                     android:id="@+id/card_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:padding="5dp"
                     android:src="@drawable/ic_cart"
                     android:tint="@color/gray6"/>
 
                 <ImageView
                     android:id="@+id/share_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:padding="5dp"
                     android:src="@drawable/ic_share"
                     android:tint="@color/gray6"/>
 

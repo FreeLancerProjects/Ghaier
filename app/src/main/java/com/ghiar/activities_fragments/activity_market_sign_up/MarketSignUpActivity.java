@@ -20,6 +20,6 @@ public class MarketSignUpActivity extends AppCompatActivity {
         mWebView = findViewById(R.id.webview);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl(Tags.base_url+"admin/market-register-form");
+        mWebView.loadUrl(Tags.base_url+"login");
     }
 }

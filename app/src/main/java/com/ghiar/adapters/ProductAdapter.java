@@ -62,7 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductA
         holder.binding.cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (context instanceof ModelDetailsActivity) {
+                if (context instanceof HomeActivity) {
                     HomeActivity activity = (HomeActivity) context;
                     activity.addtocart(list.get(position));
                 }

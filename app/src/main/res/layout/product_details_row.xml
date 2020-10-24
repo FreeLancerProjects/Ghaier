@@ -7,13 +7,11 @@
 
         <variable
             name="model"
-            type="com.ghiar.models.MarksDataModel.Like" />
-
+            type="com.ghiar.models.OrderModel.Item" />
+<variable
+    name="lang"
+    type="String" />
         <import type="android.view.View" />
-
-        <variable
-            name="lang"
-            type="String" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -55,13 +53,12 @@
                     android:maxLines="2"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text='@{lang.equals("ar")?model.title_ar:model.title_en}'
+                    android:text='@{lang.equals("en")?model.title_en:model.title_ar}'
                     android:textColor="@color/gray3"
                     android:textSize="13sp" />
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/simplarate"
-                    rate="@{Double.parseDouble(model.rate)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -98,16 +95,28 @@
 
                         >
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:singleLine="true"
+                            android:text='@{(Double.parseDouble(model.price)/Integer.parseInt(model.amount))+" "+@string/ryal}'
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13sp"
 
+                            />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/card_image"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_cart"
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -116,14 +125,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:text='@{String.valueOf(model.price)+@string/r_s}'
+                        android:text='@{String.valueOf(model.amount)}'
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tv"
 
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

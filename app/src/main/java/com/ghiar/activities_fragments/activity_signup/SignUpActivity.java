@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_about_app.AboutAppActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activity_market_sign_up.MarketSignUpActivity;
 import com.ghiar.adapters.CityAdapter;
 import com.ghiar.databinding.ActivitySignupAsCustomerBinding;
 import com.ghiar.interfaces.Listeners;
@@ -71,7 +72,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         signUpModel.setPhone(phone);
         binding.setModel(signUpModel);
 
-        cityAdapter = new CityAdapter(cityList,this);
+        cityAdapter = new CityAdapter(cityList, this);
         binding.spinnercity.setAdapter(cityAdapter);
 
         cityModel = new CityDataModel.CityModel();
@@ -101,11 +103,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
 
         binding.checkbox.setOnClickListener(v -> {
-            if (binding.checkbox.isChecked())
-            {
+            if (binding.checkbox.isChecked()) {
                 signUpModel.setTermsAccepted(true);
                 navigateToAboutAppActivity();
-            }else {
+            } else {
                 signUpModel.setTermsAccepted(false);
             }
 
@@ -116,11 +117,9 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         binding.spinnercity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position==0)
-                {
+                if (position == 0) {
                     signUpModel.setCity_id("");
-                }else
-                {
+                } else {
                     signUpModel.setCity_id(cityList.get(position).getId_city());
 
                 }
@@ -132,12 +131,18 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
             }
         });
-
+        binding.tvsignupas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, MarketSignUpActivity.class);
+                startActivity(intent);
+            }
+        });
         getCities();
     }
 
     private void getCities() {
-        ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.show();
 
         Api.getService(Tags.base_url)
@@ -151,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                                 cityList.clear();
                                 cityList.add(cityModel);
                                 cityList.addAll(response.body().getCity());
-                                Log.e("data",cityList.size()+"__");
+                                Log.e("data", cityList.size() + "__");
                                 SignUpActivity.this.runOnUiThread(() -> {
                                     cityAdapter.notifyDataSetChanged();
                                 });
@@ -199,7 +204,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     private void navigateToAboutAppActivity() {
 
         Intent intent = new Intent(this, AboutAppActivity.class);
-        intent.putExtra("type",1);
+        intent.putExtra("type", 1);
         startActivity(intent);
     }
 
@@ -224,61 +229,50 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
 
-
-
-
     private void signUp() {
 
 
-        if (uri==null) {
+        if (uri == null) {
             signUpWithoutImage();
         }
     }
 
     private void signUpWithoutImage() {
-        ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .signUp(signUpModel.getName(),signUpModel.getEmail(),signUpModel.getPhone_code(),signUpModel.getPhone(),signUpModel.getCity_id())
+                .signUp(signUpModel.getName(), signUpModel.getEmail(), signUpModel.getPhone_code(), signUpModel.getPhone(), signUpModel.getCity_id())
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful()&&response.body()!=null)
-                        {
-                            preferences.create_update_userdata(SignUpActivity.this,response.body());
+                        if (response.isSuccessful() && response.body() != null) {
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
                             navigateToHomeActivity();
-                        }else
-                        {
+                        } else {
 
-                            if (response.code()==500)
-                            {
+                            if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==422)
-                            {
+                            } else if (response.code() == 422) {
 
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==409)
-                            {
+                                Toast.makeText(SignUpActivity.this, response.errorBody() + "", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 409) {
 
-                                Log.e("99999999",response.message()+"");
+                                Log.e("99999999", response.message() + "");
 
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==406)
-                            {
+                                Toast.makeText(SignUpActivity.this, response.errorBody() + "", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 406) {
 
-                                Log.e("6666666",response.message()+"");
+                                Log.e("6666666", response.message() + "");
 
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(SignUpActivity.this,getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, response.errorBody() + "", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                             }
 
                             try {
-                                Log.e("error",response.errorBody().string());
+                                Log.e("error", response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -298,9 +292,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                                     Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        }catch (Exception e)
-                        {
-                            Log.e("Error",e.getMessage()+"__");
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
                         }
                     }
                 });

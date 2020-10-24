@@ -20,11 +20,13 @@ import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_about_app.AboutAppActivity;
 import com.ghiar.activities_fragments.activity_contact_us.ContactUsActivity;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activity_market_sign_up.MarketSignUpActivity;
 import com.ghiar.databinding.FragmentMoreBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
+import com.ghiar.share.Common;
 import com.ghiar.tags.Tags;
 
 import java.io.IOException;
@@ -82,7 +84,8 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
 
     @Override
     public void shop() {
-
+        Intent intent = new Intent(activity, MarketSignUpActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -107,7 +110,12 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
 
     @Override
     public void logout() {
-        activity.logout();
+
+        if(userModel!=null){
+        activity.logout();}
+        else {
+            Common.CreateDialogAlert2(activity,activity.getResources().getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 
     @Override
@@ -144,8 +152,6 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
             activity.refreshActivity("en");
         }
     }
-
-
 
 
 }

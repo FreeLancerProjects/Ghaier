@@ -1,5 +1,6 @@
 package com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.fragments;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_home.HomeActivity;
+import com.ghiar.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.ghiar.adapters.OrderAdapter;
 import com.ghiar.databinding.FragmentOrdersBinding;
+import com.ghiar.models.OrderModel;
 import com.ghiar.models.Order_Model;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
@@ -80,7 +83,7 @@ public class FragmentMyOrder extends Fragment {
         binding.recView.setLayoutManager(manager);
 
 
-        markets_adapter = new OrderAdapter(dataList, activity);
+        markets_adapter = new OrderAdapter(dataList, activity,this);
         binding.recView.setAdapter(markets_adapter);
         binding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -246,5 +249,9 @@ public class FragmentMyOrder extends Fragment {
 
         }
     }
-
+    public void setItemData(Order_Model.Data model) {
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("data", model.getId());
+        startActivity(intent);
+    }
 }

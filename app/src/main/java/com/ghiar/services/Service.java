@@ -15,6 +15,7 @@ import com.ghiar.models.ModelsData;
 import com.ghiar.models.MyAuctionModel;
 import com.ghiar.models.MyRequiredModel;
 import com.ghiar.models.NotificationDataModel;
+import com.ghiar.models.OrderModel;
 import com.ghiar.models.Order_Model;
 import com.ghiar.models.PlaceDirectionModel;
 import com.ghiar.models.PlaceGeocodeData;
@@ -331,5 +332,14 @@ public interface Service {
     Call<MarksDataModel> searchByName(@Query("search") String search,
                                         @Query("paginate") String paginate
 
+    );
+    @GET("api/one-order")
+    Call<OrderModel> order_detials(@Query("order_id") int order_id);
+    @FormUrlEncoded
+    @POST("api/add-rate")
+    Call<ResponseBody> rate(
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id,
+            @Field("rate") String rate
     );
 }

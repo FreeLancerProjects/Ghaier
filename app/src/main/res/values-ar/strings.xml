@@ -61,7 +61,7 @@
     <string name="req_accepted">تم قبول طلبك</string>
     <string name="no_conversation">لا توجد محادثات</string>
     <string name="commission">عمولة التطبيق</string>
-    <string name="shop_with_us">محلك معنا</string>
+    <string name="shop_with_us">سجل محلك معنا</string>
     <string name="contact_us">تواصل معنا</string>
     <string name="no_data_to_show">لا توجد عناصر لعرضها</string>
     <string name="empty_cart">السلة فارغة</string>
@@ -168,7 +168,13 @@
     <string name="my_orders">طلباتي</string>
     <string name="my_auction">مزاداتي</string>
     <string name="require">مطلوباتي</string>
-
+    <string name="status">حالة الطلب</string>
+    <string name="amount">Amout</string>
+    <string name="new_order">قيد الانتظار</string>
+    <string name="in_way"> تم الشحن</string>
+    <string name="accepted">تم إستلام طلبك</string>
+    <string name="refused">تم الرفض</string>
+    <string name="completed">مكتمل</string>
     <string-array name="type_arrays">
         <item>خدمة</item>
         <item>قطعة غيار</item>

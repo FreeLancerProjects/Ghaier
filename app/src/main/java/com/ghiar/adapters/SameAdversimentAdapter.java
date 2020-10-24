@@ -45,7 +45,7 @@ SameproductRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(cont
 
     holder.binding.setModel(list.get(position));
     holder.binding.setLang("ar");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.binding.cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(context instanceof AccessoriesSparePartsDetailsActivity){

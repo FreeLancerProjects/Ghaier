@@ -44,13 +44,13 @@ public class AllAdversimentAdapter extends RecyclerView.Adapter<AllAdversimentAd
         holder.binding.setModel(list.get(position));
         holder.binding.setLang("ar");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.binding.cardImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-if(context instanceof AccessoriesSparePartsDetailsActivity){
-    AccessoriesSparePartsDetailsActivity accessoriesSparePartsDetailsActivity=(AccessoriesSparePartsDetailsActivity)context;
-    accessoriesSparePartsDetailsActivity.addtocart(list.get(position));
-}
+                if (context instanceof AccessoriesSparePartsDetailsActivity) {
+                    AccessoriesSparePartsDetailsActivity accessoriesSparePartsDetailsActivity = (AccessoriesSparePartsDetailsActivity) context;
+                    accessoriesSparePartsDetailsActivity.addtocart(list.get(position));
+                }
             }
         });
     }

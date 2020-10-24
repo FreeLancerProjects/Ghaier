@@ -470,6 +470,8 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
             add_order_model.setProductDetails(productDetails);
             add_order_model.setDetails(order_details);
         }
+        Toast.makeText(this,getResources().getString(R.string.suc),Toast.LENGTH_LONG).show();
+        binding.setCartCount(add_order_model.getProductDetails().size());
         preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
 
 
@@ -558,6 +560,8 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
             add_order_model.setProductDetails(productDetails);
             add_order_model.setDetails(order_details);
         }
+        Toast.makeText(this,getResources().getString(R.string.suc),Toast.LENGTH_LONG).show();
+        binding.setCartCount(add_order_model.getProductDetails().size());
         preferences.create_update_order(AccessoriesSparePartsDetailsActivity.this, add_order_model);
 
 
@@ -586,6 +590,17 @@ public class AccessoriesSparePartsDetailsActivity extends AppCompatActivity impl
             smsIntent.putExtra("address", "phoneNumber");
             smsIntent.putExtra("sms_body", "message");
             startActivity(smsIntent);
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(preferences.getUserOrder(this)!=null){
+            binding.setCartCount(preferences.getUserOrder(this).getProductDetails().size());
+        }
+        else {
+            binding.setCartCount(0);
         }
     }
 }

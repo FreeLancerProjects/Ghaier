@@ -43,7 +43,11 @@ public class Common {
         DialogAlertBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_alert, null, false);
 
         binding.tvMsg.setText(msg);
+        binding.btnCancel.setOnClickListener(v -> {
+                    dialog.dismiss();
 
+                }
+        );
         dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setView(binding.getRoot());

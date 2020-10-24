@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.ghiar.R;
+import com.ghiar.activities_fragments.activity_home.fragments.fragment_profile.fragments.FragmentMyOrder;
 import com.ghiar.databinding.LoadMoreBinding;
 import com.ghiar.databinding.OrderRowBinding;
+import com.ghiar.models.OrderModel;
 import com.ghiar.models.Order_Model;
 
 import java.util.List;
@@ -30,26 +33,26 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     String title;
     private final int ITEM_DATA = 1;
     private final int LOAD = 2;
-    public OrderAdapter(List<Order_Model.Data> orderlist, Context context) {
+    private Fragment fragment;
+
+    public OrderAdapter(List<Order_Model.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
- lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        this.fragment = fragment;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if (viewType==ITEM_DATA) {
+        if (viewType == ITEM_DATA) {
             OrderRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.order_row, parent, false);
             return new EventHolder(binding);
-        }
-        else
-        {
-            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more,parent,false);
+        } else {
+            LoadMoreBinding binding = DataBindingUtil.inflate(inflater, R.layout.load_more, parent, false);
             return new LoadHolder(binding);
         }
 
@@ -60,6 +63,18 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof EventHolder) {
             EventHolder eventHolder = (EventHolder) holder;
             eventHolder.binding.setOrdermodel(orderlist.get(position));
+            holder.itemView.setOnClickListener(view ->
+            {
+                Order_Model.Data model2 = orderlist.get(holder.getAdapterPosition());
+
+                if (fragment instanceof FragmentMyOrder) {
+                    FragmentMyOrder fragmentCurrentOrder = (FragmentMyOrder) fragment;
+                    fragmentCurrentOrder.setItemData(model2);
+                } else if (fragment instanceof FragmentMyOrder) {
+                    FragmentMyOrder fragmentPreviousOrder = (FragmentMyOrder) fragment;
+                    fragmentPreviousOrder.setItemData(model2);
+                }
+            });
 /*
 if(i==position){
     if(i!=0) {
@@ -98,10 +113,8 @@ if(i!=position) {
 
 
 }*/
-        }
-        else
-        {
-           LoadHolder loadHolder = (LoadHolder) holder;
+        } else {
+            LoadHolder loadHolder = (LoadHolder) holder;
             loadHolder.binding.progBar.setIndeterminate(true);
         }
     }
@@ -120,12 +133,14 @@ if(i!=position) {
 
         }
     }
+
     public class LoadHolder extends RecyclerView.ViewHolder {
         private LoadMoreBinding binding;
+
         public LoadHolder(@NonNull LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
+            binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         }
 
     }
@@ -133,11 +148,9 @@ if(i!=position) {
     @Override
     public int getItemViewType(int position) {
         Order_Model.Data order_Model = orderlist.get(position);
-        if (order_Model!=null)
-        {
+        if (order_Model != null) {
             return ITEM_DATA;
-        }else
-        {
+        } else {
             return LOAD;
         }
 
