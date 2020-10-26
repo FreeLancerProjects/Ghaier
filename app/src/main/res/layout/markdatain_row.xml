@@ -56,8 +56,8 @@
                     android:id="@+id/city_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
                     android:text='@{lang.equals("ar")?model.city.ar_city_title:model.city.en_city_title}'
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,12 +105,16 @@
 
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
                     android:id="@+id/ratingBar"
+                    rate="@{model.rating}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    app:srb_drawBorderEnabled="true"
 
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv"
+                    app:srb_drawBorderEnabled="true"
                     app:srb_isIndicator="false"
                     app:srb_numberOfStars="5"
                     app:srb_starBackgroundColor="@color/white"
@@ -119,10 +123,6 @@
                     app:srb_starsSeparation="10dp"
                     app:srb_stepSize=".5"
                     tools:ignore="RtlCompat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv"
-                    rate="@{model.rating}"
 
 
                     />
@@ -158,8 +158,7 @@
                         android:clickable="false"
                         android:longClickable="false"
                         android:orientation="horizontal"
-android:padding="3dp"
-                        >
+                        android:padding="3dp">
 
                         <FrameLayout
                             android:layout_width="15dp"

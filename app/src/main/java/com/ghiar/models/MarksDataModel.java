@@ -43,6 +43,7 @@ private List<Like> like;
         private String model_id;
         private String created_at;
         private String updated_at;
+        private double rating;
         private ServiceCenterModel market;
 
         public int getId() {
@@ -117,12 +118,17 @@ private List<Like> like;
             return updated_at;
         }
 
+        public double getRating() {
+            return rating;
+        }
+
         public ServiceCenterModel getMarket() {
             return market;
         }
     }
 
     public class All implements Serializable {
+        private double rating;
         private int id;
         private String title_ar;
         private String title_en;
@@ -142,6 +148,10 @@ private List<Like> like;
         private String created_at;
         private String updated_at;
         private ServiceCenterModel market;
+
+        public double getRating() {
+            return rating;
+        }
 
         public int getId() {
             return id;

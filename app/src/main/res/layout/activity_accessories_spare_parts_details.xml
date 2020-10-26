@@ -200,6 +200,8 @@
                         app:srb_drawBorderEnabled="true"
                         app:srb_isIndicator="true"
                         app:srb_numberOfStars="5"
+                        rate="@{model.rating}"
+
                         app:srb_starBackgroundColor="@color/white"
                         app:srb_starBorderWidth="3"
                         app:srb_starSize="18dp"

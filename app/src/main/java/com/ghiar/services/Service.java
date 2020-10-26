@@ -281,9 +281,7 @@ public interface Service {
             @Field("message") String message
 
 
-
-
-            );
+    );
 
     @FormUrlEncoded
     @POST("api/chatRoom/get")
@@ -328,13 +326,16 @@ public interface Service {
 
 
     );
+
     @GET("api/search")
     Call<MarksDataModel> searchByName(@Query("search") String search,
-                                        @Query("paginate") String paginate
+                                      @Query("paginate") String paginate
 
     );
+
     @GET("api/one-order")
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
+
     @FormUrlEncoded
     @POST("api/RateProduct")
     Call<ResponseBody> rate(
@@ -342,6 +343,7 @@ public interface Service {
             @Field("user_id") String user_id,
             @Field("value") Double value
     );
+
     @FormUrlEncoded
     @POST("api/store-token")
     Call<ResponseBody> updateToken(

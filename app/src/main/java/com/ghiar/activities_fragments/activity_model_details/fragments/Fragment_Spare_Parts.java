@@ -105,6 +105,7 @@ public class Fragment_Spare_Parts extends Fragment {
         modelModel = new ModelModel();
         modelModel.setId(0);
         modelModel.setTitle_ar(getString(R.string.choose));
+        modelModel.setTitle_en(getString(R.string.choose));
         modelModelList.add(modelModel);
         cityAdapter = new CityAdapter(cityList, activity);
         binding.spinnerCity.setAdapter(cityAdapter);
@@ -144,6 +145,7 @@ public class Fragment_Spare_Parts extends Fragment {
         cityModel = new CityDataModel.CityModel();
         cityModel.setId_city("0");
         cityModel.setAr_city_title(getString(R.string.choose));
+        cityModel.setEn_city_title(getString(R.string.choose));
         cityList.add(cityModel);
         binding.editQuery.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
