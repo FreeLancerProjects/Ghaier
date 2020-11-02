@@ -258,27 +258,35 @@ public interface Service {
     Call<ResponseBody> accept_orders(
             @Body Create_Order_Model add_order_model);
 
-    @FormUrlEncoded
-    @POST("api/my-rooms")
-    Call<UserRoomModelData> getRooms(@Field("client_id") int client_id
+    @GET("api/my-rooms")
+    Call<UserRoomModelData> getRooms(@Query("client_id") int client_id
     );
 
-    @FormUrlEncoded
-    @POST("api/single-chat-room")
-    Call<MessageDataModel> getRoomMessages(
-            @Field("room_id") int room_id
+    @GET("api/room-id")
+    Call<MessageModel> getRoomMessages(
+            @Query("room_id") int room_id
     );
 
 
     @FormUrlEncoded
     @POST("api/send-messgae")
-    Call<MessageModel> sendmessagetext(
+    Call<MessageDataModel> sendmessagetext(
             @Field("from_id") String from_id,
 
             @Field("to_id") String to_id,
             @Field("type") String type,
             @Field("room_id") String room_id,
             @Field("message") String message
+
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/create-room")
+    Call<MessageDataModel> createroom(
+            @Field("client_id") String client_id,
+
+            @Field("market_id") String market_id
 
 
     );
@@ -293,7 +301,7 @@ public interface Service {
 
     @Multipart
     @POST("api/send-messgae")
-    Call<MessageModel> sendmessagewithimage
+    Call<MessageDataModel> sendmessagewithimage
             (
                     @Part("from_id") RequestBody from_id,
 

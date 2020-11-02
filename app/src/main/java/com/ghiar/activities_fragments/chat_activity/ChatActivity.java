@@ -75,9 +75,11 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
     private final int IMG_REQ1 = 3, IMG_REQ2 = 2;
     private Uri url = null;
     private ChatUserModel chatUserModel;
+
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));}
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,19 +174,19 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
     private void getChatMessages() {
         try {
 
-
+            binding.progBar.setVisibility(View.VISIBLE);
             Api.getService(Tags.base_url)
-                    .getRoomMessages( chatUserModel.getRoom_id())
-                    .enqueue(new Callback<MessageDataModel>() {
+                    .getRoomMessages(chatUserModel.getRoom_id())
+                    .enqueue(new Callback<MessageModel>() {
                         @Override
-                        public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
+                        public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
                             binding.progBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null) {
-                                chatUserModel = new ChatUserModel(response.body().getRoom().getOther_user_name(), response.body().getRoom().getOther_user_avatar(), response.body().getRoom().getSecond_user_id()+"", response.body().getRoom().getId());
+                                //  chatUserModel = new ChatUserModel(response.body().getRoom().getOther_user_name(), response.body().getRoom().getOther_user_avatar(), response.body().getRoom().getSecond_user_id()+"", response.body().getRoom().getId());
                                 preferences.create_update_ChatUserData(ChatActivity.this, chatUserModel);
 
                                 messagedatalist.clear();
-                                messagedatalist.addAll(response.body().getMessages().getData());
+                                messagedatalist.addAll(response.body().getData());
                                 chat_adapter.notifyDataSetChanged();
                                 scrollToLastPosition();
 
@@ -214,7 +216,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                         }
 
                         @Override
-                        public void onFailure(Call<MessageDataModel> call, Throwable t) {
+                        public void onFailure(Call<MessageModel> call, Throwable t) {
                             try {
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
@@ -305,22 +307,22 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
         RequestBody user_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
         RequestBody reciver_part = Common.getRequestBodyText(chatUserModel.getId() + "");
-        RequestBody type_part = Common.getRequestBodyText("message_file");
-        RequestBody room_part = Common.getRequestBodyText(chatUserModel.getRoom_id()+"");
+        RequestBody type_part = Common.getRequestBodyText("file");
+        RequestBody room_part = Common.getRequestBodyText(chatUserModel.getRoom_id() + "");
 
 
         MultipartBody.Part image_part = Common.getMultiPart(this, Uri.parse(url.toString()), "message");
 
         Api.getService(Tags.base_url)
-                .sendmessagewithimage(user_part, reciver_part, type_part,room_part, image_part)
-                .enqueue(new Callback<MessageModel>() {
+                .sendmessagewithimage(user_part, reciver_part, type_part, room_part, image_part)
+                .enqueue(new Callback<MessageDataModel>() {
                     @Override
-                    public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                    public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
                             //listener.onSuccess(response.body());
 
-                            messagedatalist.add(response.body());
+                            messagedatalist.add(response.body().getData());
                             chat_adapter.notifyDataSetChanged();
                             scrollToLastPosition();
                         } else {
@@ -337,7 +339,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                     }
 
                     @Override
-                    public void onFailure(Call<MessageModel> call, Throwable t) {
+                    public void onFailure(Call<MessageDataModel> call, Throwable t) {
                         try {
                             dialog.dismiss();
                             Toast.makeText(ChatActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
@@ -356,15 +358,15 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
         try {
             Api.getService(Tags.base_url)
-                    .sendmessagetext(userModel.getUser().getId() + "", chatUserModel.getId(),"message",chatUserModel.getRoom_id()+"", message ).enqueue(new Callback<MessageModel>() {
+                    .sendmessagetext(userModel.getUser().getId() + "", chatUserModel.getId(), "message", chatUserModel.getRoom_id() + "", message).enqueue(new Callback<MessageDataModel>() {
                 @Override
-                public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
 
                         Log.e("llll", response.toString());
 
-                        messagedatalist.add(response.body());
+                        messagedatalist.add(response.body().getData());
                         chat_adapter.notifyDataSetChanged();
                         scrollToLastPosition();
                     } else {
@@ -380,7 +382,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                 }
 
                 @Override
-                public void onFailure(Call<MessageModel> call, Throwable t) {
+                public void onFailure(Call<MessageDataModel> call, Throwable t) {
                     dialog.dismiss();
                     try {
                         Toast.makeText(ChatActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();

@@ -6,22 +6,21 @@ import java.util.List;
 public class MessageDataModel implements Serializable {
 
 
-    private Messages messages;
-private RoomData room;
+    private RoomData room;
+
     public RoomData getRoom() {
         return room;
     }
-private MessageModel data;
-    public Messages getMessages() {
-        return messages;
-    }
+
+    private MessageModel data;
+
+
 
     public MessageModel getData() {
         return data;
     }
 
-    public class RoomData implements Serializable
-    {
+    public class RoomData implements Serializable {
         private int id;
         private int second_user_id;
         private String other_user_name;
@@ -54,17 +53,7 @@ private MessageModel data;
         }
     }
 
-    public class Messages implements Serializable
-    {
-        private int current_page;
-        private List<MessageModel> data;
 
-        public int getCurrent_page() {
-            return current_page;
-        }
 
-        public List<MessageModel> getData() {
-            return data;
-        }
-    }
+
 }

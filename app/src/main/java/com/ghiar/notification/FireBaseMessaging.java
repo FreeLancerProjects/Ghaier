@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.ghiar.activities_fragments.activity_order_details.OrderDetailsActivity;
+import com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.ghiar.R;
@@ -56,7 +57,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         }
 
         if (getSession().equals(Tags.session_login)) {
-               Log.e("sllslslls", "lslslsls");
+            Log.e("sllslslls", "lslslsls");
             if (map.get("to_user_id") != null) {
                 //     Log.e("sllslslls", "lslslsls");
 
@@ -66,8 +67,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                     manageNotification(map);
                 }
-            }
-            else {
+            } else {
                 manageNotification(map);
             }
         }
@@ -93,22 +93,22 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String not_type = map.get("notification_type");
 
         if (not_type != null && not_type.equals("chat")) {
-            String file_link = "";
+            String file_link = map.get("image");
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String current_class = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
 
-            int msg_id = Integer.parseInt(map.get("id"));
-            int room_id = Integer.parseInt(map.get("chat_room_id"));
+            int msg_id = Integer.parseInt(map.get("message_id"));
+            int room_id = Integer.parseInt(map.get("room_id"));
             int from_user_id = Integer.parseInt(map.get("from_user_id"));
             int to_user_id = Integer.parseInt(map.get("to_user_id"));
-            String type = map.get("message_kind");
+            String type = map.get("type");
 
             Log.e("llfll", room_id + "");
             long date = Long.parseLong(map.get("date"));
             String isRead = map.get("is_read");
 
-            String message = map.get("message");
-            String from_user_name = map.get("fromUserName");
+            String message = map.get("body");
+            String from_user_name = map.get("from_user_name");
 
 
             MessageModel messageModel = new MessageModel(msg_id, to_user_id + "", from_user_id + "", type, message, file_link, room_id + "", isRead + "");
@@ -136,8 +136,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             }
 
-        }
-        else if (not_type.equals("driver_status")) {
+        } else if (not_type.equals("driver_status")) {
 
             String title = map.get("title");
             String body = map.get("body");
@@ -185,16 +184,16 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             }
 
 
-        } else if (not_type.equals("order")) {
+        } else if (not_type.equals("send_offer")) {
 
             String title = map.get("title");
-            String body = map.get("message");
-            String order_id = map.get("order_id");
+            String body = map.get("body");
+            String order_id = map.get("auction_id");
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String current_class = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-            if (current_class.equals("com.refDelegateFamily.activities_fragments.activity_order_steps.OrderStepsActivity") || current_class.equals("com.refDelegateFamily.activities_fragments.activity_orderdetail.OrderDetailActivity")) {
+            if (current_class.equals("com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity")) {
 
-                    Loadnworder(title, body, order_id);
+                Loadnworder(title, body, order_id);
 
 
             } else {
@@ -235,10 +234,12 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
         Intent intent = null;
 
-        intent = new Intent(this, OrderDetailsActivity.class);
+        intent = new Intent(this, AuctionDetialsActivity.class);
 
 
-      //  intent.putExtra("DATA", orderModel);
+        //  intent.putExtra("DATA", orderModel);
+        intent.putExtra("search", order_id + "");
+
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
@@ -365,25 +366,24 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String not_type = map.get("notification_type");
 
         if (not_type != null && not_type.equals("chat")) {
-            String file_link = "";
+            String file_link = map.get("image");
 
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String current_class = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
 
 
-            int msg_id = Integer.parseInt(map.get("id"));
-            int room_id = Integer.parseInt(map.get("chat_room_id"));
+            int msg_id = Integer.parseInt(map.get("message_id"));
+            int room_id = Integer.parseInt(map.get("room_id"));
             int from_user_id = Integer.parseInt(map.get("from_user_id"));
             int to_user_id = Integer.parseInt(map.get("to_user_id"));
-            String type = map.get("message_kind");
+            String type = map.get("type");
 
-
+            Log.e("llfll", room_id + "");
             long date = Long.parseLong(map.get("date"));
             String isRead = map.get("is_read");
 
-            String message = map.get("message");
-
-            String from_user_name = map.get("fromUserName");
+            String message = map.get("body");
+            String from_user_name = map.get("from_user_name");
 
 
             MessageModel messageModel = new MessageModel(msg_id, to_user_id + "", from_user_id + "", type, message, file_link, room_id + "", isRead + "");
@@ -407,8 +407,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             }
 
-        }
-        else if (not_type.equals("driver_status")) {
+        } else if (not_type.equals("sendoffers")) {
 
             String title = map.get("title");
             String body = map.get("body");
@@ -461,17 +460,16 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             }
 
 
-        }
-        else if (not_type.equals("order")) {
+        } else if (not_type.equals("send_offer")) {
 
             String title = map.get("title");
-            String body = map.get("message");
-            String order_id = map.get("order_id");
+            String body = map.get("body");
+            String order_id = map.get("auction_id");
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String current_class = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-            if (current_class.equals("com.refDelegateFamily.activities_fragments.activity_order_steps.OrderStepsActivity") || current_class.equals("com.refDelegateFamily.activities_fragments.familyorderstepsactivity.FamilyOrderStepsActivity")) {
+            if (current_class.equals("com.ghiar.activities_fragments.activtity_auction_detials.AuctionDetialsActivity")) {
 
-                    Loadoladorder(title, body, order_id);
+                Loadoladorder(title, body, order_id);
 
 
             } else {
@@ -513,11 +511,12 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
         Intent intent = null;
 
-        intent = new Intent(this, OrderDetailsActivity.class);
+        intent = new Intent(this, AuctionDetialsActivity.class);
 //        OrderModel.Data orderModel = new OrderModel.Data();
 //        orderModel.setId(Integer.parseInt(order_id));
+        intent.putExtra("search", order_id + "");
 
-     //   intent.putExtra("DATA", orderModel);
+        //   intent.putExtra("DATA", orderModel);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);

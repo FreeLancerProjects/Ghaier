@@ -54,6 +54,7 @@
                 <ImageView
                     android:id="@+id/tv_message_content"
                     image="@{messagemodel.image}"
+                    android:src="@drawable/logo"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

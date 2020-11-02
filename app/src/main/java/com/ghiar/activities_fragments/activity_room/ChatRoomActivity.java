@@ -105,6 +105,7 @@ public class ChatRoomActivity extends AppCompatActivity implements Listeners.Bac
     public void getRooms()
     {
         userModel = preferences.getUserData(this);
+        binding.progBar.setVisibility(View.VISIBLE);
 
         try {
             Api.getService(Tags.base_url)
@@ -113,6 +114,7 @@ public class ChatRoomActivity extends AppCompatActivity implements Listeners.Bac
                         @Override
                         public void onResponse(Call<UserRoomModelData> call, Response<UserRoomModelData> response) {
                             binding.progBar.setVisibility(View.GONE);
+                            Log.e("kdkdkdk",response.body().getRooms().size()+"");
                             if (response.isSuccessful()&&response.body()!=null&&response.body().getRooms()!=null)
                             {
                                 userRoomModelList.clear();

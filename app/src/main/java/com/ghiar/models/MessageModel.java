@@ -1,9 +1,15 @@
 package com.ghiar.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MessageModel implements Serializable {
+    private List<MessageModel> data;
 
+
+    public List<MessageModel> getData() {
+        return data;
+    }
     private int id;
     private String to_user_id;
     private String from_user_id;

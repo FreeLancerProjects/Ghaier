@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +21,15 @@ import com.ghiar.R;
 import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Address;
 import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Cart_Purchases;
 import com.ghiar.activities_fragments.activity_cart.fragments.Fragment_Payment_Type;
+import com.ghiar.activities_fragments.chat_activity.ChatActivity;
 import com.ghiar.databinding.ActivityAboutAppBinding;
 import com.ghiar.databinding.ActivityCartBinding;
 import com.ghiar.interfaces.Listeners;
 import com.ghiar.language.Language;
 import com.ghiar.models.AddOrderModel;
 import com.ghiar.models.Create_Order_Model;
+import com.ghiar.models.MessageDataModel;
+import com.ghiar.models.MessageModel;
 import com.ghiar.models.UserModel;
 import com.ghiar.preferences.Preferences;
 import com.ghiar.remote.Api;
@@ -120,6 +124,55 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         });
 
         getdata();
+    }
+    private void createroom() {
+        final Dialog dialog = Common.createProgressDialog(CartActivity.this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+        try {
+            Api.getService(Tags.base_url)
+                    .createroom(usermodel.getUser().getId()+"", create_order_model.getMarket_id() ).enqueue(new Callback<MessageDataModel>() {
+                @Override
+                public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
+                    dialog.dismiss();
+                    if (response.isSuccessful()) {
+
+                        Log.e("llll", response.toString());
+                        create_order_model = new Create_Order_Model();
+                        preferences.create_update_order(CartActivity.this
+
+
+                                , null);
+                        getdata();
+                        finish();
+                    } else {
+                        try {
+
+                            Toast.makeText(CartActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            Log.e("Error", response.toString() + " " + response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers() + " " + response.errorBody().toString());
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MessageDataModel> call, Throwable t) {
+                    dialog.dismiss();
+                    try {
+                        Toast.makeText(CartActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                        Log.e("Error", t.getMessage());
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            dialog.dismiss();
+            Log.e("error", e.getMessage().toString());
+        }
     }
 
     private void getdata() {
@@ -342,13 +395,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
                 dialog.dismiss();
                 Log.e("kkmkmkm", response.code() + "");
                 if (response.isSuccessful()) {
-                    create_order_model = new Create_Order_Model();
-                    preferences.create_update_order(CartActivity.this
-
-
-                            , null);
-                    getdata();
-                    finish();
+                 createroom();
 // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
                     //  activity.refresh(Send_Data.getType());

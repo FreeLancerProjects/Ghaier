@@ -25,12 +25,13 @@ public class Room_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private List<UserRoomModelData.UserRoomModel> userRoomModelList;
     private Context context;
-private ChatRoomActivity chatRoomActivity;
+    private ChatRoomActivity chatRoomActivity;
+
     public Room_Adapter(Context context, List<UserRoomModelData.UserRoomModel> userRoomModelList) {
 
         this.userRoomModelList = userRoomModelList;
         this.context = context;
-        chatRoomActivity=(ChatRoomActivity)context;
+        chatRoomActivity = (ChatRoomActivity) context;
     }
 
     @NonNull
@@ -38,10 +39,10 @@ private ChatRoomActivity chatRoomActivity;
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if (viewType == ITEM_DATA) {
-            UserSearchRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.user_search_row,parent,false);
+            UserSearchRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.user_search_row, parent, false);
             return new MyHolder(binding);
         } else {
-            LoadMoreBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.load_more,parent,false);
+            LoadMoreBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.load_more, parent, false);
             return new LoadMoreHolder(binding);
         }
 
@@ -55,13 +56,13 @@ private ChatRoomActivity chatRoomActivity;
             UserRoomModelData.UserRoomModel userRoomModel = userRoomModelList.get(position);
             final MyHolder myHolder = (MyHolder) holder;
             myHolder.binding.setUserroommodel(userRoomModel);
-           // myHolder.binding.tvDate.setText(Time_Ago.getTimeAgo(userRoomModel.getLast_message_date(),context));
+            // myHolder.binding.tvDate.setText(Time_Ago.getTimeAgo(userRoomModel.getLast_message_date(),context));
 
 
             myHolder.itemView.setOnClickListener(v -> {
                 UserRoomModelData.UserRoomModel userRoomModel1 = userRoomModelList.get(myHolder.getAdapterPosition());
-               // fragment.setItemData(userRoomModel1,myHolder.getAdapterPosition());
-                chatRoomActivity.setItemData(userRoomModel1,holder.getLayoutPosition());
+                // fragment.setItemData(userRoomModel1,myHolder.getAdapterPosition());
+                chatRoomActivity.setItemData(userRoomModel1, holder.getLayoutPosition());
             });
         } else {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) holder;
@@ -79,6 +80,7 @@ private ChatRoomActivity chatRoomActivity;
 
     public class MyHolder extends RecyclerView.ViewHolder {
         private UserSearchRowBinding binding;
+
         public MyHolder(UserSearchRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -91,6 +93,7 @@ private ChatRoomActivity chatRoomActivity;
     public class LoadMoreHolder extends RecyclerView.ViewHolder {
 
         private LoadMoreBinding binding;
+
         public LoadMoreHolder(LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
